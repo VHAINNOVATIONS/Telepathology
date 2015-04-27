@@ -1,0 +1,239 @@
+MAGIP138 ;WOIFO/FG,MLH,JSL - Install code for TP ; 6/26/2013 12:05 pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 86;Oct 30, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ ; There are no environment checks here but the MAGIP138 has to be
+ ; referenced by the "Environment Check Routine" field of the KIDS
+ ; build so that entry points of the routine are available to the
+ ; KIDS during all installation phases.
+ Q  ;
+ ;
+ ;+++++ INSTALLATION ERROR HANDLING
+ ;
+ERROR ;
+ S:$D(XPDNM) XPDABORT=1
+ ;--- Display the messages and store them to the INSTALL file
+ D DUMP^MAGUERR1(),ABTMSG^MAGKIDS()
+ Q
+ ;
+ ;***** POST-INSTALL CODE
+POS ;
+ N CALLBACK
+ D CLEAR^MAGUERR(1)
+ ;
+ ;--- Link new remote procedures to the Broker context option.
+ ;S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAG WINDOWS"))
+ ;I $$CP^MAGKIDS("MAG ATTACH RPCS TP WIN",CALLBACK)<0 D ERROR Q
+ S CALLBACK="$$ADDRPCS^"_$NA(MAGKIDS1("RPCLST^"_$T(+0),"MAGTP WORKLIST MGR"))
+ I $$CP^MAGKIDS("MAG ATTACH RPCS MAGTP",CALLBACK)<0 D ERROR Q
+ ;
+ ;--- Various Updates
+ I $$CP^MAGKIDS("MAG TP UPDATE","$$UPDATE^"_$T(+0))<0 D ERROR Q
+ D ADDMG
+ ;
+ ;--- Send the notification e-mail
+ D BMES^XPDUTL("Post Install Mail Message: "_$$FMTE^XLFDT($$NOW^XLFDT))
+ D INS^MAGQBUT4($G(XPDNM,"MAGTP*3.0"),DUZ,$$NOW^XLFDT,XPDA)
+ ;
+ Q  ;
+ ;
+ ;***** PRE-INSTALL CODE
+PRE ;
+ ;
+ Q  ;
+ ;
+ ;+++++ LIST OF NEW REMOTE PROCEDURES
+ ; have a list in format ;;MAG4 IMAGE LIST
+RPCLST ;
+ ;;MAGTP CHANGE CONS STATUS
+ ;;MAGTP CHANGE SLIDES AVAIL
+ ;;MAGTP CHECK CONS
+ ;;MAGTP COPY CASE
+ ;;MAGTP DEL SNOMED CODES
+ ;;MAGTP GET ACCNUM
+ ;;MAGTP GET ACTIVE
+ ;;MAGTP GET CASES
+ ;;MAGTP GET CONSULT
+ ;;MAGTP GET CPRS REPORT
+ ;;MAGTP GET CPT CODE
+ ;;MAGTP GET CONSULT
+ ;;MAGTP GET ESIGN
+ ;;MAGTP GET FIELD ATTR
+ ;;MAGTP GET LIST
+ ;;MAGTP GET LOCK MINS
+ ;;MAGTP GET NOTE
+ ;;MAGTP GET PATIENT
+ ;;MAGTP GET PREFERENCES
+ ;;MAGTP GET PT INFO
+ ;;MAGTP GET RETENTION DAYS
+ ;;MAGTP GET SITE CONFIG
+ ;;MAGTP GET SITES
+ ;;MAGTP GET SLIDES
+ ;;MAGTP GET SNOMED CODES
+ ;;MAGTP GET SUP REPORTS
+ ;;MAGTP GET TEMPLATE DATA
+ ;;MAGTP GET TEMPLATE XML
+ ;;MAGTP GET USER
+ ;;MAGTP LOCK FILE
+ ;;MAGTP PUT CONSULT
+ ;;MAGTP PUT CPT CODE
+ ;;MAGTP PUT LOCK MINS
+ ;;MAGTP PUT METHOD
+ ;;MAGTP PUT NOTE
+ ;;MAGTP PUT PREFERENCES
+ ;;MAGTP PUT PRIORITY
+ ;;MAGTP PUT REPORT FIELD
+ ;;MAGTP PUT SLIDES
+ ;;MAGTP PUT SITE CONFIG
+ ;;MAGTP PUT SNOMED CODES
+ ;;MAGTP PUT SUP REPORT
+ ;;MAGTP PUT TEMPLATE XML
+ ;;MAGTP PUT USER LIST
+ ;;MAGTP RESERVE CASE
+ ;;MAGTP SECOND LOCK
+ ;;MAGTP SET RETENTION DAYS
+ ;;MAGTP USER
+ ;;MAGG GET TIMEOUT
+ ;;MAGG INSTALL
+ ;;MAGG PAT INFO
+ ;;MAGG VERIFY ESIG
+ ;;MAGGUPREFGET
+ ;;MAGGUPREFSAVE
+ ;;MAGGUSERKEYS
+ ;;MAG BROKER SECURITY
+ ;;VAFCTFU CONVERT DFN TO ICN
+ ;;VAFCTFU CONVERT ICN TO DFN
+ ;;DG SENSITIVE RECORD ACCESS
+ ;;DG SENSITIVE RECORD BULLETIN
+ ;;XWB CREATE CONTEXT
+ ;;MAG3 SET TIMEOUT
+ ;;MAGGHSLIST
+ ;;MAGGHS
+ Q 0
+ ;
+ ;+++++ Various updates
+UPDATE() ;
+ D BUILD  ; Populate files (#2006.13) and (#2005.42)
+ D ADD    ; Add "VISTA IMAGING TELEPATHOLOGY" to file (#8994.5) REMOTE APPLICATION
+ Q 0
+ ;
+ ; +++++ POPULATE THE (#2005.42) AND (#2006.13) FILES
+ ;       WITH LAB DATA AND LOCATION-RELATED INFO, RESPECTIVELY.
+ ;       POPULATE DEFAULT TIMEOUTS INTO (#2006.1).
+ ;       
+BUILD ;
+ N MAGERR
+ N LRFDA,LRSS,YEAR,LRSF,LRX,LRAN
+ N LRDFN,LRI,IEN,LRAC
+ N MAGIEN,MAGFDA
+ D  ; update 2006.1
+ . S MAGIEN=0
+ . F  S MAGIEN=$O(^MAG(2006.1,MAGIEN)) Q:'MAGIEN  D
+ . . S MAGFDA(2006.1,MAGIEN_",",133)=30 ; default client timeout = 30 minutes
+ . . S MAGFDA(2006.1,MAGIEN_",",134)=30 ; default before purging worklist = 30 days
+ . . Q
+ . D UPDATE^DIE("","MAGFDA","","MAGERR")
+ . I $D(MAGERR) W MAGERR("DIERR",1,"TEXT",1) Q
+ . Q
+ I '$G(DUZ(2)) W !,"Set DUZ(2) entry" Q
+ I $D(^MAG(2006.13,"B",DUZ(2)))<10 D
+ . S LRFDA(2006.13,"+1,",.01)=DUZ(2)
+ . S LRFDA(2006.13,"+1,",4)=30 ; default lock = 30 minutes
+ . D UPDATE^DIE("","LRFDA","","MAGERR")
+ . I $D(MAGERR) W MAGERR("DIERR",1,"TEXT",1) Q
+ . D RPTXTPL^MAGI138T ; install XML report templates
+ . Q
+ F LRSS="CY","EM","SP" D                       ; Only three AP sections considered
+ . S YEAR="",LRX="A"_LRSS_"A"
+ . S LRSF=$S(LRSS="CY":63.09,LRSS="EM":63.02,1:63.08)
+ . F  S YEAR=$O(^LR(LRX,YEAR)) Q:YEAR=""  D    ; Most recent last
+ . . S LRAN=""
+ . . F  S LRAN=$O(^LR(LRX,YEAR,LRSS,LRAN)) Q:LRAN=""  D  ; Most recent last
+ . . . S LRDFN=$O(^LR(LRX,YEAR,LRSS,LRAN,""))
+ . . . S LRI=$O(^LR(LRX,YEAR,LRSS,LRAN,LRDFN,""))
+ . . . S IEN=LRI_","_LRDFN_","
+ . . . S LRAC=$$GET1^DIQ(LRSF,IEN,.06)         ; Get Accession Code number
+ . . . Q:LRAC=""                               ; Don't add if missing
+ . . . Q:$D(^MAG(2005.42,"B",LRAC))=10         ; Don't add if already there
+ . . . D ADD^MAGTP005(LRAC)                    ; Update file (#2005.42) 
+ . . . Q
+ . . Q
+ . Q
+ Q  ;
+ ;
+ ;+++++ ADD 'REMOTE APPLICATION' ENTRY
+ ;
+ADD ; Create Telepathology entry in (#8994.5) REMOTE APPLICATION if it does not exist
+ N ACODE,DA,DD,D0,DIC,DIE,DR,ENTRY,X,Y,CONTX,MAGFDA,MAGERR
+ S DIC="^XWB(8994.5,"
+ S X="VISTA IMAGING TELEPATHOLOGY",DIC="^XWB(8994.5,",ACODE=$$EN^XUSHSH(X),CONTX="MAGTP WORKLIST MGR"
+ S DA=$$FIND1^DIC(8994.5,,,X,"B") D:DA=0
+ . S DIC(0)="O" K DD,D0,DR D FILE^DICN
+ . S ENTRY=+Y I 'ENTRY W !,"Can't add new entry "_X D ERROR Q
+ . S DR=".02///"_CONTX_";.03///^S X=ACODE;1///S"
+ . S DR(2,8994.51)=".01///S;.02///-1"
+ . S DA=ENTRY,DIE="^XWB(8994.5," D ^DIE
+ . Q
+ ; Add new entry in PARENT DATA FILE (#2005.03) for DICOM LAB TEMP LIST (file #2006.5838)
+ I '$O(^MAG(2005.03,"B","DICOM LAB TEMP LIST",0)) D
+ . S MAGFDA(2005.03,"+1,",.01)="DICOM LAB TEMP LIST"  ; NAME
+ . S MAGFDA(2005.03,"+1,",.02)="LAB"                  ; ABBREVIATION
+ . S MAGFDA(2005.03,"+1,",.03)="ROOT2"                ; GLOBAL ROOT TYPE
+ . S MAGFDA(2005.03,"+1,",.04)=2006.5838              ; FILE POINTER
+ . D UPDATE^DIE("","MAGFDA","","MAGERR")
+ . I $D(MAGERR) W "Can't add new entry(#2005.03) for DICOM LAB TEMP LIST"
+ . K MAGFDA,MAGERR Q
+ ; Add new entry in HLO APPLICATION REGISTRY file (#779.2) for MAG TELEPATHOLOGY
+ S DIC="^HLD(779.2,",DIC(0)="B",X="MAG TELEPATHOLOGY" D ^DIC I Y<0 D
+ . S MAGFDA(779.2,"+1,",.01)="MAG TELEPATHOLOGY"  ; NAME
+ . S MAGFDA(779.2,"+1,",2)="IMAGING"              ; Package File Link:
+ . D UPDATE^DIE("","MAGFDA","","MAGERR")
+ . I $D(MAGERR) W "Can't add new entry(file #779.2) for MAG TELEPATHOLOGY"
+ . K MAGFDA,MAGERR Q
+ ;Add new entry in HL LOGICAL LINK file (#870) for MAG DPS
+ S DIC="^HLCS(870,",DIC(0)="B",X="MAG DPS" D ^DIC I Y<0 D
+ . S MAGFDA(870,"+1,",.01)="MAG DPS"  ; NODE
+ . S MAGFDA(870,"+1,",2)="TCP"        ; LLP TYPE
+ . S MAGFDA(870,"+1,",.08)="TEST_DPS.VHA.MED.VA.GOV"  ;DNS DOMAIN
+ . S MAGFDA(870,"+1,",21)=10                          ; QUEUE SIZE
+ . S MAGFDA(870,"+1,",400.01)="111.222.333.444"       ; TCP/IP ADDRESS
+ . S MAGFDA(870,"+1,",400.03)="C"                     ; TCP/IP SERVICE TYPE
+ . D UPDATE^DIE("","MAGFDA","","MAGERR")
+ . I $D(MAGERR) W "Can't add new entry(file #870) for MAG DPS"
+ . K MAGFDA,MAGERR Q
+ Q
+ADDMG ;Add TP mail group "MAG_TP_REG_PAT"
+ N J,K,L,MAGFDA,MSG,IEN,MAGIEN,MAGERR,DIERR
+ I '$D(^XMB(3.8,"B","MAG_TP_REG_PAT")) D  ;New add
+ . S MAGFDA(3.8,"?+1,",.01)="MAG_TP_REG_PAT"
+ . D UPDATE^DIE("","MAGFDA","MAGIEN","MAGERR")
+ . I $D(DIERR) D BMES^XPDUTL("Error Adding Imaging Mail Groups: "_MAGERR("DIERR",1,"TEXT",1)) K DIERR,MAGERR,MAGFDA Q
+ . K MAGFDA,DIERR,MAGERR
+ . S MAGFDA(3.8,MAGIEN(1)_",",4)="PU"
+ . D FILE^DIE("I","MAGFDA","MAGERR")
+ . K MAGFDA,DIERR,MAGERR
+ . S MAGFDA(3.81,"?+1,"_MAGIEN(1)_",",.01)=DUZ
+ . D UPDATE^DIE("","MAGFDA","MAGIEN","MAGERR")
+ . I $D(DIERR) D BMES^XPDUTL("Error Adding Imaging Mail Group member: "_MAGERR("DIERR",1,"TEXT",1)) Q
+ E  D  ;Already exist, add DUZ
+ . S L=$O(^XMB(3.8,"B","MAG_TP_REG_PAT"),"") Q:'L
+ . S MAGFDA(3.81,"?+1,"_L_",",.01)=DUZ
+ . D UPDATE^DIE("","MAGFDA","MAGIEN","MAGERR")
+ . I $D(DIERR) D BMES^XPDUTL("Error Adding Imaging Mail Group member: "_MAGERR("DIERR",1,"TEXT",1))
+ . Q
+ Q  ;
+
+

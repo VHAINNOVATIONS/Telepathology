@@ -1,0 +1,283 @@
+MAGTP008 ;WOIFO/FG,MLH,JSL - TELEPATHOLOGY TAGS ; 17 Apr 2013 2:52 PM
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3447;Jan 15, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** INITIALIZE SESSION (COLLECT USER INFO)
+ ;      SEE USERINF2^MAGJUTL3
+ ; RPC: MAGTP GET USER
+ ;
+ ; .MAGRY      Reference to a variable naming the global to store returned data
+ ;
+ ; Input Parameters
+ ; ================
+ ; N/A
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: DUZ
+ ;                ^02: NAME
+ ;                ^03: INITIALS
+ ;                ^04: SSN
+ ;                ^05: UserLocalStationNumber
+ ;                ^06: PrimarySiteStationNumber
+ ;                ^07: SiteServiceURL
+ ;                ^08: SiteCode
+ ;                ^09: SiteName
+ ;                ^10: Production account? 0:"NO",1:"YES"
+ ;
+ ; MAGRY(1:N)    Description
+ ;                 LAB DATA file (#63) Security Keys
+ ;
+USERINF(MAGRY) ; RPC [MAGTP GET USER]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I +$G(DUZ)=0 S MAGRY(0)="0^0^DUZ Undefined, Null or Zero" Q
+ I +$G(DUZ(2))=0 S MAGRY(0)="0^0^DUZ(2) Undefined, Null or Zero" Q
+ N MAGPL,SSUNC,VIXPTR,KEY,CT
+ ;
+ S MAGRY(0)=DUZ_U_$$GET1^DIQ(200,DUZ_",",.01)_U_$$GET1^DIQ(200,DUZ_",",1)  ; IA #10060
+ ;
+ ; Add pieces ^04:^06 for VIX
+ S MAGRY(0)=MAGRY(0)_U_$$GET1^DIQ(200,DUZ_",",9)  ;...SSN                  ; IA #10060
+ S MAGRY(0)=MAGRY(0)_U_$$GET1^DIQ(4,DUZ(2),99,"E")  ;.UserLocalStationNumber
+ S MAGRY(0)=MAGRY(0)_U_$P($$SITE^VASITE(),U,3)  ;.....PrimarySiteStationNumber
+ ;
+ ; Lookup SiteServiceURL
+ S MAGPL=$$PLACE^MAGBAPI(+$G(DUZ(2)))          ; Get place for DUZ(2)
+ S VIXPTR=$$GET1^DIQ(2006.1,MAGPL,55,"I")      ; Net site service
+ ;
+ ; Return UNC only if OpStatus is 'online'
+ I VIXPTR,+$$GET1^DIQ(2005.2,VIXPTR,5,"I") D
+ . S SSUNC=$$GET1^DIQ(2005.2,VIXPTR,1)
+ S MAGRY(0)=MAGRY(0)_U_$G(SSUNC)  ;...................SiteServiceURL
+ S MAGRY(0)=MAGRY(0)_U_$$GET1^DIQ(2006.1,MAGPL,.09)  ;SiteCode
+ S MAGRY(0)=MAGRY(0)_U_$$GET1^DIQ(2006.1,MAGPL,.01)  ;SiteName
+ S MAGRY(0)=MAGRY(0)_U_$S($L($T(PROD^XUPROD)):+$$PROD^XUPROD,1:0)  ; IA #4440
+ ;
+ ; KEYS
+ S KEY="LR",CT=0                               ; Find LAB DATA file keys
+ F  S KEY=$O(^XUSEC(KEY)) Q:$E(KEY,1,2)'="LR"  D     ; IA #10076
+ . I $D(^XUSEC(KEY,DUZ)) S CT=CT+1,MAGRY(CT)=KEY     ; IA #10076
+ Q  ;
+ ;
+ ;***** GET ALL AVAILABLE SITES FROM THE INSTITUTIONS FILE (#4)
+ ; RPC: MAGTP GET SITES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; Input Parameters
+ ; ================
+ ; N/A
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If @MAGRY@(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; @MAGRY@(0)   Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: "Site Number"
+ ;                ^04: "Site Name"
+ ;                ^05: "Station Number"
+ ;                ^06: "Site Abbreviation"
+ ;
+ ; @MAGRY@(i)   Description
+ ;                ^01: Site Number
+ ;                ^02: Site Name
+ ;                ^03: Station Number
+ ;                ^04: Site Abbreviation
+ ;                      
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("MAGTP",$J,"AC") global node is used by this procedure
+ ; if the count (CT) gets too large (CT>100).
+ ;
+GETSITES(MAGRY) ; RPC [MAGTP GET SITES]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N MAGOUT,MAGERR,CT,I,ABBR
+ S MAGRY="MAGRY"
+ D LIST^DIC(4,"","@;.01;99","UP","","","","","","","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S CT=+MAGOUT("DILIST",0)
+ I CT>100 D ARY2GLB^MAGTP009(.MAGRY)
+ F I=1:1:CT D
+ . S @MAGRY@(I)=MAGOUT("DILIST",I,0)
+ . S ABBR=$$GETABBR^MAGTP008($P(@MAGRY@(I),U))
+ . S @MAGRY@(I)=@MAGRY@(I)_U_ABBR              ; Add Site Abbreviation
+ . Q
+ S @MAGRY@(0)="1^"_CT_"^Site Number^Site Name^Station Number^Abbreviation"
+ Q  ;
+ ;
+ ;***** CHANGE AN INTERPRETATION/CONSULTATION STATUS: UPDATE FILE (#2005.43)
+ ; RPC: MAGTP CHANGE CONS STATUS
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; CIEN          IEN of the interpretation/consultation to be updated
+ ;
+ ; STATUS        Status of the interpretation/consultation (0:PENDING,
+ ;               1:COMPLETED, 2:REFUSED or 3:RECALLED)
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: Status updated for <CIEN>
+ ;
+CHNGSTAT(MAGRY,CIEN,STATUS) ; RPC [MAGTP CHANGE CONS STATUS]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(CIEN)="" D  Q
+ . S MAGRY(0)="0^0^Missing Consultation/Interpretation IEN"
+ I ",0,1,2,3,"'[$G(STATUS) D  Q                ; If 0,1,2,3 update
+ . S MAGRY(0)="0^0^Invalid Status"
+ N FILE,MAGFDA,MAGERR
+ I $G(STATUS)="" S STATUS=0                    ; Default to 0:PENDING
+ S FILE=2005.43
+ I '$D(^MAG(FILE,CIEN)) D  Q
+ . S MAGRY(0)="0^0^Invalid Consultation/Interpretation IEN"
+ ; Recall only if pending
+ I +$$GET1^DIQ(FILE,CIEN_",",.06,"I"),(STATUS=3) D  Q
+ . S MAGRY(0)="0^0^Record "_CIEN_" is not PENDING"
+ S MAGFDA(FILE,CIEN_",",.06)=STATUS
+ D UPDATE^DIE("","MAGFDA","","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^"_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="1^0^Status updated for "_CIEN
+ Q  ;
+ ;
+ ;***** SET/UNSET A SECOND LOGICAL LOCK ON A RECORD
+ ; RPC: MAGTP SECOND LOCK
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LFLAG         Flag that controls whether to lock or unlock
+ ;               (0:Unlocked, 1:Locked)
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is < 0, then an error
+ ; occurred during execution of the procedure: [code]^^[ERROR explanation]
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0 if file unlocked, 1 if file locked
+ ;                ^03: "File Locked"/"File Unlocked"
+ ;              -5^^Update error [Fileman error text]
+ ;              -4^^One or more input parameters are missing
+ ;              -3^^No accession code for this case
+ ;              -2^^File locked by [user] since [date-time]         
+ ;              -1^^ERROR [MUMPS error]
+ ;               0^0^File unlocked
+ ;               0^1^File locked
+ ;                     
+ ;
+SECNLOCK(MAGRY,LFLAG,LRSS,YEAR,LRAN) ; RPC [MAGTP SECOND LOCK]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGUTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="-4^^One or more input parameters are missing"
+ . Q
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N MAGFDA,MAGERR
+ N LRAC,REC,ISLOCK,LDT,LDUZ
+ N LUSER,NOW,MINS,EXP
+ N TEXT
+ D FIND^MAGUE008(.LRAC,LRSS,$P(INPUT,",",3),$P(INPUT,",",2))
+ I $G(LRAC)="" S MAGRY(0)="-3^^No Accession Code for this case" Q
+ S REC=$O(^MAG(2005.42,"B",LRAC,""))_","       ; Record number
+ ;
+ ; Lock Variables
+ ;
+ S ISLOCK=+$$GET1^DIQ(2005.42,REC,2,"I")       ; Is it locked?
+ S LDT=$$GET1^DIQ(2005.42,REC,2.1,"I")         ; Date/Time locked
+ S LDUZ=$$GET1^DIQ(2005.42,REC,2.2,"I")        ; User's DUZ in lock
+ S LUSER=$$GET1^DIQ(2005.42,REC,2.2)           ; User's Name for above DUZ
+ S MINS=+$$GET1^DIQ(2006.13,"1,",4)            ; How many minutes before ignoring lock
+ S NOW=+$$NOW^XLFDT                            ; NOW in internal format
+ S EXP=+$$FMADD^XLFDT(LDT,0,0,MINS)            ; Add MINS to LDT
+ ;
+ ; If 1) Not a superuser
+ ;    2) Lock in place
+ ;    3) Locking user not present user
+ ;    4) Lock not expired
+ ; Then do not update existing lock
+ ;
+ I '$D(^XUSEC("LRAPSUPER",DUZ)),ISLOCK,(DUZ'=LDUZ),(NOW'>EXP) D  Q  ; IA #10076
+ . S MAGRY(0)="-2^^File Locked by "_LUSER_" Since "_$TR($$FMTE^XLFDT(LDT,"5Z"),"@"," ")
+ . Q
+ ;
+ ; Otherwise update lock record with present user's data
+ ;
+ S MAGFDA(2005.42,REC,2)=LFLAG
+ S MAGFDA(2005.42,REC,2.1)=$S(LFLAG:$$NOW^XLFDT,1:"")
+ S MAGFDA(2005.42,REC,2.2)=$S(LFLAG:DUZ,1:"")
+ D UPDATE^DIE("","MAGFDA","","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="-5^^Update Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="0^"_$S(LFLAG:"1^File Locked",1:"0^File Unlocked")
+ Q  ;
+ ;
+ ;+++++ GET THE ABBREVIATION FOR A SITE IEN FROM FILE (#2006.19)
+ ;
+ ; SITE          Site Number (IEN)
+ ;
+ ; Return Value
+ ; ============
+ ;
+ ; ABBR          Abbreviation for SITE
+ ;
+GETABBR(SITE) ;
+ Q:'$G(SITE) ""
+ N MAGREC,ABBR
+ S MAGREC=$O(^MAG(2006.19,"D",SITE,""))
+ S ABBR=$S(MAGREC:$P($G(^MAG(2006.19,MAGREC,0)),U,4),1:"")
+ Q ABBR
+
+

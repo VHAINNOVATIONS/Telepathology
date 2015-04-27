@@ -1,0 +1,483 @@
+Cache for Windows^INT^^~Format=Cache.S~
+%RO on 10 Sep 2012  10:10 AM
+MAGTP007^INT^1^62706,32665^
+MAGTP007 ;WOIFO/FG - TELEPATHOLOGY TAGS ; 04/19/2012 1:50pm
+ ;;3.0;IMAGING;**???**;Apr 19, 2012;Build 8;Apr 19, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** GET ALL CONSULTATION INFO FOR A CASE FROM FILE (#2005.43)
+ ; RPC: MAGTP GET CONSULT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRAC          Accession Code for the case
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Number of Lines
+ ;                ^03: "Consult IEN"
+ ;                ^04: "Type"
+ ;                ^05: "Reservation Date"
+ ;                ^06: "Interpreting Station"
+ ;                ^07: "Site Abbreviation"
+ ;                ^08: "Status"
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: Consult IEN
+ ;                ^02: Type
+ ;                ^03: Reservation Date
+ ;                ^04: Interpreting Station
+ ;                ^05: Site Abbreviation
+ ;                ^06: Status
+ ;
+GETINTRP(MAGRY,LRAC)                           ; RPC [MAGTP GET CONSULT]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRAC)="" S MAGRY(0)="0^0^No Case Number" Q
+ N MAGOUT,MAGERR
+ N FILE,CT,SCREEN,MAGREC,MAGIEN,STAT,SITE,FIELD
+ S FILE=2005.43
+ S CT=0
+ S SCREEN="I $P(^(0),U,1)="""_LRAC_""""        ; Filter case number 
+ D LIST^DIC(FILE,"",".02;.03I;.04I;.06","","","","","",SCREEN,"","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGREC=""
+ F  S MAGREC=$O(MAGOUT("DILIST","ID",MAGREC)) Q:MAGREC'>0  D
+ . K MAGIEN,STAT,SITE
+ . S CT=CT+1
+ . S MAGIEN=MAGOUT("DILIST",2,MAGREC)
+ . ; IEN and Type
+ . S MAGRY(CT)=MAGIEN_U_MAGOUT("DILIST","ID",MAGREC,.02)
+ . ; Date/Time in MM/DD/YYYY hh:mm format
+ . S MAGRY(CT)=MAGRY(CT)_U_$TR($$FMTE^XLFDT(MAGOUT("DILIST","ID",MAGREC,.03),"5Z"),"@"," ")
+ . ; Interpreting Station
+ . S SITE=MAGOUT("DILIST","ID",MAGREC,.04)
+ . S STAT=$$STA^XUAF4(SITE)                    ; Supported IA #2171 ; Station Number
+ . S MAGRY(CT)=MAGRY(CT)_U_STAT
+ . ; Site Abbreviation
+ . S MAGRY(CT)=MAGRY(CT)_U_$$GETABBR^MAGTP008(SITE)  ; Site abbreviation
+ . ; Status
+ . S MAGRY(CT)=MAGRY(CT)_U_MAGOUT("DILIST","ID",MAGREC,.06)
+ . Q
+ S MAGRY(0)="1^"_CT_"^Consult IEN^Type^Reservation Date^Interpreting Station^Site Abbreviation^Status"
+ Q  ;
+ ;
+ ;***** REQUEST A CONSULT: UPDATE FILE (#2005.43) WITH INFO
+ ; RPC: MAGTP PUT CONSULT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRAC          Accession Code for the case
+ ;
+ ; TYPE          Type of Consultation (0:INTERPRETATION, 1:CONSULTATION)
+ ;
+ ; STAT          Interpreting Station Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: Interpretation File Updated
+ ;                ^04: CKDFN: See description in CHECKDFN^MAGTP013
+ ;
+PUTINTRP(MAGRY,LRAC,TYPE,STAT)                 ; RPC [MAGTP PUT CONSULT]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRAC)="" S MAGRY(0)="0^0^No Case Number" Q
+ I $G(TYPE)=""!(",0,1,"'[$G(TYPE)) S MAGRY(0)="0^0^Invalid Type" Q
+ N SITE,CKDFN,FILE,SCREEN,MAGOUT,MAGFDA,MAGERR,MAGIEN
+ S SITE=$$IEN^XUAF4($G(STAT))                  ; IA #2171
+ I 'SITE S MAGRY(0)="0^0^Invalid Station Number" Q
+ ;
+ ; In the case of 1:CONSULTATION check whether a 
+ ; patient exists at a site and if not send a Mailman
+ ; email to the site user group to register the patient
+ ;
+ S:TYPE=1 CKDFN=$$CHECKDFN^MAGTP013(LRAC,STAT)
+ ;
+ S FILE=2005.43
+ ;
+ ; Check that for consultations an interpretation record exists; if not error out
+ ;
+ I TYPE=1 D  Q:$D(MAGRY)                       ; In case of 1:CONSULTATION
+ . S MAGIEN=$O(^MAG(FILE,"B",LRAC,""))         ; First attached (if any) is INTERPRETATION
+ . I MAGIEN="" S MAGRY(0)="0^0^No Interpretation Entry for case "_LRAC Q
+ . S MAGFDA(FILE,"+1,",.05)=MAGIEN             ; Parent record number (set for TYPE=1 only)
+ . ;
+ . ; Check if there is a 1:CONSULTATION entry for LRAC
+ . ; with the same STATION and is 0:PENDING.
+ . ; In that case error out.
+ . ;
+ . S SCREEN="I $P(^(0),U,1)="""_LRAC_""""      ; Filter case number 
+ . S SCREEN=SCREEN_",($P(^(0),U,2)=1)"         ; Filter type 1:CONSULTATION
+ . S SCREEN=SCREEN_",($P(^(0),U,4)="""_SITE_""")"  ; Filter site number
+ . S SCREEN=SCREEN_",($P(^(0),U,6)=0)"         ; Filter status 0:PENDING
+ . D LIST^DIC(FILE,"","","","","","","",SCREEN,"","MAGOUT","MAGERR")
+ . I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ . I +MAGOUT("DILIST",0) D
+ . . S MAGRY(0)="0^0^Pending Consultation with the same Station found"
+ . Q
+ ;
+ ; Check whether previous entries exist for an interpretation
+ ;
+ I TYPE=0 D  Q:$D(MAGRY)                       ; In case of 0:INTERPRETATION
+ . S MAGIEN=$O(^MAG(FILE,"B",LRAC,""))         ; First attached (if any) is INTERPRETATION
+ . I MAGIEN]"" D                               ; If INTERPRETATION exists update it
+ . . S MAGFDA(FILE,MAGIEN_",",.03)=+$$NOW^XLFDT  ; Reservation Date, NOW: Date/Time in internal format
+ . . D UPDATE^DIE("","MAGFDA","","MAGERR")
+ . . I $D(MAGERR) S MAGRY(0)="0^0^"_MAGERR("DIERR",1,"TEXT",1) Q
+ . . S MAGRY(0)="1^0^Interpretation File Updated"
+ . . Q
+ . Q
+ ;
+ ; Otherwise continue
+ ;
+ S MAGFDA(FILE,"+1,",.01)=LRAC                 ; Case Number
+ S MAGFDA(FILE,"+1,",.02)=TYPE                 ; Type (0:INTERPRETATION, 1:CONSULTATION)
+ S MAGFDA(FILE,"+1,",.03)=+$$NOW^XLFDT         ; Reservation Date, NOW: Date/Time in internal format
+ S MAGFDA(FILE,"+1,",.04)=SITE                 ; Site Number from input Station Number
+ S MAGFDA(FILE,"+1,",.06)=0                    ; Status: Default to 0:PENDING
+ D UPDATE^DIE("","MAGFDA","","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^"_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="1^0^Interpretation File Updated"_U_$G(CKDFN)
+ Q  ;
+ ;
+ ;***** GET LAB INFO FOR A CASE AS SHOWN IN CPRS
+ ; RPC: MAGTP GET CPRS REPORT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array reproduces the structure
+ ; of global ^TMP("ORDATA",$J), containing the CPRS report:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Number of Lines 
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: Text from CPRS Report
+ ;
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("ORDATA",$J) global node is used by this procedure
+ ;
+GETREP(MAGRY,LRSS,YEAR,LRAN)                   ; RPC [MAGTP GET CPRS REPORT]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more input parameters are missing"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N LRI,LRDFN,DFN,FIELD,LABEL,RPTID,ROOT,TEMP,CT,I,J
+ S LRI=$P(INPUT,",",2),LRDFN=$P(INPUT,",",3)
+ S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I")      ; Internal Patient ID
+ S FIELD=$S(LRSS="CY":9,LRSS="EM":2,1:8)
+ S LABEL=$$GET1^DID(63,FIELD,"","LABEL")       ; Name (label) of AP Section
+ S RPTID="OR_"_LRSS_":"_LABEL_"~"_LRSS_";ORDV02A;0;1000"
+ D RPT^ORWRP(.ROOT,DFN,RPTID)                  ; Get all reports for a patient
+ M TEMP=@($P(ROOT,")")_","""_LRI_LRSS_""",""WP"")")  ; Select only one case report
+ ; Strip line numbers, set MAGRY
+ S (CT,I)=0
+ F  S I=$O(TEMP(I)) Q:I=""  D
+ . S J=""
+ . F  S J=$O(TEMP(I,J)) Q:J=""  D
+ . . S CT=CT+1
+ . . S MAGRY(CT)=$P(TEMP(I,J),U,2)
+ . . Q
+ . Q
+ S MAGRY(0)="1^"_CT
+ K ^TMP("ORDATA",$J),^TMP("LRC",$J)            ; Clean up temporary globals
+ Q  ;
+ ;
+ ;***** SET "SLIDES AVAILABLE" FLAG FOR A CASE BY UPDATING FILE (#2005.42)
+ ; RPC: MAGTP CHANGE SLIDES AVAIL
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; SLIDES        Slides Available? (0:"NO", 1:"YES"). Default 0:"NO".
+ ;
+ ; LRAC          Accession Code for the case
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: "Slides Available? Updated"
+ ;
+PUTSLIDE(MAGRY,SLIDES,LRAC)                    ; RPC [MAGTP CHANGE SLIDES AVAIL]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ S:$G(SLIDES)="" SLIDES=0                      ; Default to 0:"NO" if no entry
+ I ",0,1,"'[$G(SLIDES) S MAGRY(0)="0^0^Invalid 'Slides Available' Entry " Q
+ I $G(LRAC)="" S MAGRY(0)="0^0^No Accession Code" Q
+ N MAGFDA,MAGERR
+ N MAGREC
+ S MAGREC=$O(^MAG(2005.42,"B",LRAC,""))_","
+ I MAGREC="," S MAGRY(0)="0^0^Record Not Found" Q
+ S MAGFDA(2005.42,MAGREC,.03)=SLIDES
+ D UPDATE^DIE("","MAGFDA","","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="1^0^Slide Available? Updated"
+ Q  ;
+ ;
+ ;***** SET CONFIGURATION INFO FOR READING OR ACQUISITION SITES INTO FILE (#2006.13)
+ ; RPC: MAGTP PUT SITE CONFIG
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ENT           List of inputs:
+ ;
+ ;               Reading List:
+ ;                 ^01: 1 (for Reading)
+ ;                 ^02: 1:Add or 0:Delete
+ ;                 ^03: Reading Station Number
+ ;                 ^04: Site Type (0:Primary, 1:Consultation, 2:Both)
+ ;                 ^05: Active? (1:Yes, 0:No)
+ ;
+ ;               Acquisition List:
+ ;                 ^01: 0 (for Acquisition)
+ ;                 ^02: 1:Add or 0:Delete
+ ;                 ^03: Acquisition Station Number
+ ;                 ^04: Primary Station Number
+ ;                 ^05: Active? (1:Yes, 0:No)
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: <Label> <Entry> - Added/Updated or
+ ;                     <Label> <Entry> - Deleted
+ ;
+PUTCONF(MAGRY,ENT)                             ; RPC [MAGTP PUT SITE CONFIG]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(ENT)="" S MAGRY(0)="0^0^No Input" Q
+ N MAGERR,MAGFDA
+ N NUM,ACT,FIELD,LABEL,SUBF,SUBS,VAL,LVAL
+ N ENTRY,STAT,SITE,DA,DIK,ADD,I
+ ;
+ ; Input: First Piece:      (0:Acquisition, 1:Reading)
+ ;        Second Piece:     0:Delete or 1:Add
+ ;        Pieces 3,4,5:
+ ;        Reading List:     Station Number^Site Type^Active?
+ ;        Acquisition List: Station Number^Primary Site Station Number^Active?
+ ;
+ S NUM=$P(ENT,U)
+ S NUM=$S(NUM=0:6,NUM=1:5,1:"")                   ; Field number
+ I 'NUM S MAGRY(0)="0^0^Invalid Field Number" Q
+ ;
+ S ACT=$P(ENT,U,2)                                ; 0:Delete or 1:Add
+ I (ACT="")!("0,1"'[ACT) S MAGRY(0)="0^0^Invalid Operation" Q
+ ;
+ D FIELD^DID(2006.13,NUM,"","SPECIFIER;GLOBAL SUBSCRIPT LOCATION;LABEL","FIELD")
+ S LABEL=FIELD("LABEL")
+ S SUBF=+FIELD("SPECIFIER")
+ S SUBS=$P(FIELD("GLOBAL SUBSCRIPT LOCATION"),";")  ; Set file subscript
+ S LVAL=$P(ENT,U,3,5)                          ; List of entry values
+ S ENTRY=$TR(LVAL,U," ")                       ; Store formatted entry
+ ;
+ ; Check first piece, then the other two
+ ;
+ S STAT=$P(LVAL,U)                             ; Station Number
+ S SITE=$$IEN^XUAF4(STAT)                      ; Supported IA #2171
+ I SITE="" D  Q
+ . S MAGRY(0)="0^0^"_ENTRY_" - Invalid Station Number"
+ ;
+ ; Check whether site is already there
+ ;
+ S DA=$$FIND1^DIC(SUBF,",1,","X",STAT)
+ ;
+ ; If not found and marked for deletion just quit
+ ;
+ I ('DA),('ACT) S MAGRY(0)="0^0^"_ENTRY_" - Not found" Q
+ ;
+ ; Delete entry if found and marked for deletion, then quit
+ ;
+ I DA,('ACT) D  Q
+ . S DA(1)=1
+ . S DIK="^MAG(2006.13,"_DA(1)_","_SUBS_","
+ . D ^DIK
+ . S MAGRY(0)="1^0^"_LABEL_" "_ENTRY_" - Deleted"
+ . Q
+ ;
+ ; If not found and marked for adding, set it
+ ;
+ I 'DA S MAGFDA(1,SUBF,"+1,1,",.01)=SITE
+ ;
+ ; If found, update the entries, otherwise add them
+ ;
+ S ADD=$S(DA:DA,1:"+1")                        ; Use found IEN or just add
+ ;
+ F I=2:1:3 D
+ . S VAL(I)=$P(LVAL,U,I)
+ . I VAL(I)="" S MAGRY(0)="0^0^"_ENTRY_" - Missing Entry" Q
+ . ; Check Type for Reading List
+ . I ((I=2)&(NUM=5)),(",0,1,2,"'[VAL(I)) D  Q
+ . . S MAGRY(0)="0^0^"_ENTRY_" - Invalid Site Type Entry"
+ . ; Convert to Site IEN for Acquisition List: Station number is given
+ . I ((I=2)&(NUM=6)) D
+ . . S VAL(I)=$$IEN^XUAF4(VAL(I))              ; Supported IA #2171
+ . . I VAL(I)="" S MAGRY(0)="0^0^"_ENTRY_" - Invalid Primary Station Number"
+ . . Q
+ . ; Check Active? entry
+ . I I=3,(",0,1,"'[VAL(I)) D  Q
+ . . S MAGRY(0)="0^0^"_ENTRY_" - Invalid 'Active?' Entry"
+ . S MAGFDA(1,SUBF,ADD_",1,",I/100)=VAL(I)
+ . Q
+ Q:($P($G(MAGRY(0)),U)=0)                      ; Quit if errors
+ D UPDATE^DIE("","MAGFDA(1)","","MAGERR")
+ ; Error handling
+ I $D(MAGERR) D  Q
+ . K MAGRY
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . Q
+ I DA S MAGRY(0)="1^0^"_LABEL_" "_ENTRY_" - Updated" Q
+ S MAGRY(0)="1^0^"_LABEL_" "_ENTRY_" - Added"
+ Q  ;
+ ;
+ ;***** GET CONFIGURATION INFO FOR READING OR ACQUISITION SITES FROM FILE (#2006.13)
+ ; RPC: MAGTP GET SITE CONFIG
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ENT           Flag to denote the field number (0:Acquisition List, 1:Reading List)
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: Label (Acquisition List/Reading List)
+ ;
+ ; MAGRY(i)     Description for Reading List:
+ ;                ^01: Active?
+ ;                ^02: Reading Site IEN
+ ;                ^03: Reading Station Number
+ ;                ^04: Reading Site Abbreviation
+ ;                ^05: Reading Site Name
+ ;                ^06: Type (0:Primary, 1:Consultation, 2:Both)
+ ;
+ ; MAGRY(i)     Description for Acquisition List:
+ ;                ^01: Active?
+ ;                ^02: Acquisition Site IEN
+ ;                ^03: Acquisition Station Number
+ ;                ^04: Acquisition Site Abbreviation
+ ;                ^05: Acquisition Site Name
+ ;                ^06: Primary Site IEN
+ ;                ^07: Primary Station Number
+ ;                ^08: Primary Site Abbreviation
+ ;                ^09: Primary Site Name
+ ;
+GETCONF(MAGRY,ENT)                             ; RPC [MAGTP GET SITE CONFIG]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(ENT)="" S MAGRY(0)="0^0^No Input" Q
+ N MAGOUT,MAGERR
+ N NUM,FIELD,LABEL,SUBF,CT,INDX,NIEN,N
+ N ACTIV,SITE,STAT,SSITE,NAME
+ N TYPE,PRIM,PSTAT,SPRIM,PNAME
+ S NUM=$S(ENT=0:6,ENT=1:5,1:"")                ; Field number
+ I 'NUM S MAGRY(0)="0^0^Invalid Field Number" Q 
+ D FIELD^DID(2006.13,NUM,"","SPECIFIER;LABEL","FIELD")
+ S LABEL=FIELD("LABEL")
+ S SUBF=+FIELD("SPECIFIER")
+ D GETS^DIQ(2006.13,"1,",NUM_"*","IE","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S CT=0
+ K INDX
+ S NIEN=""
+ F  S NIEN=$O(MAGOUT(SUBF,NIEN)) Q:NIEN=""  D
+ . S INDX($P(NIEN,","))=""
+ S N="" F  S N=$O(INDX(N)) Q:N=""  D           ; NIEN may be ordered incorrectly
+ . S NIEN=N_",1,"
+ . S CT=CT+1
+ . S ACTIV=MAGOUT(SUBF,NIEN,.03,"I")           ; Is it active (0:"NO", 1:"YES")
+ . S SITE=MAGOUT(SUBF,NIEN,.01,"I")            ; Site Number
+ . S STAT=$$STA^XUAF4(SITE)                    ; Supported IA #2171 ; Station Number
+ . S SSITE=$$GETABBR^MAGTP008(SITE)            ; Site Abbreviation if present  
+ . S NAME=MAGOUT(SUBF,NIEN,.01,"E")            ;Site Name
+ . S MAGRY(CT)=ACTIV_U_SITE_U_STAT_U_SSITE_U_NAME  ; First data pieces
+ . I NUM=5 D  Q                                ; For Reading Site List stop here
+ . . S TYPE=MAGOUT(SUBF,NIEN,.02,"I")          ; Site Type (0:Primary, 1:Consultation, 2:Both)
+ . . S MAGRY(CT)=MAGRY(CT)_U_TYPE
+ . . Q
+ . S PRIM=MAGOUT(SUBF,NIEN,.02,"I")            ; Primary Site Number
+ . S PSTAT=$$STA^XUAF4(PRIM)                   ; Supported IA #2171 ; Primary Station Number
+ . S SPRIM=$$GETABBR^MAGTP008(PRIM)            ; Primary Site Abbreviation if present
+ . S PNAME=MAGOUT(SUBF,NIEN,.02,"E")           ; Primary Site Name
+ . S MAGRY(CT)=MAGRY(CT)_U_PRIM_U_PSTAT_U_SPRIM_U_PNAME  ; Add Primary data pieces
+ . Q
+ S MAGRY(0)="1^"_CT_U_LABEL
+ Q  ;
+
+
+

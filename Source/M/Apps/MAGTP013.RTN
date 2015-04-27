@@ -1,0 +1,331 @@
+MAGTP013 ;WOIFO/FG,MLH,JSL - TELEPATHOLOGY RPCS ; 25 Mar 2013 3:08 PM
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** GET A LIST OF SELECTED UNRELEASED OR RELEASED REPORTS
+ ; RPC: MAGTP GET CASES
+ ;
+ ; .MAGRY        Reference to a local or global variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          Input array. The case numbers must be
+ ;               listed one on each line.
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If @MAGRY@(0) 1st '^'-piece is < 0, then an error
+ ; occurred during execution of the procedure: [code]^^[error explanation]
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; @MAGRY@(0)   Description
+ ;                ^01: 0   if all case numbers sent in array ENT were found
+ ;                     1   if one or more case numbers sent in array ENT were not found
+ ;                ^02: Total Number of Lines
+ ;
+ ; @MAGRY@(i)   Description 
+ ;                ^01: Case Number
+ ;                     (if case not found, error description will follow
+ ;                      and pieces 2-19 will not be populated)
+ ;                ^02: Reserved Entry (0/1 for Not Reserved/Reserved) 
+ ;                ^03: Initials of who reserved the case in the LAB DATA file (#63)
+ ;                ^04: Patient's Name
+ ;                ^05: Patient's ID Number
+ ;                ^06: Priority
+ ;                ^07: Slide(s) Available
+ ;                ^08: Date/Time Specimen Taken
+ ;                ^09: Case Status
+ ;                ^10: Site Initials
+ ;                ^11: AP Section
+ ;                ^12: Year
+ ;                ^13: Accession Number
+ ;                ^14: ICN
+ ;                ^15: Specimen Count
+ ;                ^16: Reading Method
+ ;                ^17: Patient's Short ID
+ ;                ^18: Is there a Note? (Yes/No) 
+ ;                ^19: Employee/Sensitive? (1=Yes/0=No)
+ ;
+GETCAS(MAGRY,ENT) ; RPC [MAGTP GET CASES]
+ K MAGRY
+ I $D(ENT)<10 S MAGRY(0)="-2^^No Input" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGUTERR"
+ N CT,BDFLG,LINE,LRAC,LRSS,YEAR
+ N LRAN,LRSF,LRX,LRDFN,LRI,IEN
+ N RDATE,FLAG,PNM,DFN,REC,OUTPUT,LRAA,YR,LRACC
+ S (CT,LINE)=""
+ S BDFLG=0                                     ; If BDFLG=1 there's a bad entry
+ F  S LINE=$O(ENT(LINE)) Q:LINE=""!(BDFLG)  D
+ . S LRAC=ENT(LINE)    ;Ex: 'SP 13 12'         ; Read case number
+ . S LRSS=$E(LRAC,1,2)
+ . S YEAR=$E(LRAC,4,5)
+ . S LRAN=$E(LRAC,7,$L(LRAC))
+ . S CT=CT+1
+ . I LRAN'?1.N S MAGRY(CT)=LRAC_": Invalid Accession Number",BDFLG=1 Q
+ . ; Only these three AP Sections considered
+ . S LRSF=$S(LRSS="CY":63.09,LRSS="EM":63.02,LRSS="SP":63.08,1:"")
+ . I LRSF="" S MAGRY(CT)=LRAC_": Invalid AP Section",BDFLG=1 Q
+ . S LRX="A"_LRSS_"A"
+ . ; Find 3-digit year in index
+ . S YR=$S($D(^LR(LRX,200+YEAR)):200+YEAR,$D(^LR(LRX,300+YEAR)):300+YEAR,1:"")
+ . I YR="" S MAGRY(CT)=LRAC_": Invalid Year "_YEAR,BDFLG=1 Q
+ . I '$D(^LR(LRX,YEAR,LRSS,LRAN)) D        ; Try new style case(s) after LEDI
+ . . S LRAA=$O(^LRO(68,"B",LRSS,0)),IEN="" ; Number for #68 Acc - CY EM SP
+ . . F YR=(300+YEAR*10000),(200+YEAR*10000) D  Q:IEN'=""    ; YR 2000, 1900
+ . . . S LRDFN=+$P($G(^LRO(68,LRAA,1,YR,1,LRAN,0)),"^",1)
+ . . . I 'LRDFN S MAGRY(CT)=LRAC_": Record Not Found LRDFN" Q
+ . . . S LRI=+$P($G(^LRO(68,LRAA,1,YR,1,LRAN,3)),"^",5)
+ . . . I 'LRI S MAGRY(CT)=LRAC_": Record Not Found LRI" Q
+ . . . S IEN=LRI_","_LRDFN_","
+ . . . S LRACC=$G(^LRO(68,LRAA,1,YR,1,LRAN,.2)) Q:LRACC=""  ; Accession
+ . . . S REC=$O(^MAG(2005.42,"B",LRACC,""))_","             ; Record Number worklist
+ . . . S PNM=$$GET1^DIQ(63,LRDFN_",",".03")
+ . . . S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I"),FLAG=$G(FLAG,0)
+ . . . S OUTPUT=$$GETCASE^MAGTP009(LRSS,LRACC,LRSF,IEN,REC,FLAG,PNM,DFN)
+ . . . S MAGRY(CT)=LRACC_U_OUTPUT
+ . . . Q  ; OUTPUT contains pieces ^02:^17 defined above in the MAGRY(i) description
+ . . I IEN=""!(LRACC="") S MAGRY(CT)=LRAC_": Record Not Found In #68",BDFLG=1
+ . . Q
+ . I $D(^LR(LRX,YR,LRSS,LRAN)) D  ;old style before LEDI
+ . . S LRDFN=$O(^LR(LRX,YR,LRSS,LRAN,""))
+ . . I LRDFN="" S MAGRY(CT)=LRAC_": Record Not Found LRDFN",BDFLG=1 Q
+ . . S LRI=$O(^LR(LRX,YR,LRSS,LRAN,LRDFN,""))
+ . . I LRI="" S MAGRY(CT)=LRAC_": Record Not Found LRI",BDFLG=1 Q
+ . . S IEN=LRI_","_LRDFN_","
+ . . S RDATE=+$$GET1^DIQ(LRSF,IEN,.11,"I")       ; Release date if any
+ . . S FLAG=$S(RDATE:1,1:0)
+ . . S PNM=$$GET1^DIQ(63,LRDFN_",",".03")
+ . . S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I")
+ . . S REC=$O(^MAG(2005.42,"B",LRAC,""))_","
+ . . ; OUTPUT contains pieces ^02:^17 defined above in the MAGRY(i) description
+ . . S OUTPUT=$$GETCASE^MAGTP009(LRSS,LRAC,LRSF,IEN,REC,FLAG,PNM,DFN)
+ . . S MAGRY(CT)=LRAC_U_OUTPUT
+ . . Q
+ . Q
+ ;
+ ; Header
+ ;
+ S MAGRY(0)=BDFLG_"^"_CT
+ Q  ;
+ ;
+ ;***** CHECK WHETHER THERE ARE PENDING CONSULTATIONS FOR A SITE
+ ; RPC: MAGTP CHECK CONS
+ ;
+ ; .MAGRY        Reference to a local or global variable where the results
+ ;               are returned to.
+ ;
+ ; STAT          Interpreting Station Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: 0:No Pending Consultations, 1:Pending Consultations
+ ;
+CHEKPEND(MAGRY,STAT) ; RPC [MAGTP CHECK CONS]
+ K MAGRY
+ I $G(STAT)="" S MAGRY(0)="0^0^No Station Number" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N FILE,SITE,SCREEN,MAGOUT,MAGERR
+ S FILE=2005.43
+ ; Screen to get only pending consultations matching SITE 
+ S SITE=$$IEN^XUAF4(STAT)                      ; Supported IA #2171 ; Site Number
+ I SITE="" S MAGRY(0)="0^0^Invalid Station Number" Q
+ S SCREEN="I $P(^(0),U,2)=1"                   ; Filter type 1:CONSULTATION
+ S SCREEN=SCREEN_",($P(^(0),U,4)="""_SITE_""")"  ; Filter site number
+ S SCREEN=SCREEN_",($P(^(0),U,6)=0)"           ; Filter status 0:PENDING
+ D LIST^DIC(FILE,"","@;","P","","","","",SCREEN,"","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ I +MAGOUT("DILIST",0) S MAGRY(0)="1^0^1" Q
+ S MAGRY(0)="1^0^0"
+ Q  ;
+ ;
+ ;+++++ CHECK WHETHER A PATIENT EXISTS AT A SITE
+ ;      AND SEND A MAILMAN EMAIL TO A REMOTE USER
+ ;      GROUP TO REGISTER THE PATIENT
+ ;
+ ; LRAC          Accession Code for the case
+ ;
+ ; STAT          Remote station number where the group is set up
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; CKDFN        Description
+ ;                ^01: "Invalid Patient ID or Patient not in the system"
+ ;                     "Patient <DFN> exists at <Site Name>"
+ ;                     "Email sent"
+ ;                     "Email to Mailman group not sent: "_<Error>
+ ;
+CHECKDFN(LRAC,STAT) ;
+ N LRSS,LRX,YEAR,LRAN,LRDFN,DFN,SITE,NAME
+ N SCREEN,MAGOUT,MAGERR,PNM,CKDFN
+ ;
+ ; Extract DFN
+ ;
+ S LRSS=$E(LRAC,1,2)
+ S LRX="A"_LRSS_"A"
+ S YEAR=$E(LRAC,4,5)
+ ; Find 3-digit year in index
+ S YEAR=$S($D(^LR(LRX,200+YEAR)):200+YEAR,$D(^LR(LRX,300+YEAR)):300+YEAR,1:"")
+ S LRAN=$E(LRAC,7,$L(LRAC))
+ S LRDFN=$O(^LR(LRX,YEAR,LRSS,LRAN,""))
+ S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I")
+ S PNM=$$GET1^DIQ(2,DFN_",",.01)               ; Supported IA #10035
+ I PNM="" D  Q CKDFN
+ . S CKDFN="Invalid Patient ID or Patient not in the system"
+ S SITE=$$IEN^XUAF4(STAT)                      ; Supported IA #2171 ; Site Number
+ I SITE="" S CKDFN="Invalid Remote Station Number" Q CKDFN
+ S NAME=$$NAME^XUAF4(SITE)                     ; Supported IA #2171 ; Site Name
+ ;
+ ; Check whether the patient exists at Station
+ ;
+ S SCREEN="I $P(^(0),U,1)="""_DFN_""""
+ S SCREEN=SCREEN_",($P(^(0),U,2)="""_SITE_""")"
+ D LIST^DIC(391.91,"","@;.01I","P","","","","",SCREEN,"","MAGOUT","MAGERR")
+ I $D(MAGERR) S CKDFN=MAGERR("DIERR",1,"TEXT",1) Q CKDFN
+ I +MAGOUT("DILIST",0) D  Q CKDFN
+ . S CKDFN="Patient "_PNM_" exists at "_NAME
+ ;
+ ; Send Mailman email if no match
+ ;
+ N MAGREC,NODE,VADM,VAEL,VAERR,XMDUZ
+ N XMSUB,XMTEXT,MAGA,XMY,REC,XMZ,XMMG
+ S MAGREC=$O(^MAG(2006.19,"D",SITE,""))
+ S NODE=$$GET1^DIQ(2006.19,MAGREC_",",.06)
+ I NODE="" S CKDFN="Mail Domain not found for "_NAME Q CKDFN
+ ; Patient demographics
+ D DEM^VADPT,ELIG^VADPT                        ; Supported IA #10061
+ I VAERR D  Q CKDFN
+ . S CKDFN="Invalid Patient ID or Patient not in the system"
+ S XMDUZ=DUZ
+ S XMSUB="Patient Registration Request"
+ S XMTEXT="MAGA("
+ S MAGA(1)=""
+ S MAGA(2)=" Patient Registration Request"
+ S MAGA(3)=""
+ S MAGA(4)=" DFN:     "_DFN
+ S MAGA(5)=" Patient: "_VADM(1)
+ S MAGA(6)=" SSN:     "_$P(VADM(2),U,2)
+ S MAGA(7)=" DOB:     "_$$FMTE^XLFDT($P(VADM(3),U),"5Z")
+ S MAGA(8)=" Age:     "_VADM(4)
+ S MAGA(9)=" Sex:     "_$P(VADM(5),U,2)
+ S MAGA(10)=" Service? "_$S(+VAEL(3):"YES",1:"NO")
+ S MAGA(11)=" Type:    "_$P(VAEL(6),U,2)
+ S MAGA(12)=" Veteran? "_$S(+VAEL(4):"YES",1:"NO")
+ S MAGA(13)=" ICN      "_$$GETICN^MAGUE006(DFN,,"1^SUPPRESS_CODE")
+ ; Set recipients of message
+ S REC="G.MAG_TP_REG_PAT@"_NODE ;TP REG PAT@ -remote mail group
+ S XMY(REC)=""
+ D ^XMD                                        ; IA #10070
+ I $G(XMMG) D  Q CKDFN
+ . S CKDFN="Email to Mailman group not sent: "_XMMG
+ I $G(XMZ) D
+ . S CKDFN="Email to Mailman group sent to register patient "_PNM_" [MSG# "_XMZ_"]"
+ Q $G(CKDFN) ;
+ ;
+ ;***** DELETE A SELECTED SNOMED CODE FROM A CASE
+ ; RPC: MAGTP DEL SNOMED CODES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ENT           List of inputs:
+ ;
+ ;                ^01: Comma separated list of IENs
+ ;                     defining the SNOMED code to delete
+ ;                ^02: Subfield label
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: <LABEL> Record <RECORD> deleted
+ ;
+DELSNOMD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP DEL SNOMED CODES]
+ K MAGRY
+ I $G(ENT)="" S MAGRY(0)="0^0^No entries" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more case input parameters are missing"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N LRSF,LRI,LRDFN,IEN,N,LABEL,SUBF
+ N OT,NJ,LEN,DA,SUBFJ,NUM,SUBFI,REC,DIK
+ S LRSF=$P(INPUT,","),LRI=$P(INPUT,",",2)
+ S LRDFN=$P(INPUT,",",3),IEN=$P(INPUT,",",2,4)
+ S N=$P(ENT,U)                                 ; Internal numbers
+ S LABEL=$P(ENT,U,2)                           ; Subfield label
+ S SUBF=+$$GET1^DID(LRSF,10,"","SPECIFIER")    ; Use field number 10 for O/T field
+ S OT=+$$GET1^DID(LRSF,10,"","GLOBAL SUBSCRIPT LOCATION")
+ S NJ=N_","_OT                                 ; OT=2 for Organ/Tissue
+ S NJ=$REVERSE(NJ)                             ; Invert order for DIK
+ S LEN=$L(NJ,",")                              ; How many pieces in the IEN?
+ S DA=$P(NJ,",",LEN)                           ; Last one must be set as DA for DIK
+ ; Cases
+ I LABEL["ORGAN/TISSUE" D  Q:'MAGRY(0)         ; CY and EM have "CYTOPATH" and "EM" in front
+ . I LEN'=2 S MAGRY(0)="0^0^Invalid IENs" Q    ; Verify internal pointers to O/T
+ . S SUBFJ=SUBF                                ; No further level if Organ/Tissue
+ . S NJ=OT                                     ; Only OT for Organ/Tissue
+ . Q
+ I LABEL'="ETIOLOGY",(LABEL'["ORGAN/TISSUE") D  Q:'MAGRY(0)
+ . I LEN'=3 S MAGRY(0)="0^0^Invalid IENs" Q    ; Verify internal pointers to O/T subfields
+ . S SUBFJ=+$$GET1^DID(SUBF,LABEL,"","SPECIFIER")
+ . I SUBFJ=0!LABEL D  Q
+ . . S MAGRY(0)="0^0^"_LABEL_" Invalid"        ; LABEL must be text and valid
+ . S NUM=+$$GET1^DID(SUBF,LABEL,"","GLOBAL SUBSCRIPT LOCATION")
+ . S $P(NJ,",",LEN)=NUM                        ; Set the appropriate subscript
+ . Q
+ I LABEL="ETIOLOGY" D  Q:'MAGRY(0)             ; ETIOLOGY is a subfield of MORPHOLOGY
+ . I LEN'=4 S MAGRY(0)="0^0^Invalid IENs" Q    ; Verify internal pointers to ETIOLOGY
+ . S SUBFI=+$$GET1^DID(SUBF,"MORPHOLOGY","","SPECIFIER")
+ . S SUBFJ=+$$GET1^DID(SUBFI,"ETIOLOGY","","SPECIFIER")
+ . S NUM=+$$GET1^DID(SUBF,"MORPHOLOGY","","GLOBAL SUBSCRIPT LOCATION")
+ . S NJ=$P(NJ,",",1,2)_","_NUM_","_$P(NJ,",",3,4)
+ . S NUM=+$$GET1^DID(SUBFI,LABEL,"","GLOBAL SUBSCRIPT LOCATION")
+ . S $P(NJ,",",LEN+1)=NUM                      ; Length increased by 1 above
+ . Q
+ S REC=$$GET1^DIQ(SUBFJ,N_","_IEN,.01)         ; Read original record
+ I REC="" S MAGRY(0)="0^0^Record not found" Q  ; Check for existence
+ S DIK="^LR("_LRDFN_","""_LRSS_""","_LRI_","_NJ_","
+ D ^DIK
+ S MAGRY(0)="1^0^"_LABEL_" Record "_REC_" deleted"
+ Q  ;
+
+

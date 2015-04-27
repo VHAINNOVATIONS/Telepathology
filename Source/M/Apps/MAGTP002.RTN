@@ -1,0 +1,227 @@
+Cache for Windows^INT^^~Format=Cache.S~
+%RO on 10 Sep 2012  10:10 AM
+MAGTP002^INT^1^62707,46312^
+MAGTP002 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 03/28/2012 2:50pm
+ ;;3.0;IMAGING;**???**;Mar 28, 2012;Build 8;Mar 28, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;*****  GET ALL THE SUPPLEMENTARY REPORTS ATTACHED TO A CASE 
+ ; RPC: MAGTP GET SUP REPORTS
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: Date of Supplementary Report
+ ;                ^02: SR Verified (YES/NO)
+ ;                ^03: Name of provider who verified (if Verified = YES)
+ ;                ^04: SR Text [entries separated by pipes (|)]
+ ;
+GETSR(MAGRY,LRSS,YEAR,LRAN)                    ; RPC [MAGTP GET SUP REPORTS]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more input parameters are missing"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N MAGOUT,MAGERR
+ N LRSF,IEN,SUBF,LRFLE,CT,NIEN,N
+ N INDX,INDXJ,LASTJ,NIENJ,LINE
+ S LRSF=$P(INPUT,","),IEN=$P(INPUT,",",2,4)
+ S SUBF=+$$GET1^DID(LRSF,"1.2,","","SPECIFIER")
+ ;
+ ; Get auditing sub-subfield
+ ;
+ S LRFLE=$S(LRSS="SP":63.8172,LRSS="CY":63.9072,1:63.2072)
+ S CT=0
+ D GETS^DIQ(LRSF,IEN,"1.2*","IE","MAGOUT","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1)
+ S NIEN=""
+ F  S NIEN=$O(MAGOUT(SUBF,NIEN)) Q:NIEN=""  S INDX($P(NIEN,","))=""
+ S N=""
+ F  S N=$O(INDX(N)) Q:N=""  D                  ; NIEN may be ordered incorrectly
+ . S CT=CT+1,NIEN=N_","_IEN                    ; Convert date in field .01
+ . S MAGRY(CT)=$TR($$FMTE^XLFDT(MAGOUT(SUBF,NIEN,.01,"I"),"5Z"),"@"," ")_U
+ . ; Verified?
+ . S MAGRY(CT)=MAGRY(CT)_MAGOUT(SUBF,NIEN,0.02,"E")_U
+ . ; Get verifier: last entry in audit trail
+ . K INDXJ
+ . S NIENJ=""
+ . F  S NIENJ=$O(MAGOUT(LRFLE,NIENJ)) Q:NIENJ=""  D
+ . . S:$P(NIENJ,",",2)=N INDXJ($P(NIENJ,","))=""
+ . S LASTJ=$O(INDXJ(""),-1)
+ . S MAGRY(CT)=MAGRY(CT)_$G(MAGOUT(LRFLE,LASTJ_","_NIEN,.03,"E"))_U
+ . ; Get SR text
+ . S LINE=""
+ . F  S LINE=$O(MAGOUT(SUBF,NIEN,1,LINE)) Q:+LINE=0  D
+ . . S MAGRY(CT)=MAGRY(CT)_MAGOUT(SUBF,NIEN,1,LINE)_"|"
+ . Q
+ S MAGRY(0)="1^"_CT
+ Q  ;
+ ;
+ ;***** ADD/REPLACE INFO IN A SUPPLEMENTARY REPORT
+ ;      RELEASE IT IF SO MARKED IN THE INPUT ARRAY
+ ;
+ ; RPC: MAGTP PUT SUP REPORT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          Input array:
+ ;
+ ;                 First Line:      ^01: DATE
+ ;                                  ^02: RELEASE? (1:YES/0:NO)
+ ;
+ ;                 Following Lines: TEXT of Supplemenatary Report
+ ;
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: Message with the outcome of the action
+ ;                     on the Supplementary Report
+ ;                ^04: In the case of release of the Supplementary
+ ;                     Report this entry will read: 
+ ;                     "Release alert will be sent to: "
+ ;                     followed by the name(s) of the
+ ;                     pathologist and/or the patient's PCP.
+ ;
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("MAGTP",$J,"SR") global node is used by this procedure.
+ ;
+PUTSR(MAGRY,ENT,LRSS,YEAR,LRAN)                ; RPC [MAGTP PUT SUP REPORT]
+ K MAGRY
+ I $D(ENT)<10 S MAGRY(0)="0^0^No Input" Q
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more input parameters are missing"
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0) 
+ N LRSF,LRDFN,LRI,IEN
+ N LRRLS,LRRLS1
+ N LRIENS,LRFILE1,LRFILE
+ N LRORIEN,LRDA,LRQUIT,REL
+ S LRSF=$P(INPUT,","),LRI=$P(INPUT,",",2)
+ S LRDFN=$P(INPUT,",",3),IEN=$P(INPUT,",",2,4)
+ ;
+ ; Add/update first
+ ;
+ ; LRQUIT=1: Quit after tag is executed, no error
+ ; LRQUIT=2: Quit with error from tag
+ S (LRRLS1,LRQUIT)=0
+ ;
+ ; Check if the ENTIRE report is already released
+ ; Set LRRLS=1 if yes
+ ;
+ S LRRLS=$$RELEAS1^MAGTP006(LRSF,IEN)
+ ;
+ ; Select a supplementary report by date,
+ ; create one if a new date is entered
+ ;
+ D GETRPT^MAGTP006(.MAGRY,.LRFILE1,.LRQUIT,.LRDA,.REL,.ENT,LRDFN,LRSS,LRI,LRSF)
+ Q:LRQUIT=2
+ ;
+ ; Check if the supplementary report already released
+ ; Set LRRLS1=1 if yes
+ ;
+ D RELEAS2^MAGTP006(.LRIENS,.LRRLS1,LRDA,LRI,LRDFN,LRFILE1)
+ ;
+ ; Make a copy of the current report
+ ; if the main report is released
+ ; Store the copy in ^TMP("MAGTP",$J,"SR")
+ ;
+ D:LRRLS COPY^MAGTP006(.MAGRY,.LRQUIT,LRFILE1,LRIENS)
+ Q:LRQUIT=2
+ ;
+ ; Update the supplementary report only if not already released.
+ ; Note: FileMan would allow it.
+ ; Array ENT contains the text of the supplementary report
+ ;
+ D RPT^MAGTP006(.MAGRY,.LRQUIT,.ENT,LRRLS,LRRLS1,LRFILE1,LRIENS)
+ Q:LRQUIT=2
+ I LRQUIT D  Q
+ . I REL,'LRRLS1 D RELEASE^MAGTP006(.MAGRY,LRFILE1,LRIENS,LRDFN,LRSS,LRI,LRSF,LRDA)
+ . Q
+ ;
+ ; Compare updated report with the previous
+ ; report with the same date
+ ;
+ D COMPARE^MAGTP006(.MAGRY,.LRQUIT,LRDA,LRFILE1,LRIENS,LRDFN,LRSS,LRI)
+ Q:LRQUIT=2
+ I LRQUIT D  Q
+ . I REL,'LRRLS1 D RELEASE^MAGTP006(.MAGRY,LRFILE1,LRIENS,LRDFN,LRSS,LRI,LRSF,LRDA)
+ . Q
+ ;
+ ; File changes, store the date of the change and user ID
+ ;
+ D UPDATE^MAGTP006(.MAGRY,.LRQUIT,.LRORIEN,.LRFILE,LRDFN,LRSS,LRI,LRIENS,LRFILE1,REL)
+ Q:LRQUIT=2
+ ;
+ ; Store the original report for auditing purposes
+ ;
+ D STORE^MAGTP006(.MAGRY,.LRQUIT,.LRORIEN,LRIENS,LRFILE)
+ Q:LRQUIT=2
+ ;
+ ; Release SR if so marked in the input and not already released
+ ;
+ I REL,'LRRLS1 D  Q
+ . D RELEASE^MAGTP006(.MAGRY,LRFILE1,LRIENS,LRDFN,LRSS,LRI,LRSF,LRDA)
+ . Q
+ ;
+ ; If not released and no errors
+ ;
+ Q  ;
+ ;
+
+
+
