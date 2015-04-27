@@ -1,0 +1,334 @@
+﻿<UserControl x:Class="VistA.Imaging.Telepathology.Worklist.Views.WorklistView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:tree="clr-namespace:Aga.Controls.Tree;assembly=Aga.Controls"
+             xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras.WPF4"
+             xmlns:local="clr-namespace:VistA.Imaging.Telepathology.Worklist.Views"
+             xmlns:c="clr-namespace:VistA.Imaging.Telepathology.Worklist.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="334" 
+             Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+             Name="This">
+    <UserControl.Resources>
+        <c:MultiBoolToVisibilityConverter x:Key="boolToVis" />
+        <Style TargetType="{x:Type TextBlock}" x:Key="ColumnHeaderTextStyle">
+            <Setter Property="TextTrimming" Value="CharacterEllipsis"/>
+            <Setter Property="Margin" Value="0,0,15,0"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="GridBlockStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource boolToVis}" ConverterParameter="False">
+                        <Binding Path="IsSelected" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}"/>
+                        <Binding Path="HasPriority" ConverterParameter="False"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type FrameworkElement}"  x:Key="GridEditStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource boolToVis}" ConverterParameter="True">
+                        <Binding Path="IsSelected" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}"/>
+                        <Binding Path="HasPriority" ConverterParameter="False"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}" x:Key="MethodBlockStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource boolToVis}" ConverterParameter="False">
+                        <Binding Path="IsSelected" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}"/>
+                        <Binding Path="HasMethod" ConverterParameter="False"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type FrameworkElement}"  x:Key="MethodEditStyle">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Visibility">
+                <Setter.Value>
+                    <MultiBinding Converter="{StaticResource boolToVis}" ConverterParameter="True">
+                        <Binding Path="IsSelected" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}"/>
+                        <Binding Path="HasMethod" ConverterParameter="False"/>
+                    </MultiBinding>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TreeHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <GroupBox Header="Case List">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <StackPanel Margin="5,5,0,0" Grid.Row="0">
+                    <Expander Header="Filter" IsExpanded="True" 
+                              BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" 
+                              BorderThickness="1">
+                        <local:WorklistFilterView x:Name="examFilterView" 
+                                                  DataContext="{Binding WorklistFilterViewModel}" 
+                                                  FontSize="11"/>
+                    </Expander>
+                </StackPanel>
+                <tree:TreeList  Grid.Row="1" Name="_tree" Margin="5" SelectionChanged="_tree_SelectionChanged" AlternationCount="2">
+                    <tree:TreeList.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
+                            <MenuItem Header="Reserve Case" Command="{Binding ReserveCaseCommand}" />
+                            <MenuItem Header="Un-Reserve Case" Command="{Binding UnreserveCaseCommand}" />
+                            <MenuItem Header="Edit Report" Command="{Binding EditReportCommand}" />
+                            <MenuItem Header="View Report" Command="{Binding ViewReportCommand}" />
+                            <MenuItem Header="View Images" Command="{Binding ViewSnapshotsCommand}" />
+                            <MenuItem Header="View Notes" Command="{Binding ViewNotesCommand}" />
+                            <MenuItem Header="Consultation" Command="{Binding RequestConsultationCommand}" />
+                            <MenuItem Header="View Default Health Summary" Command="{Binding ViewDefaultHealthSummaryCommand}" />
+                            <MenuItem Header="View Health Summary List" Command="{Binding ViewHealthSummaryListCommand}" />
+                            <ContextMenu.Resources>
+                                <Style TargetType="ContextMenu"/>
+                            </ContextMenu.Resources>
+                        </ContextMenu>
+                    </tree:TreeList.ContextMenu>
+                    <tree:TreeList.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="SnapsToDevicePixels" Value="true"/>
+                            <Setter Property="OverridesDefaultStyle" Value="true"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                        <Border Name="Border" Padding="2" SnapsToDevicePixels="true"
+                                                Background="Transparent">
+                                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter TargetName="Border" Property="Background" Value="LightBlue"></Setter>
+                                            </Trigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition  Property="IsMouseOver" Value="true"/>
+                                                    <Condition Property="IsSelected" Value="true"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="Border" Property="Background" Value="#FFFFC100"/>
+                                                <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF303030"/>
+                                                <Setter Property="FontWeight" Value="bold"/>
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition  Property="IsMouseOver" Value="false"/>
+                                                    <Condition Property="IsSelected" Value="true"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="Border" Property="Background" Value="#FFE7BC22"/>
+                                                <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF303030"/>
+                                                <Setter Property="FontWeight" Value="bold"/>
+                                            </MultiTrigger>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition  Property="IsMouseOver" Value="true"/>
+                                                    <Condition Property="IsSelected" Value="false"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="Border" Property="Background" Value="#FFFFC800"/>
+                                                <Setter TargetName="Border" Property="BorderThickness" Value="1"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#FF303030"/>
+                                                <Setter Property="FontStyle" Value="Oblique"></Setter>
+                                            </MultiTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                    </tree:TreeList.ItemContainerStyle>
+                    <tree:TreeList.View>
+                        <GridView>
+                            <GridView.Columns>
+                                <GridViewColumn Width="Auto" >
+                                    <GridViewColumnHeader Tag="Description" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Accession #" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <tree:RowExpander/>
+                                                <TextBlock Text="{Binding Description}" Style="{StaticResource ColumnHeaderTextStyle}"></TextBlock>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding SiteAbbr}">
+                                    <GridViewColumnHeader Tag="Site" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Site" Style="{StaticResource ColumnHeaderTextStyle}" />
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding ReservedBy}">
+                                    <GridViewColumnHeader Tag="ReservedBy" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Reserved By" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <!--<GridViewColumn Width="Auto">
+                                    <GridViewColumnHeader Tag="Priority" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Priority" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <TextBlock Text="{Binding Path=Priority}" 
+                                                           Style="{StaticResource GridBlockStyle}"/>
+                                                <ComboBox SelectedItem="{Binding Path=Priority, Mode=TwoWay}"
+                                                          ItemsSource ="{Binding ElementName=This, Path=DataContext.Priorities}"
+                                                          Style="{StaticResource GridEditStyle}">
+                                                </ComboBox>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>-->
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding PatientDispSSN}">
+                                    <GridViewColumnHeader Tag="PatientID" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Patient ID" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding PatientName}">
+                                    <GridViewColumnHeader Tag="PatientName" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Patient Name" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding DateTime}">
+                                    <GridViewColumnHeader Tag="DateTime" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Date-Time" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <!--<GridViewColumn Width="Auto">
+                                    <GridViewColumnHeader Tag="Method" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Method" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <TextBlock Text="{Binding Path=Method}" 
+                                                           Style="{StaticResource MethodBlockStyle}"/>
+                                                <ComboBox SelectedItem="{Binding Path=Method, Mode=TwoWay}"
+                                                          ItemsSource ="{Binding ElementName=This, Path=DataContext.Methods}"
+                                                          Style="{StaticResource MethodEditStyle}">
+                                                </ComboBox>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>-->
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding SpecimenCount}">
+                                    <GridViewColumnHeader Tag="SpecimenCount" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Specimen" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding SnapshotCount}">
+                                    <GridViewColumnHeader Tag="SnapshotCount" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Images" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <!--<GridViewColumn Width="Auto" DisplayMemberBinding="{Binding SlidesAvailable}">
+                                    <GridViewColumnHeader Tag="SlidesAvailable" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Slides Available" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>-->
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding ConsultationStatus}">
+                                    <GridViewColumnHeader Tag="ConsultationStatus" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Consult Status" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding ReportStatus}">
+                                    <GridViewColumnHeader Tag="ReportStatus" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Report Status" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding IsNoteAttached}">
+                                    <GridViewColumnHeader Content="Notes" Tag="HasNotes" Click="GridViewColumnHeader_Click">
+                                        <GridViewColumnHeader.ContentTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text ="Notes" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                            </DataTemplate>
+                                        </GridViewColumnHeader.ContentTemplate>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                            </GridView.Columns>
+                        </GridView>
+                    </tree:TreeList.View>
+                </tree:TreeList>
+            </Grid>
+        </GroupBox>
+    </Grid>
+</UserControl>

@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="VistA.Imaging.Telepathology.Worklist.Views.WorklistsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="221" d:DesignWidth="1020" 
+             Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}" 
+             DataContextChanged="UserControl_DataContextChanged" 
+             Loaded="UserControl_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TabControl Name="tabExamList" 
+                    Grid.Row="0" SelectionChanged="tabExamList_SelectionChanged">
+            <TabControl.ItemContainerStyle>
+                <Style TargetType="TabItem">
+                    <Setter Property="Header" Value="{Binding Title}"/>
+                </Style>
+            </TabControl.ItemContainerStyle>
+        </TabControl>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="5">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Margin" Value="10,0,0,0"/>
+                </Style>
+            </StackPanel.Resources>
+            <Button Content="_Refresh" 
+                    Width="100"
+                    Command="{Binding RefreshCommand}"/>
+            <Button Content="Re_serve Case" 
+                    Width="100"
+                    Command="{Binding ReserveCaseCommand}"/>
+            <Button Content="_Un-Reserve Case" 
+                    Width="100"
+                    Command="{Binding UnreserveCaseCommand}"/>
+            <Button Content="E_dit Report" 
+                    Width="100"
+                    Command="{Binding EditReportCommand}"/>
+            <Button Content="Vie_w Report" 
+                    Width="100"
+                    Command="{Binding ViewReportCommand}"/>
+            <Button Content="View _Images"
+                    Width="100"
+                    Command="{Binding ViewSnapshotsCommand}"/>
+            <Button Content="_Notes" 
+                    Width="100"
+                    Command="{Binding ViewNotesCommand}"/>
+            <Button Content="_Consultation" 
+                    Width="100"
+                    Command="{Binding RequestConsultationCommand}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Health Su_mmary" 
+                        Width="105" 
+                        Command="{Binding ViewDefaultHealthSummaryCommand}" />
+                <Button Content="_>" 
+                        Margin="0"
+                        Command="{Binding ViewHealthSummaryListCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

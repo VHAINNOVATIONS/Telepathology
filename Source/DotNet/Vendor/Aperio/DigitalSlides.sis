@@ -1,0 +1,28 @@
+<SIS>
+  <CloseAllImages />
+  <Image>
+    <URL>//54.235.66.32/imageserver/@35</URL>
+    <Title>Angelique Unetelle,12/3/1981,S08-03003,A,Ki-67,Breast</Title>
+    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>
+  </Image>
+  <Image>
+    <URL>//54.235.66.32/imageserver/@34</URL>
+    <Title>Angelique Unetelle,12/3/1981,S08-03003,A,H&amp;E,Breast</Title>
+    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>
+  </Image>
+  <Image>
+    <URL>//54.235.66.32/imageserver/@33</URL>
+    <Title>Angelique Unetelle,12/3/1981,S08-03003,A,HER2,Breast</Title>
+    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>
+  </Image>
+  <Image>
+    <URL>//54.235.66.32/imageserver/@32</URL>
+    <Title>Angelique Unetelle,12/3/1981,S08-03003,A,PR,Breast</Title>
+    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>
+  </Image>
+  <Image>
+    <URL>//54.235.66.32/imageserver/@31</URL>
+    <Title>Angelique Unetelle,12/3/1981,S08-03003,A,ER,Breast</Title>
+    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>
+  </Image>
+</SIS>

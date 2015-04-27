@@ -1,0 +1,72 @@
+﻿<Window x:Class="VistA.Imaging.Telepathology.Configurator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:VistA.Imaging.Telepathology.Configurator.Views"
+        Title="VistA Imaging Telepathology Configurator" 
+        Icon="/MagTPConfigurator;component/Images/PathWLC48.ico"
+        Loaded="Window_Loaded" ContentRendered="Window_ContentRendered" Closed="Window_Closed" 
+        SizeToContent="WidthAndHeight" Closing="Window_Closing" ResizeMode="CanResizeWithGrip" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu Name="menu1">
+            <MenuItem Header="_File">
+                <MenuItem Header="Log_in" Name="mnuLogin" Click="Login_Click" />
+                <MenuItem Header="Log_out" Name="mnuLogout" Click="Logout_Click" />
+                <Separator/>
+                <MenuItem Header="E_xit" Click="Exit_Click" />
+            </MenuItem>
+            <MenuItem Header="_View" Click="MessageLog_Click">
+                <MenuItem Header="Message _Log" Name="mnuMessageLog" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="Abo_ut..." Click="About_Click" />
+            </MenuItem>
+        </Menu>
+        <TabControl MinWidth="700" MinHeight="300" Grid.Row="1">
+            <TabItem Header="Who _do I read for?" Name="tabItem1" >
+                <views:ReadingSiteSetupView x:Name="readingSetupView" />
+            </TabItem>
+            <TabItem Header="_Who reads for me?" Name="tabItem2">
+                <views:AcquisitionSiteSetupView x:Name="acquisitionSetupView" />
+            </TabItem>
+            <TabItem Header="_My report templates" Name="tabItem3">
+                <views:ReportTemplateView x:Name="repTemplateView" />
+            </TabItem>
+            <TabItem Header="_Worklist Settings" Name="tabItem4">
+                <views:OtherSettingsView x:Name="otherSettingsView"/>
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Grid.Row="2" Height="25" Name="statusBar">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+            
+            <StatusBarItem>
+                <Button Width="20" Margin="2" Click="MessageLog_Click">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="/VistA.Imaging.Telepathology.Common;component/Images/List%2016%20n%20i8.ico"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>    
+            </StatusBarItem>
+            <Separator Margin="1,5,1,5" Grid.Column="1"/>
+            <StatusBarItem Content="status" Grid.Column="2"/>
+        </StatusBar>
+    </Grid>
+</Window>
