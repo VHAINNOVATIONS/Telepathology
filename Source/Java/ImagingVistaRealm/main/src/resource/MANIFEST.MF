@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Class-Path: ImagingCommon-0.1.jar;ImagingExchangeCommon-0.1,jar;ImagingExchangeSiteServiceProxy-0.1.jar
+Ant-Version: Apache Ant 1.5.3 
+Created-By: Apache Maven
+Built-By: VHAISWBECKEC
+Package: 
+Build-Jdk: 1.5.0_07
+Extension-Name: ImagingVistaRealm
+Specification-Title: Tomcat Realm implementation using Vista for A ...
+Specification-Vendor: United States Veterans Health Administration
+Implementation-Title: 
+Implementation-Vendor: United States Veterans Health Administration
+Implementation-Version: 0.1

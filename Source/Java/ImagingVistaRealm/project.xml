@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project 
+	xmlns="http://maven.apache.org/POM/3.0.0"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+>
+	<extend>../ImagingRoot/project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <artifactId>ImagingVistaRealm</artifactId>
+    <name>ImagingVistaRealm</name>
+	<package>gov.va.med.imaging.tomcat.vistarealm</package>
+	<shortDescription>Tomcat Realm using Vista for AA</shortDescription>  
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>main/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*/*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resource</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+			<resource>
+				<directory>main/src/java</directory>
+				<includes>
+					<include>**/mbeans-descriptors.xml</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>			
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>catalina</groupId>
+			<artifactId>catalina</artifactId>
+			<version>5.5.17</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-modeler</groupId>
+			<artifactId>commons-modeler</artifactId>
+			<version>2.0</version>
+		</dependency>
+    	<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingVistaRealmClient</artifactId>
+			<version>${pom.currentVersion}</version>      
+			<type>jar</type>
+			<properties>
+				<jar.manifest.classpath>true</jar.manifest.classpath>
+				<jar.bundle>false</jar.bundle>
+			</properties>
+		</dependency>
+	</dependencies>
+	<package>
+		<description>gov.va.med.imaging.tomcat.realm</description>
+	</package>
+</project>
+

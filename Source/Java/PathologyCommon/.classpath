@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataSourceServiceProvider"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TransactionContext"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterAnnotation"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

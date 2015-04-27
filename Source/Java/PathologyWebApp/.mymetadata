@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="PathologyWebApp"
+  id="myeclipse.1339442202905"
+  context-root="/PathologyWebApp"
+  j2ee-spec="5.0"
+  archive="PathologyWebApp.war">
+  <attributes>
+    <attribute name="webrootdir" value="/WebRoot" />
+  </attributes>
+</project-module>
+

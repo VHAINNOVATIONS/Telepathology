@@ -1,0 +1,2 @@
+\Q/target/\E.*
+\Q/main/generated/java/\E.*

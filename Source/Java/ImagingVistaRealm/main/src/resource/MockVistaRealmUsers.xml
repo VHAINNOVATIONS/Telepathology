@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="gov.va.med.imaging.tomcat.vistarealm.MockVistaRealmPrincipalDO"> 
+  <void property="access"> 
+   <string>boating1</string> 
+  </void> 
+  <void property="duz"> 
+   <string>655321</string> 
+  </void> 
+  <void property="fullname"> 
+   <string>Alex DeLarge</string> 
+  </void> 
+  <void property="realm"> 
+   <string>VistaRealm</string> 
+  </void> 
+  <void property="roles"> 
+   <array class="java.lang.String" length="1"> 
+    <void index="0"> 
+     <string>vista-user</string> 
+    </void> 
+   </array> 
+  </void> 
+  <void property="siteNumber"> 
+   <string>660</string> 
+  </void> 
+  <void property="sitename"> 
+   <string>SLC</string> 
+  </void> 
+  <void property="ssn"> 
+   <string>111-22-3333</string> 
+  </void> 
+  <void property="verify"> 
+   <string>boating1.</string> 
+  </void> 
+ </object> 
+ <object class="gov.va.med.imaging.tomcat.vistarealm.MockVistaRealmPrincipalDO"> 
+  <void property="access"> 
+   <string>doduser</string> 
+  </void> 
+  <void property="duz"> 
+   <string>655321</string> 
+  </void> 
+  <void property="fullname"> 
+   <string>DOD User</string> 
+  </void> 
+  <void property="realm"> 
+   <string>VistaRealm</string> 
+  </void> 
+  <void property="roles"> 
+   <array class="java.lang.String" length="1"> 
+    <void index="0"> 
+     <string>vista-user</string> 
+    </void> 
+   </array> 
+  </void> 
+  <void property="siteNumber"> 
+   <string>660</string> 
+  </void> 
+  <void property="sitename"> 
+   <string>SLC</string> 
+  </void> 
+  <void property="ssn"> 
+   <string>222-33-4444</string> 
+  </void> 
+  <void property="verify"> 
+   <string>dodpassword</string> 
+  </void> 
+ </object> 
+ <object class="gov.va.med.imaging.tomcat.vistarealm.MockVistaRealmPrincipalDO"> 
+  <void property="access"> 
+   <string>alexdelarge</string> 
+  </void> 
+  <void property="realm"> 
+   <string>VistaRealm</string> 
+  </void> 
+  <void property="roles"> 
+   <array class="java.lang.String" length="1"> 
+    <void index="0"> 
+     <string>clinical-display-user</string> 
+    </void> 
+   </array> 
+  </void> 
+  <void property="verify"> 
+   <string>655321</string> 
+  </void> 
+ </object> 
+ <object class="gov.va.med.imaging.tomcat.vistarealm.MockVistaRealmPrincipalDO"> 
+  <void property="access"> 
+   <string>vixs</string> 
+  </void> 
+  <void property="realm"> 
+   <string>VistaRealm</string> 
+  </void> 
+  <void property="roles"> 
+   <array class="java.lang.String" length="1"> 
+    <void index="0"> 
+     <string>peer-vixs</string> 
+    </void> 
+   </array> 
+  </void> 
+  <void property="verify"> 
+   <string>vixs</string> 
+  </void> 
+ </object> 
+ <object class="gov.va.med.imaging.tomcat.vistarealm.MockVistaRealmPrincipalDO"> 
+  <void property="access"> 
+   <string>admin</string> 
+  </void> 
+  <void property="realm"> 
+   <string>VistaRealm</string> 
+  </void> 
+  <void property="roles"> 
+   <array class="java.lang.String" length="2"> 
+    <void index="0"> 
+     <string>admin</string> 
+    </void> 
+    <void index="1"> 
+     <string>manager</string> 
+    </void> 
+   </array> 
+  </void> 
+  <void property="verify"> 
+   <string>raptor</string> 
+  </void> 
+ </object> 
+</java> 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/generated/java"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/BaseWebFacade"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterAnnotation"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterAnnotationProcessor"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TransactionContext"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar"/>
+	<classpathentry kind="var" path="M2_REPO/javax/ws/rs/jsr311-api/1.1/jsr311-api-1.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/sun/jersey/jersey-server/1.2/jersey-server-1.2.jar"/>
+	<classpathentry kind="var" path="M2_REPO/springframework/spring/1.2.9/spring-1.2.9.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/PathologyCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouter"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>
