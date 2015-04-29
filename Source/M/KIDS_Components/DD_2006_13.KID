@@ -1,0 +1,578 @@
+KIDS Distribution saved on Jan 21, 2013@14:47:34
+VistA Imaging Version 3.0 Patch 138 File 2006.13
+**KIDS**:Z VSS FILE 0.1T^
+
+**INSTALL NAME**
+Z VSS FILE 0.1T
+"BLD",1522,0)
+Z VSS FILE 0.1T^^0^3130121^n
+"BLD",1522,1,0)
+^^1^1^3130121^
+"BLD",1522,1,1,0)
+VistA Imaging Version 3.0 Patch 138 File 2006.13
+"BLD",1522,4,0)
+^9.64PA^2006.13^1
+"BLD",1522,4,2006.13,0)
+2006.13
+"BLD",1522,4,2006.13,222)
+y^y^f^^^^n
+"BLD",1522,4,"B",2006.13,2006.13)
+
+"BLD",1522,6.3)
+3
+"BLD",1522,"KRN",0)
+^9.67PA^779.2^20
+"BLD",1522,"KRN",.4,0)
+.4
+"BLD",1522,"KRN",.401,0)
+.401
+"BLD",1522,"KRN",.402,0)
+.402
+"BLD",1522,"KRN",.403,0)
+.403
+"BLD",1522,"KRN",.5,0)
+.5
+"BLD",1522,"KRN",.84,0)
+.84
+"BLD",1522,"KRN",3.6,0)
+3.6
+"BLD",1522,"KRN",3.8,0)
+3.8
+"BLD",1522,"KRN",9.2,0)
+9.2
+"BLD",1522,"KRN",9.8,0)
+9.8
+"BLD",1522,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",1522,"KRN",19,0)
+19
+"BLD",1522,"KRN",19.1,0)
+19.1
+"BLD",1522,"KRN",101,0)
+101
+"BLD",1522,"KRN",409.61,0)
+409.61
+"BLD",1522,"KRN",771,0)
+771
+"BLD",1522,"KRN",779.2,0)
+779.2
+"BLD",1522,"KRN",870,0)
+870
+"BLD",1522,"KRN",8989.51,0)
+8989.51
+"BLD",1522,"KRN",8989.52,0)
+8989.52
+"BLD",1522,"KRN",8994,0)
+8994
+"BLD",1522,"KRN","B",.4,.4)
+
+"BLD",1522,"KRN","B",.401,.401)
+
+"BLD",1522,"KRN","B",.402,.402)
+
+"BLD",1522,"KRN","B",.403,.403)
+
+"BLD",1522,"KRN","B",.5,.5)
+
+"BLD",1522,"KRN","B",.84,.84)
+
+"BLD",1522,"KRN","B",3.6,3.6)
+
+"BLD",1522,"KRN","B",3.8,3.8)
+
+"BLD",1522,"KRN","B",9.2,9.2)
+
+"BLD",1522,"KRN","B",9.8,9.8)
+
+"BLD",1522,"KRN","B",19,19)
+
+"BLD",1522,"KRN","B",19.1,19.1)
+
+"BLD",1522,"KRN","B",101,101)
+
+"BLD",1522,"KRN","B",409.61,409.61)
+
+"BLD",1522,"KRN","B",771,771)
+
+"BLD",1522,"KRN","B",779.2,779.2)
+
+"BLD",1522,"KRN","B",870,870)
+
+"BLD",1522,"KRN","B",8989.51,8989.51)
+
+"BLD",1522,"KRN","B",8989.52,8989.52)
+
+"BLD",1522,"KRN","B",8994,8994)
+
+"BLD",1522,"QUES",0)
+^9.62^^
+"FIA",2006.13)
+MAG PATH CONFIG
+"FIA",2006.13,0)
+^MAG(2006.13,
+"FIA",2006.13,0,0)
+2006.13P
+"FIA",2006.13,0,1)
+y^y^f^^^^n
+"FIA",2006.13,0,10)
+
+"FIA",2006.13,0,11)
+
+"FIA",2006.13,0,"RLRO")
+
+"FIA",2006.13,2006.13)
+0
+"FIA",2006.13,2006.131)
+0
+"FIA",2006.13,2006.132)
+0
+"FIA",2006.13,2006.133)
+0
+"FIA",2006.13,2006.135)
+0
+"FIA",2006.13,2006.136)
+0
+"FIA",2006.13,2006.137)
+0
+"FIA",2006.13,2006.1371)
+0
+"FIA",2006.13,2006.1372)
+0
+"MBREQ")
+0
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"SEC","^DIC",2006.13,2006.13,0,"AUDIT")
+
+"SEC","^DIC",2006.13,2006.13,0,"DD")
+
+"SEC","^DIC",2006.13,2006.13,0,"DEL")
+
+"SEC","^DIC",2006.13,2006.13,0,"LAYGO")
+
+"SEC","^DIC",2006.13,2006.13,0,"RD")
+
+"SEC","^DIC",2006.13,2006.13,0,"WR")
+
+"VER")
+8.0^22.0
+"^DD",2006.13,2006.13,0)
+FIELD^^8^8
+"^DD",2006.13,2006.13,0,"DDA")
+N
+"^DD",2006.13,2006.13,0,"DT")
+3130121
+"^DD",2006.13,2006.13,0,"IX","B",2006.13,.01)
+
+"^DD",2006.13,2006.13,0,"NM","MAG PATH CONFIG")
+
+"^DD",2006.13,2006.13,0,"VRPK")
+MAG
+"^DD",2006.13,2006.13,.01,0)
+SITE^RP4'^DIC(4,^0;1^Q
+"^DD",2006.13,2006.13,.01,1,0)
+^.1
+"^DD",2006.13,2006.13,.01,1,1,0)
+2006.13^B
+"^DD",2006.13,2006.13,.01,1,1,1)
+S ^MAG(2006.13,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.13,.01,1,1,2)
+K ^MAG(2006.13,"B",$E(X,1,30),DA)
+"^DD",2006.13,2006.13,.01,3)
+Enter the local Site IEN. Type a number between 1 and 10000, 0 decimal digits.
+"^DD",2006.13,2006.13,.01,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.13,.01,21,1,0)
+This is the local Site.
+"^DD",2006.13,2006.13,.01,"DT")
+3120620
+"^DD",2006.13,2006.13,1,0)
+CY TEMPLATE^2006.131^^1;0
+"^DD",2006.13,2006.13,1,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.13,1,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.13,1,21,2,0)
+to display in the GUI for Cytopathology (CY).
+"^DD",2006.13,2006.13,2,0)
+EM TEMPLATE^2006.132^^2;0
+"^DD",2006.13,2006.13,2,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.13,2,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.13,2,21,2,0)
+to display in the GUI for EM.
+"^DD",2006.13,2006.13,3,0)
+SP TEMPLATE^2006.133^^3;0
+"^DD",2006.13,2006.13,3,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.13,3,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.13,3,21,2,0)
+to display in the GUI for Surgical Pathology (SP).
+"^DD",2006.13,2006.13,4,0)
+NUMBER OF MINUTES (LOCKING)^NJ3,0^^4;1^K:+X'=X!(X>600)!(X<0)!(X?.E1"."1N.N) X
+"^DD",2006.13,2006.13,4,.1)
+Number of minutes before ignoring locks
+"^DD",2006.13,2006.13,4,3)
+Type a number between 0 and 600, 0 decimal digits.
+"^DD",2006.13,2006.13,4,21,0)
+^^1^1^3130121^
+"^DD",2006.13,2006.13,4,21,1,0)
+This is the number of minutes before an access lock expires.
+"^DD",2006.13,2006.13,4,"DT")
+3130121
+"^DD",2006.13,2006.13,5,0)
+READING SITE LIST^2006.135P^^5;0
+"^DD",2006.13,2006.13,5,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.13,5,21,1,0)
+This is the list of sites allowed to read a case in this site.
+"^DD",2006.13,2006.13,6,0)
+ACQUISITION SITE LIST^2006.136P^^6;0
+"^DD",2006.13,2006.13,6,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.13,6,21,1,0)
+This is the list of sites holding cases this site is allowed to read. 
+"^DD",2006.13,2006.13,7,0)
+USER PREFERENCES^2006.137P^^7;0
+"^DD",2006.13,2006.13,7,21,0)
+^^1^1^3120705^
+"^DD",2006.13,2006.13,7,21,1,0)
+This field records a user together with the user's Worklist preferences.
+"^DD",2006.13,2006.13,7,"DT")
+3120705
+"^DD",2006.13,2006.131,0)
+CY TEMPLATE SUB-FIELD^^.01^1
+"^DD",2006.13,2006.131,0,"DT")
+3120326
+"^DD",2006.13,2006.131,0,"NM","CY TEMPLATE")
+
+"^DD",2006.13,2006.131,0,"UP")
+2006.13
+"^DD",2006.13,2006.131,.01,0)
+CY TEMPLATE^Wx^^0;1
+"^DD",2006.13,2006.131,.01,3)
+Enter the XML code that displays the template for the Cytopathology GUI.
+"^DD",2006.13,2006.131,.01,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.131,.01,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.131,.01,21,2,0)
+to display in the GUI for Cytopathology (CY).
+"^DD",2006.13,2006.131,.01,"DT")
+3120620
+"^DD",2006.13,2006.132,0)
+EM TEMPLATE SUB-FIELD^^.01^1
+"^DD",2006.13,2006.132,0,"DT")
+3120326
+"^DD",2006.13,2006.132,0,"NM","EM TEMPLATE")
+
+"^DD",2006.13,2006.132,0,"UP")
+2006.13
+"^DD",2006.13,2006.132,.01,0)
+EM TEMPLATE^Wx^^0;1
+"^DD",2006.13,2006.132,.01,3)
+Enter the XML code that displays the template for the EM GUI.
+"^DD",2006.13,2006.132,.01,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.132,.01,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.132,.01,21,2,0)
+to display in the GUI for EM.
+"^DD",2006.13,2006.132,.01,"DT")
+3120620
+"^DD",2006.13,2006.133,0)
+SP TEMPLATE SUB-FIELD^^.01^1
+"^DD",2006.13,2006.133,0,"DT")
+3120326
+"^DD",2006.13,2006.133,0,"NM","SP TEMPLATE")
+
+"^DD",2006.13,2006.133,0,"UP")
+2006.13
+"^DD",2006.13,2006.133,.01,0)
+SP TEMPLATE^Wx^^0;1
+"^DD",2006.13,2006.133,.01,3)
+Enter the XML code that displays the template for the Surgical Pathology GUI.
+"^DD",2006.13,2006.133,.01,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.133,.01,21,1,0)
+This is the XML template detailing the list of Lab Data fields
+"^DD",2006.13,2006.133,.01,21,2,0)
+to display in the GUI for Surgical Pathology (SP).
+"^DD",2006.13,2006.133,.01,"DT")
+3120620
+"^DD",2006.13,2006.135,0)
+READING SITE LIST SUB-FIELD^^.03^3
+"^DD",2006.13,2006.135,0,"DT")
+3120620
+"^DD",2006.13,2006.135,0,"IX","B",2006.135,.01)
+
+"^DD",2006.13,2006.135,0,"NM","READING SITE LIST")
+
+"^DD",2006.13,2006.135,0,"UP")
+2006.13
+"^DD",2006.13,2006.135,.01,0)
+READING SITE^P4'^DIC(4,^0;1^Q
+"^DD",2006.13,2006.135,.01,1,0)
+^.1
+"^DD",2006.13,2006.135,.01,1,1,0)
+2006.135^B
+"^DD",2006.13,2006.135,.01,1,1,1)
+S ^MAG(2006.13,DA(1),5,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.135,.01,1,1,2)
+K ^MAG(2006.13,DA(1),5,"B",$E(X,1,30),DA)
+"^DD",2006.13,2006.135,.01,3)
+Enter the sites allowed to read from this site. Answer must be 1-6 characters in length.
+"^DD",2006.13,2006.135,.01,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.135,.01,21,1,0)
+This is the list of sites allowed to read a case in this site.
+"^DD",2006.13,2006.135,.01,"DT")
+3120620
+"^DD",2006.13,2006.135,.02,0)
+READING SITE TYPE^S^0:PRIMARY;1:CONSULTATION;2:BOTH;^0;2^Q
+"^DD",2006.13,2006.135,.02,3)
+Enter the type of site in the reading list.
+"^DD",2006.13,2006.135,.02,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.135,.02,21,1,0)
+This is the type of site in the reading list.
+"^DD",2006.13,2006.135,.02,"DT")
+3120620
+"^DD",2006.13,2006.135,.03,0)
+ACTIVE^S^0:NO;1:YES;^0;3^Q
+"^DD",2006.13,2006.135,.03,3)
+Select whether the site is active.
+"^DD",2006.13,2006.135,.03,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.135,.03,21,1,0)
+This flag indicates whether a site in the reading list is active or not.
+"^DD",2006.13,2006.135,.03,"DT")
+3120620
+"^DD",2006.13,2006.136,0)
+ACQUISITION SITE LIST SUB-FIELD^^.03^3
+"^DD",2006.13,2006.136,0,"DT")
+3120601
+"^DD",2006.13,2006.136,0,"IX","B",2006.136,.01)
+
+"^DD",2006.13,2006.136,0,"NM","ACQUISITION SITE LIST")
+
+"^DD",2006.13,2006.136,0,"UP")
+2006.13
+"^DD",2006.13,2006.136,.01,0)
+ACQUISITION SITE^P4'^DIC(4,^0;1^Q
+"^DD",2006.13,2006.136,.01,1,0)
+^.1
+"^DD",2006.13,2006.136,.01,1,1,0)
+2006.136^B
+"^DD",2006.13,2006.136,.01,1,1,1)
+S ^MAG(2006.13,DA(1),6,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.136,.01,1,1,2)
+K ^MAG(2006.13,DA(1),6,"B",$E(X,1,30),DA)
+"^DD",2006.13,2006.136,.01,3)
+Enter an acquisition site. Answer must be 1-6 characters in length.
+"^DD",2006.13,2006.136,.01,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.136,.01,21,1,0)
+This is the list of sites holding cases this site is allowed to read.
+"^DD",2006.13,2006.136,.01,"DT")
+3120620
+"^DD",2006.13,2006.136,.02,0)
+PRIMARY SITE^P4'^DIC(4,^0;2^Q
+"^DD",2006.13,2006.136,.02,3)
+Enter the primary site for the corresponding acquisition site. Answer must be 1-6 characters in length.
+"^DD",2006.13,2006.136,.02,21,0)
+^^1^1^3120620^
+"^DD",2006.13,2006.136,.02,21,1,0)
+This is the primary site for the corresponding acquisition site.
+"^DD",2006.13,2006.136,.02,"DT")
+3120620
+"^DD",2006.13,2006.136,.03,0)
+ACTIVE^S^0:NO;1:YES;^0;3^Q
+"^DD",2006.13,2006.136,.03,3)
+Select whether the site is active.
+"^DD",2006.13,2006.136,.03,21,0)
+^^2^2^3120620^
+"^DD",2006.13,2006.136,.03,21,1,0)
+This flag indicates whether a site in the acquisition 
+"^DD",2006.13,2006.136,.03,21,2,0)
+list is active or not.
+"^DD",2006.13,2006.136,.03,"DT")
+3120620
+"^DD",2006.13,2006.137,0)
+USER PREFERENCES SUB-FIELD^^.02^2
+"^DD",2006.13,2006.137,0,"DT")
+3120712
+"^DD",2006.13,2006.137,0,"IX","B",2006.137,.01)
+
+"^DD",2006.13,2006.137,0,"NM","USER PREFERENCES")
+
+"^DD",2006.13,2006.137,0,"UP")
+2006.13
+"^DD",2006.13,2006.137,.01,0)
+USER^P200'^VA(200,^0;1^Q
+"^DD",2006.13,2006.137,.01,1,0)
+^.1
+"^DD",2006.13,2006.137,.01,1,1,0)
+2006.137^B
+"^DD",2006.13,2006.137,.01,1,1,1)
+S ^MAG(2006.13,DA(1),7,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.137,.01,1,1,2)
+K ^MAG(2006.13,DA(1),7,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.137,.01,3)
+Enter the user whose Worklist preferences are stored.
+"^DD",2006.13,2006.137,.01,21,0)
+^^1^1^3120705^
+"^DD",2006.13,2006.137,.01,21,1,0)
+This is the user whose Worklist preferences are stored.
+"^DD",2006.13,2006.137,.01,"DT")
+3120705
+"^DD",2006.13,2006.137,.02,0)
+USER LABEL^2006.1371^^1;0
+"^DD",2006.13,2006.137,.02,21,0)
+^^1^1^3120712^
+"^DD",2006.13,2006.137,.02,21,1,0)
+This is the label under which user's preferences are stored.
+"^DD",2006.13,2006.1371,0)
+USER LABEL SUB-FIELD^^.02^2
+"^DD",2006.13,2006.1371,0,"DT")
+3120712
+"^DD",2006.13,2006.1371,0,"IX","B",2006.1371,.01)
+
+"^DD",2006.13,2006.1371,0,"NM","USER LABEL")
+
+"^DD",2006.13,2006.1371,0,"UP")
+2006.137
+"^DD",2006.13,2006.1371,.01,0)
+USER LABEL^F^^0;1^K:$L(X)>30!($L(X)<1) X
+"^DD",2006.13,2006.1371,.01,1,0)
+^.1
+"^DD",2006.13,2006.1371,.01,1,1,0)
+2006.1371^B
+"^DD",2006.13,2006.1371,.01,1,1,1)
+S ^MAG(2006.13,DA(2),7,DA(1),1,"B",$E(X,1,30),DA)=""
+"^DD",2006.13,2006.1371,.01,1,1,2)
+K ^MAG(2006.13,DA(2),7,DA(1),1,"B",$E(X,1,30),DA)
+"^DD",2006.13,2006.1371,.01,3)
+Enter the label under which the user's preferences are stored. Answer must be 1-30 characters in length.
+"^DD",2006.13,2006.1371,.01,21,0)
+^^1^1^3120712^
+"^DD",2006.13,2006.1371,.01,21,1,0)
+This is the label under which user's preferences are stored.
+"^DD",2006.13,2006.1371,.01,"DT")
+3120712
+"^DD",2006.13,2006.1371,.02,0)
+XML TEXT^2006.1372^^1;0
+"^DD",2006.13,2006.1371,.02,21,0)
+^^2^2^3120712^
+"^DD",2006.13,2006.1371,.02,21,1,0)
+This is the XML text detailing the user's Worklist preferences associated 
+"^DD",2006.13,2006.1371,.02,21,2,0)
+to a label.
+"^DD",2006.13,2006.1372,0)
+XML TEXT SUB-FIELD^^.01^1
+"^DD",2006.13,2006.1372,0,"DT")
+3120712
+"^DD",2006.13,2006.1372,0,"NM","XML TEXT")
+
+"^DD",2006.13,2006.1372,0,"UP")
+2006.1371
+"^DD",2006.13,2006.1372,.01,0)
+XML TEXT^Wx^^0;1
+"^DD",2006.13,2006.1372,.01,3)
+Enter the XML text containing the user's Worklist preferences associated to a label.
+"^DD",2006.13,2006.1372,.01,21,0)
+^^2^2^3120712^
+"^DD",2006.13,2006.1372,.01,21,1,0)
+This is the XML text detailing the user's Worklist preferences associated 
+"^DD",2006.13,2006.1372,.01,21,2,0)
+to a label.
+"^DD",2006.13,2006.1372,.01,"DT")
+3120712
+"^DIC",2006.13,2006.13,0)
+MAG PATH CONFIG^2006.13
+"^DIC",2006.13,2006.13,0,"GL")
+^MAG(2006.13,
+"^DIC",2006.13,2006.13,"%",0)
+^1.005^^0
+"^DIC",2006.13,2006.13,"%D",0)
+^1.001^3^3^3120501^^
+"^DIC",2006.13,2006.13,"%D",1,0)
+Telepathology Configurations
+"^DIC",2006.13,2006.13,"%D",2,0)
+Stores site templates and other site-related parameters
+"^DIC",2006.13,2006.13,"%D",3,0)
+for the Telepathology GUI.
+"^DIC",2006.13,"B","MAG PATH CONFIG",2006.13)
+
+**END**
+**END**

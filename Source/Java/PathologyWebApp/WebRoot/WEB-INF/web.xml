@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name></display-name>	
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <listener>
+		<description>
+			The Spring servlet context listener that loads the
+			application context.
+		</description>
+		<display-name>Spring context loader listener</display-name>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+	
+	<filter>
+		<description>
+			Sets the security context on the request and clears it on
+			the response.
+		</description>
+		<display-name>
+			Security Context Creation and Destruction
+		</display-name>
+		<filter-name>SecurityFilter</filter-name>
+		<filter-class>
+			org.springframework.web.filter.DelegatingFilterProxy
+		</filter-class>
+		<!-- <filter-class>gov.va.med.imaging.SecurityFilter</filter-class>  -->
+		<init-param>
+			<param-name>targetBeanName</param-name>
+			<param-value>securityFilter</param-value>
+		</init-param>
+	</filter>
+	
+	<servlet>
+	  	<display-name>JAX-RS REST Servlet</display-name>
+	  	<servlet-name>JAX-RS REST Servlet</servlet-name>
+	  	<servlet-class>
+	  		com.sun.jersey.spi.container.servlet.ServletContainer
+	  	</servlet-class>
+	  	<!-- 
+	  	<init-param>  
+		  <param-name>com.sun.jersey.config.property.resourceConfigClass</param-name>  
+		  <param-value>com.sun.jersey.api.core.PackagesResourceConfig</param-value>  
+		</init-param>
+		-->
+		<!-- Define the packages for Jersey to look for REST stuff - need this here
+			so it can find the exception mappers that are in BaseWebFacade
+		 -->
+	  	<init-param>
+	  		<param-name>com.sun.jersey.config.property.packages</param-name>
+	  		<param-value>gov.va.med.imaging.web.rest.exceptions;gov.va.med.imaging.pathology.rest</param-value>		
+        </init-param>
+	  	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	
+  	<servlet-mapping>
+	  	<servlet-name>JAX-RS REST Servlet</servlet-name>
+	  	<url-pattern>/restservices/*</url-pattern>
+	</servlet-mapping>
+	
+	<filter-mapping>
+		<filter-name>SecurityFilter</filter-name>
+		<servlet-name>JAX-RS REST Servlet</servlet-name>
+	</filter-mapping>
+	
+	<security-constraint>
+		<display-name>PassthroughConstraint</display-name>
+		<web-resource-collection>
+			<web-resource-name>Passthrough</web-resource-name>
+			<description>
+				Access to methods is restricted to known user roles
+			</description>
+			<url-pattern>/restservices/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>clinical-display-user</role-name>
+			<role-name>vista-user</role-name>
+			<role-name>peer-vixs</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<description>
+				The transport does not have to be guaranteed just the
+				user authenticated
+			</description>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	<security-role>
+		<description>
+			A user of the clinical display application
+		</description>
+		<role-name>clinical-display-user</role-name>
+	</security-role>
+	<security-role>
+		<description>
+			A VistaImaging user authenticated against VistaImaging
+		</description>
+		<role-name>vista-user</role-name>
+	</security-role>
+	<security-role>
+		<description>An administrator</description>
+		<role-name>administrator</role-name>
+	</security-role>
+	<security-role>
+		<description>
+			A peer ViXS server Authentication by certificate
+		</description>
+		<role-name>peer-vixs</role-name>
+	</security-role>
+	<resource-ref>
+		<description>The VIX Core</description>
+		<res-ref-name>CoreRouter</res-ref-name>
+		<res-type>gov.va.med.imaging.core.interfaces.Router</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<resource-ref>
+		<description>
+			The VIX Core Application Configuration
+		</description>
+		<res-ref-name>AppConfiguration</res-ref-name>
+		<res-type>
+			gov.va.med.imaging.core.interfaces.IAppConfiguration
+		</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+	<resource-ref>
+		<description>
+			The factory that creates the router commands.
+		</description>
+		<res-ref-name>CommandFactory</res-ref-name>
+		<res-type>
+			gov.va.med.imaging.core.interfaces.router.CommandFactory
+		</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+  
+  
+</web-app>

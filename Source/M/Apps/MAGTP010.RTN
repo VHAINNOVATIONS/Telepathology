@@ -1,0 +1,439 @@
+MAGTP010 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 05/07/2013 2:50pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4258;May 07, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** SET THE METHOD FOR A CASE BY UPDATING FILE (#2005.42)
+ ; RPC: MAGTP PUT METHOD
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; METH          Method (0:TRADITIONAL, 1:ROBOTICS, 2:WSI). Default TRADITIONAL.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: "Method Updated"
+ ;
+PUTMETH(MAGRY,METH,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT METHOD]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N MAGFDA,MAGERR
+ N LRSF,IEN,LRAC,REC
+ S LRSF=$P(INPUT,","),IEN=$P(INPUT,",",2,4)
+ S LRAC=$$GET1^DIQ(LRSF,IEN,.06)               ; Accession Number
+ I LRAC="" S MAGRY(0)="0^0^No Case Number" Q
+ S REC=$O(^MAG(2005.42,"B",LRAC,""))_","       ; Record Number
+ I REC="," S MAGRY(0)="0^0^Record Not Found" Q
+ S:$G(METH)="" METH=0                          ; Default to TRADITIONAL
+ S MAGFDA(2005.42,REC,.04)=METH
+ D UPDATE^DIE("","MAGFDA","","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="1^0^Method Updated"
+ Q  ;
+ ;
+ ;***** CHECK WHETHER THE E-SIGN SWITCH IS ON IN THE LOCAL SYSTEM
+ ;      AND WHETHER THE USER HAS THE RIGHT CREDENTIALS
+ ; RPC: MAGTP GET ESIGN
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section 
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;          0^^Electronic Signature authorized
+ ;         -1^^ERROR: [MUMPS error]
+ ;         -2^^ERROR: Missing AP Section
+ ;          1^^Electronic Signature not enabled
+ ;          2^^Electronic signature not authorized: missing PROVIDER key
+ ;          3^^Electronic Signature not authorized: PROVIDER CLASS must include PHYSICIAN, 
+ ;             or CYTOTECHNOLOGIST for CY sections only, or DENTIST for oral and maxillofacial pathology
+ ;          4^^Electronic Signature not authorized: PERSON CLASS is inactive or undefined
+ ;          5^^Electronic Signature not authorized: PERSON CLASS has expired
+ ;          6^^Electronic Signature not authorized: invalid PERSON CLASS
+ ;
+CHKESIGN(MAGRY,LRSS) ; RPC [MAGTP GET ESIGN]
+ I $G(LRSS)="" S MAGRY(0)="0^0^Missing AP Section" Q
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N LRESSW
+ ; Is the electronic signature flag active?
+ D GETDATA^LRAPESON(.LRESSW)
+ I 'LRESSW S MAGRY(0)="1^0^E-Signature not enabled" Q
+ ;                     
+ ; If E-Signature is on, check the user's credentials
+ ;
+ D CLSSCHK^MAGTP010(.MAGRY,LRSS)
+ Q
+ ;+++++  DETERMINE IF THE USER HAS THE PROPER CLASS
+ ;       SETTINGS AND PROVIDER KEY
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;              1^^Electronic Signature not enabled
+ ;              2^^Electronic signature not authorized: missing PROVIDER key
+ ;              3^^Electronic Signature not authorized: PROVIDER CLASS must include PHYSICIAN, 
+ ;                 or CYTOTECHNOLOGIST for CY sections only, or DENTIST for oral and maxillofacial pathology
+ ;              4^^Electronic Signature not authorized: PERSON CLASS is inactive or undefined
+ ;              5^^Electronic Signature not authorized: PERSON CLASS has expired
+ ;              6^^Electronic Signature not authorized: invalid PERSON CLASS
+ ;
+CLSSCHK(MAGRY,LRSS) ;
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N LRPRCLSS,LRPCEXP,LRVCDE,LRPCSTR,LRMTCH
+ ;
+ ; First, check for PROVIDER key
+ ;
+ I '$D(^XUSEC("PROVIDER",DUZ)) D  Q            ; IA #10076
+ . S MAGRY(0)="2^0^Electronic signature not authorized: Missing PROVIDER key"
+ . Q
+ ; Next, check the provider class
+ ;
+ S LRPRCLSS=$$GET1^DIQ(200,DUZ_",",53.5)       ; IA #10060
+ ;
+ ; PROVIDER CLASS must contain PHYSICIAN, or CYTOTECH only for CY Section
+ ; or DENTIST for all oral and Maxillofacial Pathology
+ ;
+ S LRMTCH=0 ;No Match found Flag
+ I LRPRCLSS'["PHYSICIAN",LRPRCLSS'["DENTIST" D
+ . I LRPRCLSS'["CYTOTECH" S LRMTCH=1
+ . I LRSS'="CY" S LRMTCH=1
+ . Q
+ I LRMTCH=1 D  Q
+ . S MAGRY(0)="3^0^Electronic Signature is not authorized: PROVIDER CLASS must include PHYSICIAN,"
+ . S MAGRY(0)=MAGRY(0)_" or CYTOTECHNOLOGIST for CY SECTIONS only, or DENTIST for oral and maxillofacial pathology"
+ . Q
+ ;
+ ; Finally, check the PERSON CLASS
+ ;
+ S LRPCSTR=$$GET^XUA4A72(DUZ)                  ; IA #1625
+ I LRPCSTR<0 D  S LRMTCH=1 Q
+ . S MAGRY(0)="4^0^Electronic signature is not authorized: PERSON CLASS is inactive or undefined"
+ . Q
+ S LRPCEXP=+$P(LRPCSTR,"^",6)
+ I LRPCEXP D  S LRMTCH=1 Q
+ . S MAGRY(0)="5^0^Electronic Signature not authorized: CLASS has expired"
+ . Q
+ S LRVCDE=$P(LRPCSTR,"^",7)
+ ;
+ ; Correct PERSON CLASS should match PROVIDER class
+ S LRMTCH=1
+ I LRPRCLSS["PHYSICIAN" D
+ . I $E(LRVCDE,1,6)="V11370","123568"[+$E(LRVCDE,7) S LRMTCH=0 Q
+ . I $E(LRVCDE,1,6)="V11371","03"[+$E(LRVCDE,7) S LRMTCH=0 Q
+ . I $E(LRVCDE,1,6)="V18240","124579"[+$E(LRVCDE,7) S LRMTCH=0 Q
+ . I LRVCDE="V182413" S LRMTCH=0 Q
+ . Q
+ I LRPRCLSS["CYTOTECH" S:LRVCDE="V150113" LRMTCH=0
+ I LRPRCLSS["DENTIST" S:LRVCDE="V030503" LRMTCH=0
+ I LRMTCH D  Q  ;No match CLASS found
+ . S MAGRY(0)="6^0^Electronic Signature not authorized: Invalid PERSON CLASS"
+ . Q
+ S MAGRY(0)="0^0^Electronic Signature authorized"
+ Q  ;
+ ;
+ ;***** ADD CPT CODES TO PCE WORKLOAD
+ ; RPC: MAGTP PUT CPT CODE
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LOC           Ordering Location
+ ;
+ ; CPT           List of CPT codes, separated by commas
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; 0^0^ ERROR explanation: When no other lines of output are generated
+ ;
+ ; 0^ Total Number of Lines: if an error occurred while
+ ; extracting one of the fields
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: Description of defect found
+ ;                     in one or more CPT codes entered (if any)
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: (0/1) Failure/Success for a CPT code entry
+ ;                ^02: CPT code
+ ;                ^03: CPT description
+ ;
+PUTCPT(MAGRY,LOC,CPT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT CPT CODE]
+ K MAGRY
+ I $G(LOC)="" S MAGRY(0)="0^0^No Ordering Location" Q
+ I $G(CPT)="" S MAGRY(0)="0^0^No CPT code(s)" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more case input parameters are missing"
+ N INPUT,LRX,LRAA,LRAD,LRSF,LRDFN,IEN,LRPRO
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ S LRX="A"_LRSS_"A"
+ S LRAD=$S($D(^LR(LRX,200+YEAR)):200+YEAR,$D(^LR(LRX,300+YEAR)):300+YEAR,1:"")_"0000"
+ S LRSF=$P(INPUT,","),LRDFN=$P(INPUT,",",3)
+ S IEN=$P(INPUT,",",2,4)
+ S LRAA=$$FIND1^DIC(68,"","B",LRSS)            ; IA #.....
+ S LRPRO=$$GET1^DIQ(LRSF,IEN,.07,"I")
+ D SETUP^MAGTP010(.MAGRY,LRAA,LRAD,LRAN,CPT,LRDFN,LRPRO)
+ D CLEAN^MAGTP010(LRAA,LRAD,LRAN)
+ Q  ;
+ ;
+ ;+++++ PERFORM CHECKS AND SETUP PCE REPORTING VARIABLES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRAA          Internal value of accession area
+ ;
+ ; LRAD          Date working on in accession area
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; CPT           List of CPT codes, separated by commas
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient         
+ ;
+ ; LRPRO         Ordering provider
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; 0^0^ ERROR explanation: When no other lines of output are generated
+ ;
+ ; 0^ Total Number of Lines: if an error occurred while
+ ; extracting one of the fields
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: Description of defect found
+ ;                     in one or more CPT codes entered (if any)
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: (0/1) Failure/Success for a CPT code entry
+ ;                ^02: CPT code
+ ;                ^03: CPT description
+ ;
+SETUP(MAGRY,LRAA,LRAD,LRAN,CPT,LRDFN,LRPRO) ;
+ N LRDLOC,LRPARAM,LRPCEON,LREDT,X,LRESCPT      ; LRPARAM from EN^LRPARAM
+ N LRNOP,LRPKG,LRDSSID,LRDSSLOC,LRNINS
+ D EN^LRCAPES1
+ D EN^LRPARAM
+ K ^TMP("LRPXAPI",$J),^TMP("LR",$J,"LRLST")
+ S ^TMP("LR",$J,"LRLST")=$$FMADD^XLFDT(DT,2)_U_DT_U_"LAB ES CPT"
+ S:'$G(LRPKG) LRPKG=$O(^DIC(9.4,"B","LR",0))   ; IA #4390
+ S:'$G(LRPKG) LRPKG=$O(^DIC(9.4,"B","LAB SERVICE",0))  ; IA #4390
+ ; Check to see if Lab Package is installed
+ I '$G(LRPKG) S MAGRY(0)="0^0^LAB SERVICE PACKAGE is not loaded" Q
+ ; Check to see if PCE is turned on
+ S X="PXAI" X ^%ZOSF("TEST") I '$T S MAGRY(0)="0^0^PCE is not installed" Q
+ ; Is the PCE package turned on?
+ S LRPCEON=$$PKGON^VSIT("PX")                  ; Supported IA #1900
+ I 'LRPCEON S MAGRY(0)="0^0^PCE is not turned on" Q
+ ; Location check
+ S LRDLOC=+$$GET1^DIQ(69.9,"1,",.8,"I")        ; IA #.....
+ ; Check to see if the LRDLOC is an OOS location
+ I $$GET1^DIQ(44,LRDLOC_",",.01)'["LAB DIV " D  Q  ; Supported IA #10040
+ . S MAGRY(0)="0^0^Default LAB OOS location is not defined correctly"
+ S LRESCPT=1
+ D WLN^MAGTP010(LRAA,LRAD,LRAN,.LREDT,LRDLOC,.LRDSSID,.LRDSSLOC,.LRNINS,.LRNOP,LOC)
+ I $G(LRNOP) S MAGRY(0)="0^0^"_$P(LRNOP,U,2) Q
+ D WKL^MAGTP010(.MAGRY,LRAA,LRAD,LRAN,CPT,LRDFN,LRPRO,LREDT,LRDSSID,LRDSSLOC,LRNINS)
+ Q  ;
+ ;
+ ;+++++ PERFORM CHECKS
+ ;
+ ; LRAA          Internal value of accession area
+ ;
+ ; LRAD          Date working on in accession area
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; .LREDT        The date/time the specimen was taken
+ ;
+ ; LRDLOC        Default LAB OOS location
+ ;
+ ; .LRDSSID      Stop code number assigned to a specific location
+ ;
+ ; .LRDSSLOC     Print order of the Accession Area
+ ;
+ ; .LRNINS       Institution name where the specific location is
+ ;
+ ; .LRNOP        Variable storing error messages
+ ;
+ ; LOC           Ordering Location
+ ;
+WLN(LRAA,LRAD,LRAN,LREDT,LRDLOC,LRDSSID,LRDSSLOC,LRNINS,LRNOP,LOC) ;
+ N LRLLOC
+ L +^LRO(68,LRAA,1,LRAD,1,LRAN):10 I '$T D  Q
+ . S LRNOP="1^Someone else is editing this accession"
+ S LREDT=$$GET1^DIQ(68.02,LRAN_","_LRAD_","_LRAA_",",9,"I")
+ I LREDT'?7N.E D  Q
+ . S LRNOP="6^This accession does not have a Collection Date/Time"
+ S LRDSSLOC=+$$GET1^DIQ(68,LRAA_",",.8,"I")
+ S LRDSSLOC=$S($G(LRDSSLOC):LRDSSLOC,1:LRDLOC)
+ ; Get provider, patient/location information
+ I '$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0))#2 D  Q   ; IA #.....
+ . S LRNOP="7^Corrupt Accession - missing zero node"
+ ; Reporting Location
+ S LRNOP=0
+ S LRLLOC=$$GET1^DIQ(68.02,LRAN_","_LRAD_","_LRAA_",",6)  ; IA #.....
+ I $L(LRLLOC) S LRLLOC=+$$FIND1^DIC(44,"","OM",LRLLOC)
+ ; Check to see if outpatient location
+ I '$D(^SC(+$G(LRLLOC),0))#2 S LRLLOC=LOC      ; IA #.....
+ I '$G(LRLLOC) S LRNOP="8^No Location" Q
+ S LRDSSID=+$$GET1^DIQ(44,+LRLLOC,8,"I")       ; IA #.....
+ S LRNINS=$$GET1^DIQ(44,+LRLLOC,3,"I")         ; Supported IA #10040
+ S LRNINS=$S(LRNINS:LRNINS,1:$G(DUZ(2)))
+ Q  ;
+ ;
+ ;+++++ VALIDATE AND LOAD CPT CODES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRAA          Internal value of accession area
+ ;
+ ; LRAD          Date working on in accession area
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; CPT           List of CPT codes, separated by commas
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRPRO         Ordering provider
+ ;
+ ; LREDT         The date/time the specimen was taken
+ ;
+ ; LRDSSID       Stop code number assigned to a specific location
+ ;
+ ; LRDSSLOC      Print order of the Accession Area
+ ;
+ ; LRNINS        Institution name where the specific location is
+ ;
+WKL(MAGRY,LRAA,LRAD,LRAN,CPT,LRDFN,LRPRO,LREDT,LRDSSID,LRDSSLOC,LRNINS) ;
+ N X9,LRQUIET,T1,DFN,LRVSITN
+ N X,LRX,LRCNT,LRXTST,I,CT
+ N LRNOTFD,LRNOLK,LRIA81,LRIA64,LRRF64
+ K ^TMP("LR",$J,"LRLST")
+ ; Call input in X
+ ; Return loop in X9
+ ; Index is T1
+ S X=CPT D RANGE^LRWU2
+ ; Parse the CPT entry
+ X (X9_"S LRX=T1 D EX1^LRCAPES")
+ S (CT,I)=""
+ ; Exception cases
+ I $G(LRNOTFD)!$G(LRIA81)!$G(LRIA64)!$G(LRNOLK) D
+ . S $P(MAGRY(0),U)=0                          ; Set error in header
+ . I $G(LRNOTFD) F I=1:1:$L(LRNOTFD,",")-1 S CT=CT+1,MAGRY(CT)="0^"_$P(LRNOTFD,",",I)_U_"Not found in #81"
+ . I $G(LRIA81) F I=1:1:$L(LRIA81,",")-1 S CT=CT+1,MAGRY(CT)="0^"_$P(LRIA81,",",I)_U_"Inactive in #81"
+ . I $G(LRIA64) F I=1:1:$L(LRIA64,",")-1 S CT=CT+1,MAGRY(CT)="0^"_$P(LRIA64,",",I)_U_"Inactive in #64"
+ . I $G(LRNOLK) F I=1:1:$L(LRNOLK,",")-1 S CT=CT+1,MAGRY(CT)="0^"_$P(LRNOLK,",",I)_U_"Not Linked to Workload"
+ . Q
+ I $G(LRRF64) F I=1:1:$L(LRRF64,",")-1 S CT=CT+1,MAGRY(CT)="1^"_$P(LRRF64,",",I)_U_"Inactive in #64\Active Replacement Found"
+ I '$O(^TMP("LR",$J,"LRLST",0)) D  Q
+ . S $P(MAGRY(0),U,1,2)="0^"_CT                ; If nothing entered or accepted, give error
+ S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I")      ; Internal Patient ID
+ S LRQUIET=1 D LOAD^LRCAPES                    ; Setup ^TMP("LRPXAPI" to load CPT workload
+ ;
+ ; Add lines to MAGRY with CPT codes entered and visit number
+ ;
+ S I=""
+ F  S I=$O(LRXTST(I)) Q:I=""  D
+ . S CT=CT+1
+ . S MAGRY(CT)="1^"_$P(LRXTST(I),U)_U_$P(LRXTST(I),U,3)
+ . Q
+ ; Add visit if any
+ S:$G(LRVSITN) CT=CT+1,MAGRY(CT)="1^Visit #: "_LRVSITN
+ S $P(MAGRY(0),U,2)=CT                         ; Set Total Number of Lines in ^02
+ Q  ;
+ ;
+ ;+++++ FINAL CLEANUP
+ ;
+ ; LRAA          Internal value of accession area
+ ;
+ ; LRAD          Date working on in accession area
+ ;
+ ; LRAN          Accession Number
+ ;
+CLEAN(LRAA,LRAD,LRAN) ;
+ L -^LRO(68,LRAA,1,LRAD,1,LRAN)                ; IA #.....
+ K ^TMP("LRMOD",$J),^TMP("LRPXAPI",$J)
+ K ^TMP("LR",$J,"AK"),^TMP("LR",$J,"LRLST")
+ Q  ;
+ ;
+
+

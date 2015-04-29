@@ -1,0 +1,240 @@
+MAGTP001 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 06/10/2012 2:50pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** GET LAB DATA INFO FOR SELECTED FIELDS LISTED IN A TEMPLATE
+ ; RPC: MAGTP GET TEMPLATE DATA
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          Input array. The field numbers must be
+ ;               listed one on each line.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; 0^0^ ERROR explanation: When no other lines of output are generated
+ ;
+ ; 0^ Total Number of Lines: if an error occurred while
+ ; extracting one of the fields
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: Field Number
+ ;                ^02: Field Label
+ ;                ^03: Data [entries separated by pipes (|)]
+ ;
+GETTD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP GET TEMPLATE DATA]
+ K MAGRY
+ I $D(ENT)<10 S MAGRY(0)="0^0^No Input" Q 
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more input parameters are missing"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N MAGOUT,MAGERR
+ N LRSF,LRDFN,IEN,CT,LINE,NUM
+ N FIELD,LABEL,SUBF,IE,INDX,NIEN,N,I,DATA
+ S LRSF=$P(INPUT,","),LRDFN=$P(INPUT,",",3)
+ S IEN=$P(INPUT,",",2,4)
+ D GETS^DIQ(LRSF,IEN,"**","IE","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S CT=0,LINE=""
+ F  S LINE=$O(ENT(LINE)) Q:LINE=""!('MAGRY(0))  D
+ . S NUM=ENT(LINE)
+ . S CT=CT+1
+ . K FIELD
+ . D FIELD^DID(LRSF,NUM,"","MULTIPLE-VALUED;TYPE;LABEL;SPECIFIER","FIELD")
+ . I '$D(FIELD) D  Q
+ . . K MAGRY
+ . . S MAGRY(0)="0^0^"_NUM_": Invalid Field Number"
+ . . Q
+ . S LABEL=FIELD("LABEL")
+ . S SUBF=+FIELD("SPECIFIER")
+ . S MAGRY(CT)=NUM_U_LABEL_U
+ . S IE=$S(FIELD("TYPE")="DATE/TIME":"I",1:"E")  ; "I" for dates only
+ . I SUBF>0,$D(MAGOUT(SUBF)) D  Q
+ . . K INDX S NIEN=""
+ . . F  S NIEN=$O(MAGOUT(SUBF,NIEN)) Q:NIEN=""  D
+ . . . S INDX($P(NIEN,","))=""
+ . . S N="" F  S N=$O(INDX(N)) Q:N=""  D       ; NIEN may be ordered incorrectly
+ . . . S NIEN=N_","_IEN
+ . . . S MAGRY(CT)=MAGRY(CT)_$$FRMTVAL^MAGTP006(MAGOUT(SUBF,NIEN,.01,IE),IE)_"|"
+ . . . Q
+ . . Q
+ . I $G(FIELD("MULTIPLE-VALUED"))=1 D
+ . . S I="" F  S I=$O(MAGOUT(LRSF,IEN,NUM,I)) Q:+I=0  D
+ . . . S DATA=MAGOUT(LRSF,IEN,NUM,I)
+ . . . S MAGRY(CT)=MAGRY(CT)_$$FRMTVAL^MAGTP006(DATA,IE)_"|"
+ . . . Q
+ . . Q
+ . E  S MAGRY(CT)=MAGRY(CT)_$$FRMTVAL^MAGTP006(MAGOUT(LRSF,IEN,NUM,IE),IE)_"|"
+ . Q
+ S:+MAGRY(0)>0 MAGRY(0)=1_U_CT                 ; If no errors update node 0
+ Q  ;
+ ;
+ ;*****  ADD/REPLACE ENTRIES FOR ONE OR MORE FIELDS
+ ; RPC: MAGTP PUT REPORT FIELD
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          Input array. The field numbers and entry data
+ ;               must be listed one on each line as:
+ ;
+ ;               ENT(n)   = Field Number ^ N: Total Number of lines of data
+ ;               ENT(n+1) = Field Number ^ DATA (1)
+ ;               ...
+ ;               ENT(n+N) = Field Number ^ DATA (N)
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is < 0, then an error
+ ; occurred during execution of the procedure: [code]^^[error explanation]
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 0 if field update only 
+ ;                     1 if Field #.11 updated with notification to providers
+ ;                ^02: [empty]
+ ;                ^03: In the case of entry of Field # .11
+ ;                     (Release Report Date), the entry will
+ ;                     read "Release alert will be sent to: "
+ ;                     followed by the name(s) of the
+ ;                     providers to which the alert was sent
+ ;              -6^^Study context not found
+ ;              -5^^No Input
+ ;              -4^^One or more input parameters are missing
+ ;              -3^^[fldnum]: Invalid Field Number
+ ;              -2^^[fldnam] - Updating Error: [Fileman error description]
+ ;              -1^^ERROR [MUMPS error]
+ ;               0^^Data entries updated
+ ;               1^^[alert message text if report was released]
+ ;
+PUTFIELD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT REPORT FIELD]
+ K MAGRY
+ I $D(ENT)<10 S MAGRY(0)="-5^0^No Input" Q      ; Input: NUM^Total Number of lines, then NUM^DATA1, etc.
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGUTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="-4^0^One or more input parameters are missing"
+ . Q
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN)
+ I '$G(MAGRY(0)) S MAGRY(0)="-6^0^Study context not found" Q 
+ N MAGERR,LRFDA
+ N LRSF,LRDFN,LRI,IEN,BDFLG,LINE,NUM,I,NVAL
+ N VAL,FIELD,LRMSG,SUBF,FLOC,SFROOT,DA,DIK,Y,LRAC,STAT
+ S LRSF=$P(INPUT,","),LRI=$P(INPUT,",",2)
+ S LRDFN=$P(INPUT,",",3),IEN=$P(INPUT,",",2,4)
+ S BDFLG=1                                     ; If BDFLG=0 there's a bad entry
+ S LINE="" F  S LINE=$O(ENT(LINE)) Q:LINE=""!('BDFLG)  D
+ . K VAL,FIELD,LRFDA,MAGERR,DIK,Y
+ . S NUM=+$P(ENT(LINE),U)                      ; Field number
+ . D FIELD^DID(LRSF,NUM,"","MULTIPLE-VALUED;TYPE;LABEL;SPECIFIER;GLOBAL SUBSCRIPT LOCATION","FIELD")
+ . I '$D(FIELD) D  Q
+ . . S MAGRY(0)="-3^0^"_NUM_": Invalid Field Number"
+ . . S BDFLG=0
+ . . Q
+ . S NVAL=$P(ENT(LINE),U,2)                    ; Number of entries in multiple field
+ . F I=1:1:NVAL S VAL(I)=$P(ENT(LINE+I),U,2)   ; Extract values from NVAL lines of ENT
+ . ; Word-processing fields
+ . I $G(FIELD("TYPE"))="WORD-PROCESSING" D
+ . . M LRFDA=VAL                               ; Whole text killed for WP
+ . . I '$D(LRFDA) S LRFDA(0)=1,LRFDA(1)=""     ; User deleted all 
+ . . D WP^DIE(LRSF,IEN,NUM,"K","LRFDA","MAGERR")
+ . . Q
+ . ; Single valued fields
+ . I '$G(FIELD("MULTIPLE-VALUED")) D
+ . . Q:$G(VAL(1))=""
+ . . S LRFDA(LRSF,IEN,NUM)=VAL(1)              ; Single valued always replaced by first entry
+ . . D UPDATE^DIE("E","LRFDA","","MAGERR")
+ . . Q
+ . ; Multiple valued fields - non WP
+ . I $G(FIELD("MULTIPLE-VALUED")),($G(FIELD("TYPE"))'="WORD-PROCESSING") D
+ . . S SUBF=+FIELD("SPECIFIER")
+ . . S FLOC=$P(FIELD("GLOBAL SUBSCRIPT LOCATION"),";")  ; Set LR subscript
+ . . S SFROOT=$NA(^LR(LRDFN,LRSS,LRI,FLOC))
+ . . S DIK=$E(SFROOT,1,$L(SFROOT)-1)_","
+ . . D                                         ; Delete everything first for multiple fields
+ . . . N DA
+ . . . S DA(1)=LRI,DA(2)=LRDFN
+ . . . S DA=0 F  S DA=$O(@SFROOT@(DA)) Q:'DA  D ^DIK
+ . . . Q
+ . . S:$G(Y) @(DIK_"0)")=Y                     ; Reinstate 0 subnode if necessary
+ . . F I=1:1:NVAL D
+ . . . S:$G(VAL(I))]"" LRFDA(SUBF,"+"_I_","_IEN,.01)=VAL(I)
+ . . . Q
+ . . D:$D(LRFDA) UPDATE^DIE("E","LRFDA","","MAGERR")
+ . . Q
+ . ; Update LINE number to next field entry
+ . S LINE=LINE+NVAL
+ . ; Error handling
+ . I $D(MAGERR) D  Q
+ . . S MAGRY(0)="-2^0^"_FIELD("LABEL")_" - Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . . S BDFLG=0
+ . . Q
+ . ; If released:
+ . ; 1) Cancel the corresponding reservation on the case
+ . ; 2) Send alert to ordering provider/PCP
+ . ; 3) For CY or SP set default CPT codes
+ . I (NUM=.11),(VAL(1)]"") D  S:$P(MAGRY(0),U)'<0 BDFLG=2
+ . . D LOCKR^MAGTP003(.MAGRY,0,LRSS,YEAR,LRAN) Q:MAGRY(0)<0
+ . . D SNDALRT^MAGTP006(.LRMSG,LRDFN,LRSS,LRI,LRSF)
+ . . D:("CYSP"[LRSS) VERADCPT^MAGTP009(.MAGRY,LRSS,YEAR,LRAN,LRI,LRDFN)
+ . . ; MOD FOR I873 CT/3/21/2015
+ . . ;N LRMSG,LRQUIT,...
+ . . ;D TIUPREP^LRAPRES,STORE^LRAPRES
+ . . D EDIT^MAGT7MA ; build HL7 msg, and sets CaseList entry to Read
+ . . ; END MOD FOR I873
+ . . Q
+ . ; If completed generate an interpretation for the case
+ . I (NUM=.03),(VAL(1)]"") D
+ . . S LRAC=$$GET1^DIQ(LRSF,IEN,.06)           ; Case Number
+ . . S STAT=$$STA^XUAF4($G(DUZ(2)))            ; IA #2171  ; Get Station Number
+ . . D PUTINTRP^MAGTP007(.MAGRY,LRAC,0,STAT)
+ . . Q
+ . Q
+ I $G(BDFLG)=1 S:$P(MAGRY(0),U)'<0 MAGRY(0)="0^0^Data entries updated"  ;No filing error
+ I $G(BDFLG)=2 S:$P(MAGRY(0),U)'<0 MAGRY(0)="1^0^"_$G(LRMSG)  ;And released
+ Q  ;
+ ;
+
+

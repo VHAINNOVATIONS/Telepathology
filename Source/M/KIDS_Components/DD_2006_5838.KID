@@ -1,0 +1,382 @@
+KIDS Distribution saved on Jul 09, 2013@16:57:24
+DD for DICOM LAB TEMP LIST (#2006.5838) file.
+**KIDS**:MAG*3.0*138*6^
+
+**INSTALL NAME**
+MAG*3.0*138*6
+"BLD",7931,0)
+MAG*3.0*138*6^^0^3130709^n
+"BLD",7931,1,0)
+^^1^1^3130709^
+"BLD",7931,1,1,0)
+DD for DICOM LAB TEMP LIST (#2006.5838) file.
+"BLD",7931,4,0)
+^9.64PA^2006.5838^1
+"BLD",7931,4,2006.5838,0)
+2006.5838
+"BLD",7931,4,2006.5838,222)
+y^y^f^^^^n
+"BLD",7931,4,"B",2006.5838,2006.5838)
+
+"BLD",7931,6.3)
+1
+"BLD",7931,"KRN",0)
+^9.67PA^779.2^20
+"BLD",7931,"KRN",.4,0)
+.4
+"BLD",7931,"KRN",.401,0)
+.401
+"BLD",7931,"KRN",.402,0)
+.402
+"BLD",7931,"KRN",.403,0)
+.403
+"BLD",7931,"KRN",.5,0)
+.5
+"BLD",7931,"KRN",.84,0)
+.84
+"BLD",7931,"KRN",3.6,0)
+3.6
+"BLD",7931,"KRN",3.8,0)
+3.8
+"BLD",7931,"KRN",9.2,0)
+9.2
+"BLD",7931,"KRN",9.8,0)
+9.8
+"BLD",7931,"KRN",19,0)
+19
+"BLD",7931,"KRN",19.1,0)
+19.1
+"BLD",7931,"KRN",101,0)
+101
+"BLD",7931,"KRN",409.61,0)
+409.61
+"BLD",7931,"KRN",771,0)
+771
+"BLD",7931,"KRN",779.2,0)
+779.2
+"BLD",7931,"KRN",870,0)
+870
+"BLD",7931,"KRN",8989.51,0)
+8989.51
+"BLD",7931,"KRN",8989.52,0)
+8989.52
+"BLD",7931,"KRN",8994,0)
+8994
+"BLD",7931,"KRN","B",.4,.4)
+
+"BLD",7931,"KRN","B",.401,.401)
+
+"BLD",7931,"KRN","B",.402,.402)
+
+"BLD",7931,"KRN","B",.403,.403)
+
+"BLD",7931,"KRN","B",.5,.5)
+
+"BLD",7931,"KRN","B",.84,.84)
+
+"BLD",7931,"KRN","B",3.6,3.6)
+
+"BLD",7931,"KRN","B",3.8,3.8)
+
+"BLD",7931,"KRN","B",9.2,9.2)
+
+"BLD",7931,"KRN","B",9.8,9.8)
+
+"BLD",7931,"KRN","B",19,19)
+
+"BLD",7931,"KRN","B",19.1,19.1)
+
+"BLD",7931,"KRN","B",101,101)
+
+"BLD",7931,"KRN","B",409.61,409.61)
+
+"BLD",7931,"KRN","B",771,771)
+
+"BLD",7931,"KRN","B",779.2,779.2)
+
+"BLD",7931,"KRN","B",870,870)
+
+"BLD",7931,"KRN","B",8989.51,8989.51)
+
+"BLD",7931,"KRN","B",8989.52,8989.52)
+
+"BLD",7931,"KRN","B",8994,8994)
+
+"FIA",2006.5838)
+DICOM LAB TEMP LIST
+"FIA",2006.5838,0)
+^MAG(2006.5838,
+"FIA",2006.5838,0,0)
+2006.5838S
+"FIA",2006.5838,0,1)
+y^y^f^^^^n
+"FIA",2006.5838,0,10)
+
+"FIA",2006.5838,0,11)
+
+"FIA",2006.5838,0,"RLRO")
+
+"FIA",2006.5838,2006.5838)
+0
+"IX",2006.5838,2006.5838,"C",0)
+2006.5838^C^Link image groups to temporary entities^R^^R^IR^I^2006.5838^^^^^LS
+"IX",2006.5838,2006.5838,"C",.1,0)
+^^5^5^3130608^
+"IX",2006.5838,2006.5838,"C",.1,1,0)
+This cross-reference keeps track of which image groups are
+"IX",2006.5838,2006.5838,"C",.1,2,0)
+associated with which temporary entities.
+"IX",2006.5838,2006.5838,"C",.1,3,0)
+ 
+"IX",2006.5838,2006.5838,"C",.1,4,0)
+This cross-reference will be used to associate all images
+"IX",2006.5838,2006.5838,"C",.1,5,0)
+in these groups to their permanent "parent data file". 
+"IX",2006.5838,2006.5838,"C",1)
+S ^MAG(2006.5838,"C",X(1),X(2),X(3),DA)=""
+"IX",2006.5838,2006.5838,"C",2)
+K ^MAG(2006.5838,"C",X(1),X(2),X(3),DA)
+"IX",2006.5838,2006.5838,"C",2.5)
+K ^MAG(2006.5838,"C")
+"IX",2006.5838,2006.5838,"C",11.1,0)
+^.114IA^3^3
+"IX",2006.5838,2006.5838,"C",11.1,1,0)
+1^F^2006.5838^.01^^1^F
+"IX",2006.5838,2006.5838,"C",11.1,1,3)
+
+"IX",2006.5838,2006.5838,"C",11.1,2,0)
+2^F^2006.5838^2^^2^F
+"IX",2006.5838,2006.5838,"C",11.1,2,3)
+
+"IX",2006.5838,2006.5838,"C",11.1,3,0)
+3^F^2006.5838^3^^3^F
+"IX",2006.5838,2006.5838,"C",11.1,3,3)
+
+"MBREQ")
+0
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"SEC","^DIC",2006.5838,2006.5838,0,"AUDIT")
+@
+"SEC","^DIC",2006.5838,2006.5838,0,"DD")
+@
+"SEC","^DIC",2006.5838,2006.5838,0,"DEL")
+@
+"SEC","^DIC",2006.5838,2006.5838,0,"LAYGO")
+@
+"SEC","^DIC",2006.5838,2006.5838,0,"RD")
+@
+"SEC","^DIC",2006.5838,2006.5838,0,"WR")
+@
+"VER")
+8.0^22.0
+"^DD",2006.5838,2006.5838,0)
+FIELD^^4^4
+"^DD",2006.5838,2006.5838,0,"DDA")
+N
+"^DD",2006.5838,2006.5838,0,"DT")
+3130709
+"^DD",2006.5838,2006.5838,0,"IX","B",2006.5838,.01)
+
+"^DD",2006.5838,2006.5838,0,"NM","DICOM LAB TEMP LIST")
+
+"^DD",2006.5838,2006.5838,.01,0)
+SUBFILE NUMBER^RS^63.08:Surgical Pathology;63.2:Autopsy Organ/Tissue;63.09:Cytopathology;63.02:Electron Microscopy;^0;1^Q
+"^DD",2006.5838,2006.5838,.01,1,0)
+^.1
+"^DD",2006.5838,2006.5838,.01,1,1,0)
+2006.5838^B
+"^DD",2006.5838,2006.5838,.01,1,1,1)
+S ^MAG(2006.5838,"B",$E(X,1,30),DA)=""
+"^DD",2006.5838,2006.5838,.01,1,1,2)
+K ^MAG(2006.5838,"B",$E(X,1,30),DA)
+"^DD",2006.5838,2006.5838,.01,3)
+Enter the subfile to which this image will be connected temporarily.
+"^DD",2006.5838,2006.5838,.01,21,0)
+^.001^2^2^3130709^^^^
+"^DD",2006.5838,2006.5838,.01,21,1,0)
+This is the sub-file of the LAB DATA (#63) file which contains 
+"^DD",2006.5838,2006.5838,.01,21,2,0)
+the record to which the image is temporarily associated.
+"^DD",2006.5838,2006.5838,.01,"DT")
+3130709
+"^DD",2006.5838,2006.5838,2,0)
+LAB LRDFN^RP63'^LR(^0;2^Q
+"^DD",2006.5838,2006.5838,2,3)
+Select the LAB record.
+"^DD",2006.5838,2006.5838,2,21,0)
+^.001^1^1^3130709^^^^
+"^DD",2006.5838,2006.5838,2,21,1,0)
+This is the main LAB record with which the image is temporarily associated.
+"^DD",2006.5838,2006.5838,2,"DT")
+3130709
+"^DD",2006.5838,2006.5838,3,0)
+INVERSE DATE^RNJ15,6^^0;3^K:+X'=X!(X>99999999)!(X<0)!(X?.E1"."7N.N) X
+"^DD",2006.5838,2006.5838,3,3)
+Enter the LAB Inverse Date value.
+"^DD",2006.5838,2006.5838,3,21,0)
+9^.001^3^3^3130709^^
+"^DD",2006.5838,2006.5838,3,21,1,0)
+This is the IEN of the record in the sub-file identified by the
+"^DD",2006.5838,2006.5838,3,21,2,0)
+SUBFILE NUMBER (#.01) field to which the image is temporarily associated.
+"^DD",2006.5838,2006.5838,3,21,3,0)
+The main LAB record is identified by the LAB LRDFN (#2) field.
+"^DD",2006.5838,2006.5838,3,"DT")
+3130608
+"^DD",2006.5838,2006.5838,4,0)
+IMAGE^RP2005'^MAG(2005,^0;4^Q
+"^DD",2006.5838,2006.5838,4,3)
+Select the image.
+"^DD",2006.5838,2006.5838,4,21,0)
+^.001^7^7^3130709^^^
+"^DD",2006.5838,2006.5838,4,21,1,0)
+The image is usually
+"^DD",2006.5838,2006.5838,4,21,2,0)
+the group-parent of the group of images that is
+"^DD",2006.5838,2006.5838,4,21,3,0)
+linked to the entity in the temporary file.
+"^DD",2006.5838,2006.5838,4,21,4,0)
+ 
+"^DD",2006.5838,2006.5838,4,21,5,0)
+(When the image group consists of one single
+"^DD",2006.5838,2006.5838,4,21,6,0)
+image, that image won't have a "group parent",
+"^DD",2006.5838,2006.5838,4,21,7,0)
+and this field will be the image itself.)
+"^DD",2006.5838,2006.5838,4,"DT")
+3130608
+"^DIC",2006.5838,2006.5838,0)
+DICOM LAB TEMP LIST^2006.5838
+"^DIC",2006.5838,2006.5838,0,"GL")
+^MAG(2006.5838,
+"^DIC",2006.5838,2006.5838,"%D",0)
+^1.001^28^28^3130709^^^^
+"^DIC",2006.5838,2006.5838,"%D",1,0)
+ +---------------------------------------------------------------+
+"^DIC",2006.5838,2006.5838,"%D",2,0)
+ |                                                               |
+"^DIC",2006.5838,2006.5838,"%D",3,0)
+ | Property of the US Government.                                |
+"^DIC",2006.5838,2006.5838,"%D",4,0)
+ | No permission to copy or redistribute this software is given. |
+"^DIC",2006.5838,2006.5838,"%D",5,0)
+ | Use of unreleased versions of this software requires the user |
+"^DIC",2006.5838,2006.5838,"%D",6,0)
+ | to execute a written test agreement with the VistA Imaging    |
+"^DIC",2006.5838,2006.5838,"%D",7,0)
+ | Development Office of the Department of Veterans Affairs,     |
+"^DIC",2006.5838,2006.5838,"%D",8,0)
+ | telephone (301) 734-0100.                                     |
+"^DIC",2006.5838,2006.5838,"%D",9,0)
+ |                                                               |
+"^DIC",2006.5838,2006.5838,"%D",10,0)
+ | The Food and Drug Administration classifies this software as  |
+"^DIC",2006.5838,2006.5838,"%D",11,0)
+ | a medical device.  As such, it may not be changed in any way. |
+"^DIC",2006.5838,2006.5838,"%D",12,0)
+ | Modifications to this software may result in an adulterated   |
+"^DIC",2006.5838,2006.5838,"%D",13,0)
+ | medical device under 21CFR820, the use of which is considered |
+"^DIC",2006.5838,2006.5838,"%D",14,0)
+ | to be a violation of US Federal Statutes.                     |
+"^DIC",2006.5838,2006.5838,"%D",15,0)
+ |                                                               |
+"^DIC",2006.5838,2006.5838,"%D",16,0)
+ +---------------------------------------------------------------+
+"^DIC",2006.5838,2006.5838,"%D",17,0)
+ 
+"^DIC",2006.5838,2006.5838,"%D",18,0)
+Anatomic Pathology images are associated with TIU documents that
+"^DIC",2006.5838,2006.5838,"%D",19,0)
+contain the diagnostic report.  Until the TIU document is created,
+"^DIC",2006.5838,2006.5838,"%D",20,0)
+this Imaging file temporarily records the association for the
+"^DIC",2006.5838,2006.5838,"%D",21,0)
+Anatomic Pathology image entries.  The Lab package notifies Imaging
+"^DIC",2006.5838,2006.5838,"%D",22,0)
+when an Anatomic Pathology case is electronically signed and a TIU
+"^DIC",2006.5838,2006.5838,"%D",23,0)
+note is created for the report.  Imaging then changes the association
+"^DIC",2006.5838,2006.5838,"%D",24,0)
+parent data file to the TIU document(actually the TIU EXTERNAL DATA
+"^DIC",2006.5838,2006.5838,"%D",25,0)
+LINK file (#8925.91)).  The entry in this file is then deleted.
+"^DIC",2006.5838,2006.5838,"%D",26,0)
+ 
+"^DIC",2006.5838,2006.5838,"%D",27,0)
+If the TUI document exists at the time that the image is acquired,
+"^DIC",2006.5838,2006.5838,"%D",28,0)
+the association is made to it and this file is not used.
+"^DIC",2006.5838,"B","DICOM LAB TEMP LIST",2006.5838)
+
+**END**
+**END**

@@ -1,0 +1,95 @@
+﻿<Window x:Class="VistA.Imaging.Telepathology.Worklist.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wlm="clr-namespace:VistA.Imaging.Telepathology.Worklist.Views"
+        xmlns:vm="clr-namespace:VistA.Imaging.Telepathology.Worklist.ViewModel"
+        Title="{Binding AppTitle}" Height="845" Width="1050"
+        ResizeMode="CanResizeWithGrip"
+        Loaded="Window_Loaded" Closing="Window_Closing" Closed="Window_Closed" 
+        Icon="/MagTPWorklist;component/Images/PathWLM48.ico">
+    <Window.Resources>
+        <!-- style used on text in status bar to show elipses (...) when text is cut off -->
+        <vm:ViewModelLocator x:Key="Locator"/>
+        <Style TargetType="TextBlock" x:Key="StatusBarTextBlock">
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+            <Setter Property="Padding" Value="2,0" />
+        </Style>
+    </Window.Resources>
+    <Window.DataContext>
+        <Binding Path="MainWindowViewModel" Source="{StaticResource Locator}"/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" IsMainMenu="True" Name="mnuMain">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Log Out" Command="{Binding LogoutCommand}"  />
+                <MenuItem Header="E_xit" Command="{Binding CloseCommand}" />
+            </MenuItem>
+            <MenuItem Header="_Context" >
+                <MenuItem Header="Suspend Context" Command="{Binding SuspendContextCommand}" />
+                <MenuItem Header="Resume Context" Command="{Binding ResumeContextCommand}" />
+                <!--<MenuItem Header="Resume Set Context" Command="{Binding ResumeSetContextCommand}" />
+                <MenuItem Header="Resume Get Context" Command="{Binding ResumeGetContextCommand}" />-->
+            </MenuItem>
+            <MenuItem Header="_Settings">
+                <MenuItem Header="_Filter settings" Click="ViewSettingsItem_Click"/>
+                <Separator/>
+                <MenuItem Name="mnuSavePref" Header="Save layout _preferences on exit" IsCheckable="True" />
+                <MenuItem Name="mnuSavePrefNow" Header="Save layout preferences _now" Click="mnuSavePrefNow_Click" />
+                <Separator/>
+                <MenuItem Header="Message _Log" Click="MessageLog_Click" />
+            </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Header="_About" Click="About_Click" />
+            </MenuItem>
+        </Menu>
+        <wlm:WorklistsView x:Name="examGroupsView" DataContext="{Binding WorklistsViewModel}" Grid.Row="1" Margin="5"></wlm:WorklistsView>
+
+        <StatusBar Height="25" Name="statusBar1" Grid.Row="2">
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <StatusBarItem>
+                <Button Width="20" Margin="2" Click="MessageLog_Click">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Image Source="/VistA.Imaging.Telepathology.Common;component/Images/List%2016%20n%20i8.ico"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </StatusBarItem>
+            <Separator Margin="1,5,1,5" Grid.Column="1"/>    
+            <StatusBarItem Content="{Binding SiteAbbr}" Grid.Column="2"/>
+            <Separator Grid.Column="3" Margin="1,5,1,5"/>
+            <StatusBarItem Content="" Grid.Column="4"/>
+            <Separator Grid.Column="5" Margin="1,5,1,5"/>
+            <StatusBarItem Content="Last time refreshed: Unread: " Grid.Column="6"/>
+            <StatusBarItem Content="{Binding UnreadListRefreshTime}" Grid.Column="7"/>
+            <StatusBarItem Content=" Read: " Grid.Column="8"/>
+            <StatusBarItem Content="{Binding ReadListRefreshTime}" Grid.Column="9" Margin="0,0,20,0"/>
+        </StatusBar>
+    </Grid>
+</Window>

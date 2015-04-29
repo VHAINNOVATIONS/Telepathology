@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE mbeans-descriptors PUBLIC
+   "-//Apache Software Foundation//DTD Model MBeans Configuration File"
+   "http://jakarta.apache.org/commons/dtds/mbeans-descriptors.dtd">
+   
+<mbeans-descriptors>
+	<mbean
+		name="VistaRealm"
+		className="org.apache.catalina.mbeans.ClassNameMBean"
+		description="Vista Realm"
+		domain="gov.va.med.imaging.tomcat.vistarealm"
+		group="VistaImaging"
+		type="gov.va.med.imaging.exchange.realm.tomcat.VistaRealm"
+	>
+	    <attribute   
+	    	name="className"
+			description="Fully qualified class name of the managed object"
+			type="java.lang.String"
+			writeable="false"
+		/>
+	    <attribute   
+	    	name="configured"
+			description="True iff VistaRealm has enough configuration to do VistaRealm authentication."
+			type="java.lang.Boolean"
+			writeable="false"
+			is="true"
+		/>
+	    <attribute   
+	    	name="localSiteNumber"
+			description="The number of the Site to authenticate against, ex:660"
+			type="java.lang.String"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="localSiteAbbreviation"
+			description="The abbreviation of the Site to authenticate against, ex:SLC"
+			type="java.lang.String"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="localSiteName"
+			description="The name of the Site to authenticate against"
+			type="java.lang.String"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="localVistaServer"
+			description="The DNS name or IP address of the Vista Server to authenticate against"
+			type="java.lang.String"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="localVistaPort"
+			description="The IP port of the Vista Server to authenticate against"
+			type="java.lang.Integer"
+			writeable="true"
+		/>
+		
+		<!-- Principal Cache Attributes -->
+	    <attribute   
+	    	name="usingPrincipalCache"
+			description="If true then cache Principal instances within VistaRealm, perhaps avoiding many transactions with Vista"
+			type="java.lang.Boolean"
+			writeable="true"
+			is="true"
+		/>
+	    <attribute   
+	    	name="principalCacheLifespan"
+			description="The time in milliseconds to retain Principal instances in the cache.  Ignored if userPrincipalCache is false."
+			type="java.lang.Long"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="refreshPrincipalCacheEntryOnUse"
+			description="If true then entries in the Principal cache will be evicted relative to last use, if false then relative to first use."
+			type="java.lang.Boolean"
+			writeable="true"
+			is="true"
+		/>
+		
+		<!-- SecurityConstraint Cache Attributes -->
+	    <attribute   
+	    	name="usingSecurityConstraintCache"
+			description="If true then cache SecurityConstraint instances, this will provide a minor performance enhancement."
+			type="java.lang.Boolean"
+			writeable="true"
+			is="true"
+		/>
+	    <attribute   
+	    	name="securityConstraintCacheLifespan"
+			description="The time in milliseconds to retain SecurityConstraint instances in the cache.  Ignored if usingSecurityConstraintCache is false."
+			type="java.lang.Long"
+			writeable="true"
+		/>
+	    <attribute   
+	    	name="refreshSecurityConstraintCacheEntryOnUse"
+			description="If true then entries in the SecurityConstraint cache will be evicted relative to last use, if false then relative to first use.  Ignored if usingSecurityConstraintCache is false."
+			type="java.lang.Boolean"
+			writeable="true"
+			is="true"
+		/>
+		
+		<!-- Save and Restore Operations -->
+		<operation 
+			name="storeToPropertiesFile" 
+			description="Store configuration parameters." 
+			impact="ACTION" 
+			returnType="void" 
+		/>
+		<operation 
+			name="loadFromPropertiesFile" 
+			description="Load/reload configuration parameters." 
+			impact="ACTION" 
+			returnType="void" 
+		/>
+	</mbean>
+</mbeans-descriptors>

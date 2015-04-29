@@ -1,0 +1,115 @@
+MAGT7SS2 ;WOIFO/MLH - telepathology - create HL7 message to DPS - segment build - set up OBXs for each SPM - block level segments ; 11/26/2012 5:07 PM
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3056;Nov 21, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q
+ ;
+BLOKSEGS(MSG,DFN,LRDFN,LRSS,LRI,SPMIX,BLKTYPSTG,BLKTYPSTGIX) ; FUNCTION - main entry point - create ancillary OBX segments
+ I $G(DFN)'?1.N Q "-1110`Invalid DFN ("_$G(DFN)_")"
+ I $G(LRDFN)'?1.N Q "-1120`Invalid LRDFN ("_$G(LRDFN)_")"
+ I "^AU^CY^EM^SP^"'[("^"_$G(LRSS)_"^") Q "-1130`Invalid LRSS ("_$G(LRSS)_")"
+ I $G(LRI)'?1.N.1"."1.N Q "-1140`Invalid LRI ("_$G(LRI)_")"
+ I $G(SPMIX)'?1.N Q "-1150`Invalid SPMIX ("_$G(SPMIX)_")"
+ I '$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX)) Q "-1155`SPMIX ("_SPMIX_") not found on file"
+ I $G(BLKTYPSTG)'?1.N Q "-1156`Invalid BLKTYPSTG ("_$G(BLKTYPSTG)_")"
+ I '$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG)) Q "-1158`BLKTYPSTG ("_BLKTYPSTG_") not found on file"
+ I $G(BLKTYPSTGIX)'?1.N Q "-1160`Invalid BLKTYPSTGIX ("_$G(BLKTYPSTGIX)_")"
+ I '$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG,BLKTYPSTGIX)) Q "-1165`BLKTYPSTGIX ("_$G(BLKTYPSTGIX)_") not found on file"
+ N BLKTYPSTGINSTDTA ; block type/stage instance data
+ N DTTMBLKPREP ; date/time block prepared
+ N STAPROINSTIX ; stain/procedure instance index
+ N STAPROINSTDTA ; stain/procedure instance data
+ N STAPROIX ; stain/procedure index on ^LAB(60)
+ N STAPRODESC ; stain/procedure description
+ N NUMSLISECT ; slides/sections prepared
+ N NUMCTLSLI ; control slides
+ N DTTMSTNPREP ; date/time slides stained or sections prepared
+ N DTTMEXAM ; date/time slides/sections examined
+ N SLISECTKT ; slides/sections counted
+ N NUSECTLBLKT ; new sections / labels to print
+ N SLSCRSECTEXKT ; slides screened / sections examined
+ N NCTRLSLSECTKT ; non-control slides counted
+ N PRMADEKT ; prints made
+ N DTTMPRMADE ; date/time prints made
+ N PRINTKT ; prints counted
+ N EXAMSECKT ; examined sections counted
+ S OUT=0 ; assume nothing to report
+ D  ; make OBX segments, bail if a problem arises
+ . D  Q:OUT  ; block type/stage instance ID
+ . . S BLKTYPSTGINSTDTA=$G(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG,BLKTYPSTGIX,0))
+ . . S DTTMBLKPREP=$P(BLKTYPSTGINSTDTA,"^",2)
+ . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"BLOCK INDEX","ST",$P(BLKTYPSTGINSTDTA,"^",1),DTTMBLKPREP)
+ . . Q
+ . S SLISECWORD=$S(LRSS'="EM":"SLIDE",1:"SECTION")
+ . S STAPROINSTIX=0
+ . F  S STAPROINSTIX=$O(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG,BLKTYPSTGIX,1,STAPROINSTIX)) Q:'STAPROINSTIX  D  Q:OUT
+ . . S STAPROINSTDTA=$G(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG,BLKTYPSTGIX,1,STAPROINSTIX,0))
+ . . S DTTMSTNPREP=$P(STAPROINSTDTA,"^",4) ; date/time slides stained or sections prepared
+ . . S DTTMEXAM=$P(STAPROINSTDTA,"^",5) ; date/time slides/sections examined
+ . . S DTTMPRMADE=$P(STAPROINSTDTA,"^",11) ; date/time prints made
+ . . D  Q:OUT  ; procedure index
+ . . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"PROCEDURE INDEX","ST",$P(STAPROINSTDTA,"^",1),DTTMSTNPREP)
+ . . . Q
+ . . D  Q:OUT  ; procedure description
+ . . . S STAPROIX=$P(STAPROINSTDTA,"^",1)
+ . . . D:STAPROIX
+ . . . . S STAPRODESC=$P($G(^LAB(60,STAPROIX,0)),"^",1)
+ . . . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"PROCEDURE DESCRIPTION","ST",STAPRODESC,DTTMSTNPREP)
+ . . . . Q
+ . . . Q
+ . . D  Q:OUT  ; slides/sections prepared
+ . . . S NUMSLISECT=$P(STAPROINSTDTA,"^",2)
+ . . . S:NUMSLISECT OUT=$$OBXSEG^MAGT7SX(.MSG,SLISECWORD_"S PREPARED","NM",NUMSLISECT,DTTMSTNPREP)
+ . . . Q
+ . . D  Q:OUT  ; control slides
+ . . . S NUMCTLSLI=$P(STAPROINSTDTA,"^",3)
+ . . . S:NUMCTLSLI OUT=$$OBXSEG^MAGT7SX(.MSG,"CONTROL "_SLISECWORD_"S","NM",NUMCTLSLI,DTTMSTNPREP)
+ . . . Q
+ . . D  Q:OUT  ; slides/sections counted
+ . . . S SLISECTKT=$P(STAPROINSTDTA,"^",6)
+ . . . S:SLISECTKT OUT=$$OBXSEG^MAGT7SX(.MSG,SLISECWORD_"S COUNTED","NM",SLISECTKT,DTTMEXAM)
+ . . . Q
+ . . D  Q:OUT  ; new sections / labels to print
+ . . . S NUSECTLBLKT=$P(STAPROINSTDTA,"^",7)
+ . . . S:NUSECTLBLKT OUT=$$OBXSEG^MAGT7SX(.MSG,$S(LRSS'="EM":"LABELS TO PRINT",1:"NEW SECTIONS"),"NM",NUSECTLBLKT,DTTMSTNPREP)
+ . . . Q
+ . . D:LRSS'="SP"  Q:OUT  ; slides screened / sections examined
+ . . . S SLSCRSECTEXKT=$P(STAPROINSTDTA,"^",8)
+ . . . S:SLSCRSECTEXKT OUT=$$OBXSEG^MAGT7SX(.MSG,SLISECWORD_"S "_$S(LRSS="CY":" SCREENED",1:" EXAMINED"),"NM",SLSCRSETEXKT,DTTMEXAM)
+ . . . Q
+ . . D  Q:OUT  ; non-control slides counted
+ . . . S NCTRLSLSECTKT=$P(STAPROINSTDTA,"^",9)
+ . . . S:NCTRLSLSECTKT OUT=$$OBXSEG^MAGT7SX(.MSG,"NON-CONTROL SLIDES COUNTED","NM",NCTRLSLSECTKT,DTTMEXAM)
+ . . . Q
+ . . D:LRSS="EM"  Q:OUT  ; fields for electron microscopy only
+ . . . D  Q:OUT  ; prints made
+ . . . . S PRMADEKT=$P(STAPROINSTDTA,"^",10)
+ . . . . S:PRMADEKT OUT=$$OBXSEG^MAGT7SX(.MSG,"PRINTS MADE","NM",PRMADEKT,DTTMPRMADE)
+ . . . . Q
+ . . . D  Q:OUT  ; prints counted
+ . . . . S PRINTKT=$P(STAPROINSTDTA,"^",12)
+ . . . . S:PRINTKT OUT=$$OBXSEG^MAGT7SX(.MSG,"PRINTS COUNTED","NM",PRINTKT,DTTMPRMADE)
+ . . . . Q
+ . . . D  Q:OUT  ; examined sections counted
+ . . . . S EXAMSECKT=$P(STAPROINSTDTA,"^",13)
+ . . . . S:EXAMSECKT OUT=$$OBXSEG^MAGT7SX(.MSG,"EXAMINED SECTIONS COUNTED","NM",EXAMSECKT,DTTMPRMADE)
+ . . . . Q
+ . . . Q
+ . . Q
+ . Q
+ Q OUT
+
+

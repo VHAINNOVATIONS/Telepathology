@@ -1,0 +1,23 @@
+﻿<Window x:Class="VistA.Imaging.Telepathology.Worklist.Views.WorklistFilterEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wlm="clr-namespace:VistA.Imaging.Telepathology.Worklist.Views"
+        Title="Worklist Filter" Height="482" Width="530" 
+        Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}" 
+        ResizeMode="CanResizeWithGrip" Loaded="Window_Loaded" 
+        Icon="/MagTPWorklist;component/Images/PathWLM48.ico"
+        SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="205*" />
+            <RowDefinition Height="0" />
+            <RowDefinition Height="21*" />
+        </Grid.RowDefinitions>
+        <wlm:WorklistFilterDetailsView Grid.Row="0" x:Name="worklistFilterDetailsView"></wlm:WorklistFilterDetailsView>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,5,5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="32" Width="255">
+            <Button Content="_Clear" Width="75" Command="{Binding ClearCommand}" Margin="5" />
+            <Button Content="_Apply" Width="75" Command="{Binding ApplyCommand}" Margin="5" IsDefault="True" />
+            <Button Content="Ca_ncel" Width="75" Command="{Binding CloseCommand}" Margin="5" />
+        </StackPanel>
+    </Grid>
+</Window>

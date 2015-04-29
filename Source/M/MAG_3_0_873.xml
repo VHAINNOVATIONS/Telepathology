@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<build
+
+  name="MAG*3.0*873"
+  patch="873"
+  patchName="VistA Imaging V3.0 Patch 873 - Telepathology Worklist Innovation"
+  envCheckRoutine=""
+  deleteEnvCheckRoutine=""
+  preInstallRoutine="PRE^MAGIP873"
+  deletePreInstalltRoutine="Yes"
+  postInstallRoutine="POS^MAGIP873"
+  deletePostInstallRoutine="Yes"
+  packageName="IMAGING"
+  packageNumber="454"
+  packageVersion="3.0"
+  packagePrefix="MAG"
+  packageDateDestributed="3020901"
+  alphaBetaTesting="YES"
+  installationMessage="YES"
+  addressForUsageReporting="G.IMAGING DEVELOPMENT TEAM@FORUM.VA.GOV"
+
+  xmlns="http://va.gov/VistA/kids/manifest">
+  <requiredBuilds>
+    <!-- action= 0:Warning only;1:Don't install, remove global;2:Don't install, leave global;
+ -->
+ 
+    <requiredBuild name="MAG*3.0*138" action="2"/>
+ 
+  </requiredBuilds>
+  <components>
+    <dataDictionaries>
+
+	<!--   patch 138 -->
+      <dataDictionary name="2005.42" export="DD_2005_42.KID"/>
+      <dataDictionary name="2005.43" export="DD_2005_43.KID"/>
+      <dataDictionary name="2006.13" export="DD_2006_13.KID"/>
+      <dataDictionary name="2006.5838" export="DD_2006_5838.KID"/>
+      <dataDictionary name="2006.1" export="DD_2006_1_P138.KID"/>
+
+    <!--   patch 873 - none -->
+	
+    </dataDictionaries>
+    <routines>
+      <!--   patch 873  -->
+      <routine name="MAGIP873" export="MAGIP873.RTN"/>
+      <routine name="MAG7RS"   export="MAG7RS.RTN"/>
+      <routine name="MAGDGMRC" export="MAGDGMRC.RTN"/>
+      <routine name="MAGDHWA"  export="MAGDHWA.RTN"/>
+      <routine name="MAGDHWC"  export="MAGDHWC.RTN"/>
+      <routine name="MAGDHWS"  export="MAGDHWS.RTN"/>
+      <routine name="MAGI138T" export="MAGI138T.RTN"/>
+      <routine name="MAGI138U" export="MAGI138U.RTN"/>
+      <routine name="MAGI138V" export="MAGI138V.RTN"/>
+      <routine name="MAGI138W" export="MAGI138W.RTN"/>
+      <routine name="MAGT7SS1" export="MAGT7SS1.RTN"/>
+      <routine name="MAGT7SS2" export="MAGT7SS2.RTN"/>
+      <routine name="MAGTP001" export="MAGTP001.RTN"/>
+      <routine name="MAGTP002" export="MAGTP002.RTN"/> -->
+      <routine name="MAGTP003" export="MAGTP003.RTN"/>
+      <!-- <routine name="MAGTP004" export="MAGTP004.RTN"/> -->
+      <routine name="MAGTP005" export="MAGTP005.RTN"/>
+      <routine name="MAGTP006" export="MAGTP006.RTN"/>
+      <routine name="MAGTP007" export="MAGTP007.RTN"/>
+      <routine name="MAGTP008" export="MAGTP008.RTN"/>
+      <routine name="MAGTP009" export="MAGTP009.RTN"/>
+      <routine name="MAGTP011" export="MAGTP011.RTN"/>
+      <routine name="MAGTP012" export="MAGTP012.RTN"/>
+      <routine name="MAGTP013" export="MAGTP013.RTN"/>
+      <!-- <routine name="MAGTP014" export="MAGTP014.RTN"/> -->
+      <routine name="MAGUE006" export="MAGUE006.RTN"/>
+      <routine name="MAGUE008" export="MAGUE008.RTN"/>
+    </routines>
+    <rpcs>
+      <!--   patch 873  -->
+      <rpc name="MAGTP CHANGE CONS STATUS" export="RPC_MAGTP_CHANGE_CONS_STATUS.KID"/>
+      <rpc name="MAGTP CHANGE SLIDES AVAIL" export="RPC_MAGTP_CHANGE_SLIDES_AVAIL.KID"/>
+      <rpc name="MAGTP CHECK CONS" export="RPC_MAGTP_CHECK_CONS.KID"/>
+      <rpc name="MAGTP COPY CASE" export="RPC_MAGTP_COPY_CASE.KID"/>
+      <!-- <rpc name="MAGTP GET ACTIVE" export="RPC_MAGTP_GET_ACTIVE.KID"/> -->
+      <rpc name="MAGTP DEL SNOMED CODES" export="RPC_MAGTP_DEL_SNOMED_CODES.KID"/>
+      <rpc name="MAGTP GET CASES" export="RPC_MAGTP_GET_CASES.KID"/>
+      <rpc name="MAGTP GET CONSULT" export="RPC_MAGTP_GET_CONSULT.KID"/>
+      <rpc name="MAGTP GET CPRS REPORT" export="RPC_MAGTP_GET_CPRS_REPORT.KID"/>
+      <rpc name="MAGTP GET CPT CODE" export="RPC_MAGTP_GET_CPT_CODE.KID"/>
+      <rpc name="MAGTP GET ESIGN" export="RPC_MAGTP_GET_ESIGN.KID"/>
+      <rpc name="MAGTP GET LIST" export="RPC_MAGTP_GET_LIST.KID"/>
+      <rpc name="MAGTP GET LOCK MINS" export="RPC_MAGTP_GET_LOCK_MINS.KID"/>
+      <rpc name="MAGTP GET NOTE" export="RPC_MAGTP_GET_NOTE.KID"/>
+      <rpc name="MAGTP GET PATIENT" export="RPC_MAGTP_GET_PATIENT.KID"/>
+      <rpc name="MAGTP GET PREFERENCES" export="RPC_MAGTP_GET_PREFERENCES.KID"/>
+      <rpc name="MAGTP GET RETENTION DAYS" export="RPC_MAGTP_GET_RETENTION_DAYS.KID"/>
+      <rpc name="MAGTP GET SITE CONFIG" export="RPC_MAGTP_GET_SITE_CONFIG.KID"/>
+      <rpc name="MAGTP GET SITES" export="RPC_MAGTP_GET_SITES.KID"/>
+      <!-- <rpc name="MAGTP GET SLIDES" export="RPC_MAGTP_GET_SLIDES.KID"/> -->
+      <rpc name="MAGTP GET SNOMED CODES" export="RPC_MAGTP_GET_SNOMED_CODES.KID"/>
+      <rpc name="MAGTP GET SUP REPORTS" export="RPC_MAGTP_GET_SUP_REPORTS.KID"/>
+      <rpc name="MAGTP GET TEMPLATE DATA" export="RPC_MAGTP_GET_TEMPLATE_DATA.KID"/>
+      <rpc name="MAGTP GET TEMPLATE XML" export="RPC_MAGTP_GET_TEMPLATE_XML.KID"/>
+      <rpc name="MAGTP GET USER" export="RPC_MAGTP_GET_USER.KID"/>
+      <rpc name="MAGTP PUT CONSULT" export="RPC_MAGTP_PUT_CONSULT.KID"/>
+      <rpc name="MAGTP PUT CPT CODE" export="RPC_MAGTP_PUT_CPT_CODE.KID"/>
+      <rpc name="MAGTP PUT LOCK MINS" export="RPC_MAGTP_PUT_LOCK_MINS.KID"/>
+      <rpc name="MAGTP PUT METHOD" export="RPC_MAGTP_PUT_METHOD.KID"/>
+      <rpc name="MAGTP PUT NOTE" export="RPC_MAGTP_PUT_NOTE.KID"/>
+      <rpc name="MAGTP PUT PRIORITY" export="RPC_MAGTP_PUT_PRIORITY.KID"/>
+      <rpc name="MAGTP PUT PREFERENCES" export="RPC_MAGTP_PUT_PREFERENCES.KID"/>
+      <rpc name="MAGTP PUT REPORT FIELD" export="RPC_MAGTP_PUT_REPORT_FIELD.KID"/>
+      <!-- <rpc name="MAGTP RESERVE CASE" export="RPC_MAGTP_RESERVE_CASE.KID"/> -->
+      <rpc name="MAGTP PUT SITE CONFIG" export="RPC_MAGTP_PUT_SITE_CONFIG.KID"/>
+      <rpc name="MAGTP PUT SNOMED CODES" export="RPC_MAGTP_PUT_SNOMED_CODES.KID"/>
+      <rpc name="MAGTP PUT SUP REPORT" export="RPC_MAGTP_PUT_SUP_REPORT.KID"/>
+      <rpc name="MAGTP PUT TEMPLATE XML" export="RPC_MAGTP_PUT_TEMPLATE_XML.KID"/>
+      <rpc name="MAGTP SECOND LOCK" export="RPC_MAGTP_SECOND_LOCK.KID"/>
+      <rpc name="MAGTP SET RETENTION DAYS" export="RPC_MAGTP_SET_RETENTION_DAYS.KID"/>
+      <!-- <rpc name="MAGTP USER" export="RPC_MAGTP_USER.KID"/> -->
+
+    </rpcs>
+    <options>
+      <!--   patch 138  -->
+      <option name="MAGTP WORKLIST MGR" export="OPT_MAGTP_WORKLIST_MGR.KID"/>
+
+    <!--   patch 873 - none -->
+      
+    </options>
+    <securityKeys>
+    </securityKeys>
+    <protocols>
+    </protocols>
+    <templateLists>
+    </templateLists>
+    <hl7Applications>
+    </hl7Applications>
+    <hl7LogicalLinks>
+    </hl7LogicalLinks>
+    <parameterDefinitions>
+    </parameterDefinitions>
+    <parameterTemplates>
+    </parameterTemplates>
+    <printTemplates>
+    </printTemplates>
+    <sortTemplates>
+    </sortTemplates>
+    <inputTemplates>
+    </inputTemplates>
+    <forms>
+    </forms>
+    <functions>
+    </functions>
+    <dialogs>
+    </dialogs>
+    <bulletins>
+    </bulletins>
+    <mailGroups>
+    </mailGroups>
+    <helpFrames>
+    </helpFrames>
+  </components>
+</build>

@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+<assemblyIdentity
+    type="win32"
+    name="VergenceContextor.sxs"
+    processorArchitecture="x86"
+    version="1.0.0.0" />
+
+<file name="VergenceContextor.dll">
+
+    <comClass
+        description="Vergence ContextorControl"
+        clsid="{8778ACF7-5CA9-11D3-8727-0060B0B5E137}"
+        threadingModel="Apartment"
+        progid="Sentillion.ContextorControl"
+        tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+    <comClass
+        description="Vergence Contextor"
+        clsid="{D5C9CC98-5FDB-11D3-8727-0060B0B5E137}"
+        threadingModel="Apartment"
+        progid="Sentillion.Contextor"
+        tlbid="{8D879F4F-5FE6-11D3-8727-0060B0B5E137}" />
+
+    <comClass
+        description="Vergence ContextItemCollection"
+        clsid="{AC4C0272-615A-11D3-84B5-0000861FDD4F}"
+        threadingModel="Apartment"
+        progid="Sentillion.ContextItemCollection"
+        tlbid="{8D879F4F-5FE6-11D3-8727-0060B0B5E137}" />
+
+    <comClass
+        description="Vergence ContextItem"
+        clsid="{AC4C0274-615A-11D3-84B5-0000861FDD4F}"
+        threadingModel="Apartment"
+        progid="Sentillion.ContextItem"
+        tlbid="{8D879F4F-5FE6-11D3-8727-0060B0B5E137}" />
+
+    <comClass
+        description="Vergence ResponseDialog"
+        clsid="{9D33ECF2-8277-11D3-8525-0000861FDD4F}"
+        threadingModel="Apartment"
+        progid="Sentillion.ResponseDialog"
+        tlbid="{8D879F4F-5FE6-11D3-8727-0060B0B5E137}" />
+
+    <comClass
+        description="ContextorParticipant Class"
+        clsid="{4BA034A2-D0FA-11D3-818B-0050049598B2}"
+        threadingModel="Apartment"
+        progid="VergenceContextor.ContextorParticipant"
+        tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+    <typelib tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}"
+        version="1.0"
+        helpdir="" />
+
+</file>
+
+<comInterfaceExternalProxyStub
+    name="_IContextChangesSink"
+    iid="{6BED8971-B3DD-11D3-8736-0060B0B5E137}"
+    proxyStubClsid32="{00020420-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IContextor"
+    iid="{8D879F5D-5FE6-11D3-8727-0060B0B5E137}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IContextItemCollection"
+    iid="{AC4C0271-615A-11D3-84B5-0000861FDD4F}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IContextItem"
+    iid="{AC4C0273-615A-11D3-84B5-0000861FDD4F}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IContextParticipant"
+    iid="{3E3DD272-998E-11D0-808D-00A0240943E4}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IResponseContextChange"
+    iid="{CBC6D968-9F6D-416A-8AA7-99172E588DF0}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IResponseDialogAccessor"
+    iid="{86592071-F3BA-11D3-8181-005004A0F801}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IResponseDialog"
+    iid="{9D33ECF1-8277-11D3-8525-0000861FDD4F}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="IContextChangesSink"
+    iid="{0B437E31-620E-11D3-84B6-0000861FDD4F}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+<comInterfaceExternalProxyStub
+    name="ISetHook"
+    iid="{8D879FDD-5FE6-11D3-8727-0060B0B5E137}"
+    proxyStubClsid32="{00020424-0000-0000-C000-000000000046}"
+    baseInterface="{00000000-0000-0000-C000-000000000046}"
+    tlbid="{30AFBABD-5FD3-11D3-8727-0060B0B5E137}" />
+
+</assembly>

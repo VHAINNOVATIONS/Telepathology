@@ -1,0 +1,530 @@
+MAGTP006 ;WOIFO/FG,JSL - TELEPATHOLOGY TAGS ; May 14 2013 5:07pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;+++++ SET CONTEXT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;
+ ; "LRSF,LRI,LRDFN,"     if successful
+ ; ""                    if error
+ ;
+ ; Where:
+ ;
+ ; LRSF          Subfield Number in LAB DATA file (#63)
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+CONTEXT(MAGRY,LRSS,YEAR,LRAN) ;
+ K MAGRY
+ N LRX,LRSF,LRDFN,LRI,IEN,LRAA,LRYR
+ I '$D(LRSS) S MAGRY(0)="0^0^Missing AP Section" Q ""
+ I '$D(YEAR) S MAGRY(0)="0^0^Missing Year" Q ""
+ I '$D(LRAN) S MAGRY(0)="0^0^Missing Accession Number" Q ""
+ ; Only these three AP Sections considered
+ S LRSF=$S(LRSS="CY":63.09,LRSS="EM":63.02,LRSS="SP":63.08,1:"")
+ I LRSF="" S MAGRY(0)="0^0^Invalid AP Section" Q ""
+ S LRAA=$O(^LRO(68,"B",LRSS,0))
+ I LRAA="" S MAGRY(0)="0^0^Accession Area Not Found" Q ""
+ ; Find year in index
+ S LRYR=YEAR_"0000"
+ S LRYR=$S($D(^LRO(68,LRAA,1,2E6+LRYR)):2E6+LRYR,$D(^LRO(68,LRAA,1,3E6+LRYR)):3E6+LRYR,1:"")
+ I LRYR="" S MAGRY(0)="0^0^Invalid Year" Q ""
+ I +LRAN=0 S MAGRY(0)="0^0^Invalid Accession Number" Q ""
+ D  Q:$D(MAGRY(0)) "" ; look up by accession number; crawl if necessary
+ . N ACCID
+ . S ACCID=LRSS_" "_YEAR_" "_LRAN
+ . I $D(^LRO(68,LRAA,1,LRYR,1,LRAN)),$P($G(^(LRAN,.2)),"^",1)=ACCID Q  ; found
+ . D  ; try to crawl, redefine LRAN (accession serial IEN)
+ . . S LRAN=0 F  S LRAN=$O(^LRO(68,LRAA,1,LRYR,1,LRAN)) Q:'LRAN  I $P($G(^(LRAN,.2)),"^",1)=ACCID Q
+ . . S:LRAN="" MAGRY(0)="0^0^Accession Record Not Found"
+ . . Q
+ . Q
+ S LRDFN=$P($G(^LRO(68,LRAA,1,LRYR,1,LRAN,0)),"^",1)
+ I LRDFN="" S MAGRY(0)="0^0^LAB DATA Patient Index Not Found" Q ""
+ I '$D(^LR(LRDFN)) S MAGRY(0)="0^0^LAB DATA Patient Record Not Found" Q ""
+ S LRI=$P($G(^LRO(68,LRAA,1,LRYR,1,LRAN,3)),"^",5)
+ I LRI="" S MAGRY(0)="0^0^LAB DATA Order Index Not Found" Q ""
+ I '$D(^LR(LRDFN,LRSS,LRI)) S MAGRY(0)="0^0^LAB DATA Order Record Not Found" Q ""
+ S IEN=LRI_","_LRDFN_","
+ S MAGRY(0)="1^0"
+ Q LRSF_","_IEN
+ ;
+ ;+++++ CONVERT DATA IN INTERNAL FORMAT (I.E. DATES) INTO THE MM/DD/YYYY hh:mm:ss FORMAT
+ ;      RETURN DATA IN EXTERNAL FORMAT UNCHANGED
+ ;
+ ; X             Input data in internal or external format
+ ;
+ ; IE            Flags data as external ("E") or internal ("I")
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If input data is in Internal format:
+ ;                                      The input is Date/Time
+ ;                                      The output is Date/Time in MM/DD/YYYY hh:mm:ss format
+ ;
+ ; If input data is in External format:
+ ;                                      The input is not a date
+ ;                                      The output is the same as the input
+ ;
+FRMTVAL(X,IE) ;
+ Q $S($G(IE)="E":X,1:$TR($$FMTE^XLFDT(X,"5Z"),"@"," "))
+ ;
+ ;+++++ GET ORDERING PROVIDER AND/OR PCP, SEND ALERT
+ ;
+ ; .LRMSG        Message with list of recipients
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRSS          AP Section
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRSF          Subfield Number in LAB DATA file (#63)
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; LRMSG         Message with recipients if successful,
+ ;               otherwise return "No Ordering Provider or PCP for alert"
+ ;
+SNDALRT(LRMSG,LRDFN,LRSS,LRI,LRSF) ;
+ N LRDOCS,LRC,LRDOCSN,LRXQA,LRA,DFN,LRAN,LRACC,YR
+ K LRMSG
+ ;
+ ; CPRS alerts only sent for "patients" related to Patient file (#2)
+ I $$GET1^DIQ(63,LRDFN_",",".02","I")'=2 S LRMSG="^Patient not in Patient file" Q
+ ;
+ D GETDOCS^LRAPUTL(.LRDOCS,LRDFN,LRSS,LRI,LRSF)
+ S LRMSG="^Release alert will be sent to: "
+ F LRC=1:1:LRDOCS I LRDOCS(LRC) D
+ . S LRDOCSN(LRC)=$$NAME^XUSER(+LRDOCS(LRC),"F")
+ . I LRDOCSN(LRC)'="" S LRXQA(+LRDOCS(LRC))="",LRMSG=LRMSG_LRDOCSN(LRC)_" "
+ . Q
+ I '$D(LRXQA) S LRMSG="^No Ordering Provider or PCP for alert" Q
+ ;
+ ; Send the alert
+ ;
+ S LRA=$G(^LR(LRDFN,LRSS,LRI,0))               ; Node 0
+ I LRA="" S LRA=9999999-LRI,YR=LRA\10000*10000,LRACC=$O(^LRO(68,"B",LRSS,0)) I LRACC D
+ . S LRAN=$O(^LRO(68,LRACC,1,YR,1,"E",LRA,0)),$P(LRA,U,6)=LRSS_" "_$E(LRA,2,3)_" "_LRAN
+ . Q
+ S DFN=$$GET1^DIQ(63,LRDFN_",",".03","I")      ; Internal Patient ID
+ D LAB^ORB3LAB(DFN,LRDFN,LRI,$G(LRA),LRSS,.LRXQA)  ; Trigger Lab-related notifications
+ Q  ;
+ ;
+ ;+++++ DETERMINE WHETHER THE MAIN REPORT IS ALREADY RELEASED
+ ;
+ ; LRSF          Subfield Number in LAB DATA file (#63)    
+ ;
+ ; IEN           LAB DATA file (#63) IEN for a case
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; LRRLS         Parameter indicating whether the main report is already released
+ ;
+RELEAS1(LRSF,IEN) ;
+ S LRRLS=0
+ S:+$$GET1^DIQ($G(LRSF),$G(IEN),.11,"I") LRRLS=1
+ ; If the report has been released auditing will occur
+ ; COPY and COMPARE may be executed
+ Q LRRLS ;
+ ;
+ ;+++++ SELECT THE SUPPLEMENTARY REPORT BY DATE, OR CREATE A NEW ONE
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .LRFILE1      Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error
+ ;
+ ; .LRDA         Part of the IEN of the sub-subfield for the supplementary report
+ ;
+ ; .REL          Determines whether or not the supplementary report
+ ;               is to be released
+ ;
+ ; .ENT          Input array
+ ;                  First Line:
+ ;                     01^: Date
+ ;                     02^: REL: Release?
+ ;
+ ;               Following lines: Supplementary report text
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRSS          AP Section
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRSF          Subfield Number in LAB DATA file (#63)
+ ;
+GETRPT(MAGRY,LRFILE1,LRQUIT,LRDA,REL,ENT,LRDFN,LRSS,LRI,LRSF) ;
+ ; First, select the report; First line: Date^Release?
+ K LRFILE1,LRDA,REL
+ N I,DATA,X,DIC,DLAYGO,LRX,Y
+ S I=$O(ENT(""))
+ S DATA=ENT(I)                                 ; First line of ENT: Date^Release?
+ S X=$TR($P(DATA,U)," ","@")                   ; First piece of first line is date
+ S REL=$P(DATA,U,2)                            ; Second piece is "Release?"
+ S DIC(0)="L",DLAYGO=63
+ S DIC="^LR(LRDFN,LRSS,LRI,1.2,"
+ S DIC("P")=$$GET1^DID(LRSF,1.2,"","SPECIFIER")
+ S DIC("B")="" S LRX=0
+ F  S LRX=$O(@(DIC_"LRX)")) Q:'LRX  D
+ . S DIC("B")=+(@(DIC_"LRX,0)"))
+ D ^DIC K DLAYGO
+ S LRFILE1=+DIC("P")
+ ; Error handling
+ I Y=-1 S LRQUIT=2,MAGRY(0)="0^0^Updating Error" Q
+ ; Otherwise set MAGRY and continue
+ S LRDA=+Y
+ Q  ;
+ ;
+ ;+++++ DETERMINE WHETHER THE SUPPLEMENTARY REPORT IS ALREADY RELEASED
+ ;
+ ; .LRIENS       LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report
+ ;
+ ; .LRRLS1       Parameter indicating whether the supplementary report is already released
+ ;
+ ; LRDA          Part of the IEN of the sub-subfield for the supplementary report
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+RELEAS2(LRIENS,LRRLS1,LRDA,LRI,LRDFN,LRFILE1) ;
+ K LRIENS
+ S LRIENS=LRDA_","_LRI_","_LRDFN_","
+ S:+$$GET1^DIQ(LRFILE1,LRIENS,.02,"I") LRRLS1=1
+ Q  ;
+ ;
+ ;+++++ MAKE A COPY OF THE CURRENT REPORT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report
+ ;
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("MAGTP",$J,"SR") global node is used by this procedure.
+ ;
+COPY(MAGRY,LRQUIT,LRFILE1,LRIENS) ;
+ K ^TMP("MAGTP",$J,"SR")
+ N MAGERR
+ D GETS^DIQ(LRFILE1,LRIENS,"**","Z","^TMP(""MAGTP"",$J,""SR"")","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Supplementary Report Copy Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S LRQUIT=2
+ . Q
+ Q  ;
+ ;
+ ;+++++ UPDATE SUPPLEMENTARY REPORT ONLY IF NOT ALREADY RELEASED
+ ;      NOTE: FILEMAN WOULD ALLOW IT
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ; 
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error or stop completely
+ ;
+ ; .ENT          Input array
+ ;               First Line:
+ ;
+ ;                    01^: Date
+ ;                    02^: REL: Release?
+ ;
+ ;               Following lines: Supplementary report text
+ ;
+ ; LRRLS         Parameter indicating whether the main report is already released
+ ;
+ ; LRRLS1        Parameter indicating whether the supplementary report is already released
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report
+ ;
+RPT(MAGRY,LRQUIT,ENT,LRRLS,LRRLS1,LRFILE1,LRIENS) ;
+ I LRRLS1 D  Q
+ . S MAGRY(0)="1^0^Supplementary Report Already Released, No Update"
+ . K ^TMP("MAGTP",$J,"SR")                     ; Clean copy
+ . S LRQUIT=2                                  ; Stop completely
+ . Q
+ N LINE,I,DATA
+ N LRFDA,MAGERR
+ S LINE=$O(ENT("")),I=""                       ; Start from second line of input array
+ F  S LINE=$O(ENT(LINE)) Q:LINE=""  D
+ . S DATA=ENT(LINE)
+ . S:DATA]"" I=I+1,LRFDA(I)=DATA               ; FDA arrays cannot start from 0
+ . Q
+ ; Update only if input present
+ I $D(LRFDA)=10 D WP^DIE(LRFILE1,LRIENS,1,"K","LRFDA","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S LRQUIT=2
+ . Q
+ ; If main report is not released, stop here and proceed
+ ; to release the SR if so marked
+ I 'LRRLS D  Q
+ . S MAGRY(0)="1^0^Supplementary Report Updated"
+ . S LRQUIT=1
+ . Q
+ Q  ;
+ ;
+ ;+++++ COMPARE REPORTS
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error or stop completely
+ ;
+ ; LRDA          Part of the IEN of the sub-subfield for the supplementary report
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRSS          AP Section
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+COMPARE(MAGRY,LRQUIT,LRDA,LRFILE1,LRIENS,LRDFN,LRSS,LRI) ; Compare reports
+ N LRFIL,LRA,LRFLG,LRXTMP,LRYTMP
+ ; If nothing to compare to, quit
+ I '$D(^TMP("MAGTP",$J,"SR")) D  Q
+ . S MAGRY(0)="1^0^Supplementary Report Updated"
+ . S LRQUIT=1
+ . Q
+ S LRFIL="^LR(LRDFN,LRSS,LRI,1.2,LRDA,1,"
+ I '$D(@(LRFIL_"0)")) D  Q                     ; Quit if no entry - do not release
+ . S MAGRY(0)="1^0^Empty Supplementary Report - Cannot release"
+ . K ^TMP("MAGTP",$J,"SR")
+ . S LRQUIT=2                                  ; Stop completely
+ . Q
+ S LRA=0,LRFLG=1
+ F  S LRA=$O(@(LRFIL_"LRA)")) Q:'LRA  D
+ . S LRXTMP=@(LRFIL_"LRA,0)")
+ . S:'$D(^TMP("MAGTP",$J,"SR",LRFILE1,LRIENS,1,LRA,0)) LRFLG=0
+ . Q:'LRFLG
+ . S LRYTMP=^TMP("MAGTP",$J,"SR",LRFILE1,LRIENS,1,LRA,0)
+ . I LRXTMP'=LRYTMP S LRFLG=0
+ . Q
+ I LRFLG D
+ . S LRA=0
+ . F  S LRA=$O(^TMP("MAGTP",$J,"SR",LRFILE1,LRIENS,1,LRA)) Q:'LRA  D
+ . . I '$D(@(LRFIL_"LRA,0)")) S LRFLG=0
+ . Q
+ ;
+ ; If no changes (LRFLG=1) stop, then release SR if marked for release
+ ;
+ I LRFLG D  Q
+ . K ^TMP("MAGTP",$J,"SR")
+ . S MAGRY(0)="1^0^No changes were made to the Supplementary Report"
+ . S LRQUIT=1
+ . Q
+ Q  ;
+ ;
+ ;+++++ FILE CHANGES FOR AUDITING
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error
+ ;
+ ; .LRORIEN      IEN of the newly generated entry that stores the supplementary report
+ ;               before it is updated
+ ;
+ ; LRFILE        Supplementary report modified sub-subfield
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRSS          AP Section
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, - IEN of the sub-subfield of the supplementary report
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+ ; REL           Determines whether or not the supplementary report
+ ;               is to be released
+ ;
+UPDATE(MAGRY,LRQUIT,LRORIEN,LRFILE,LRDFN,LRSS,LRI,LRIENS,LRFILE1,REL) ;
+ ;
+ ; First, store the date of the change and user ID
+ N PARAM
+ K MAGRY
+ F PARAM="LRDFN","LRSS","LRI" I $G(@PARAM)="" D  Q
+ . S MAGRY(0)="0^0^Invalid parameter value ("_PARAM_")"
+ . Q
+ Q:$P($G(MAGRY(0)),"^",1)=0
+ D UPDATE^LRPXRM(LRDFN,LRSS,+$G(LRI))
+ N LRIENS1
+ N LRFDA,MAGERR
+ S LRIENS1="+1,"_$G(LRIENS)
+ S LRFILE=+$$GET1^DID($G(LRFILE1),2,"","SPECIFIER")
+ I LRFILE="" S LRQUIT=1 Q
+ S LRFDA(1,LRFILE,LRIENS1,.01)=$$NOW^XLFDT     ; Set timestamp to NOW
+ S LRFDA(1,LRFILE,LRIENS1,.02)=DUZ
+ D UPDATE^DIE("","LRFDA(1)","LRORIEN","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S LRQUIT=2
+ . Q
+ ;
+ ; Set 3rd piece .03 SUPP REPORT MODIFIED to 1
+ ; to flag the supp report, release it if marked as such
+ ;
+ I '$G(REL) D
+ . K LRFDA,MAGERR
+ . S LRFDA(1,LRFILE1,LRIENS,.03)=1
+ . D UPDATE^DIE("","LRFDA(1)","","MAGERR")
+ . S MAGRY(0)="1^0^Supplementary Report Updated"
+ . Q
+ ; Error handling
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S LRQUIT=2
+ . Q
+ Q  ;
+ ;
+ ;+++++ STORE THE ORIGINAL REPORT FOR AUDITING PURPOSES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ; 
+ ; .LRQUIT       Parameter determining whether to quit and how
+ ;                   0: Do not quit
+ ;                   1: Quit after tag is executed, no error
+ ;                   2: Quit with error
+ ;
+ ; .LRORIEN      IEN of the newly generated entry that stores the supplementary report
+ ;               before it is updated
+ ;
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report 
+ ;
+ ; LRFILE        Supplementary report modified sub-subfield
+ ;
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("MAGTP",$J,"SR") global node is used by this procedure.
+ ;
+STORE(MAGRY,LRQUIT,LRORIEN,LRIENS,LRFILE) ; Second, store the original report
+ N LRWPROOT,MAGERR
+ N LRIENS2
+ S LRIENS2=LRORIEN(1)_","_LRIENS
+ S LRWPROOT="^TMP(""MAGTP"",$J,""SR"",LRFILE1,LRIENS,1)"
+ I $D(@LRWPROOT)'<10 D
+ . D WP^DIE(LRFILE,LRIENS2,1,"K",LRWPROOT,"MAGERR")
+ K ^TMP("MAGTP",$J,"SR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S LRQUIT=2
+ . Q
+ S MAGRY(0)="1^0^Supplementary Report Updated"
+ Q  ;
+ ;
+ ;+++++ RELEASE SUPPLEMENTARY REPORT IF MARKED FOR RELEASE
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRFILE1       Sub-subfield of the AP subfield ("CY":63.09, "EM":63.02, "SP":63.08)
+ ;               where the supplementary report is stored
+ ;
+ ; LRIENS        LRIENS=LRDA,LRI,LRDFN, IEN of the sub-subfield of the supplementary report
+ ;
+ ; LRDFN         DFN from LAB DATA file (#63) for a patient
+ ;
+ ; LRSS          AP Section
+ ;
+ ; LRI           Reverse Date entry in LAB DATA file (#63)
+ ;
+ ; LRSF          Subfield Number in LAB DATA file (#63)
+ ;
+ ; LRDA          Part of the IEN of the sub-subfield for the supplementary report
+ ;
+RELEASE(MAGRY,LRFILE1,LRIENS,LRDFN,LRSS,LRI,LRSF,LRDA) ;
+ N LRFDA,MAGERR,LRMSG
+ S LRFDA(LRFILE1,LRIENS,.02)=1                 ; Set released flag
+ S LRFDA(LRFILE1,LRIENS,.03)="@"               ; Clear modified flag
+ D CKSIGNR^LRAPR1                              ; LRDA assumed: Update auditing if any
+ D UPDATE^DIE("","LRFDA","","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; If released, send alert to ordering provider/PCP
+ ;
+ D SNDALRT^MAGTP006(.LRMSG,LRDFN,LRSS,LRI,LRSF)  ;
+ S MAGRY(0)="1^0^Supplementary Report Released"_$G(LRMSG)
+ Q  ;
+
+

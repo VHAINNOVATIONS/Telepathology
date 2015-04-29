@@ -1,0 +1,60 @@
+MAGT7SS1 ;WOIFO/MLH - telepathology - create HL7 message to DPS - segment build - set up OBXs for each SPM ; 11/26/2012 4:10 PM
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3056;Nov 21, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q
+ ;
+SPMANC(MSG,DFN,LRDFN,LRSS,LRI,SPMIX) ; FUNCTION - main entry point - create ancillary OBX segments
+ I $G(DFN)'?1.N Q "-910`Invalid DFN ("_$G(DFN)_")"
+ I $G(LRDFN)'?1.N Q "-920`Invalid LRDFN ("_$G(LRDFN)_")"
+ I "^AU^CY^EM^SP^"'[("^"_$G(LRSS)_"^") Q "-930`Invalid LRSS ("_$G(LRSS)_")"
+ I $G(LRI)'?1.N.1"."1.N Q "-940`Invalid LRI ("_$G(LRI)_")"
+ I $G(SPMIX)'?1.N Q "-950`Invalid SPMIX ("_$G(SPMIX)_")"
+ I '$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX)) Q "-955`SPMIX ("_SPMIX_") not found on file"
+ N BLKTYPSTGSTR ; block type/stage string
+ N BLKTYPSTG ; block type/stage
+ N BLKTYPSTGIX ; block type/stage index
+ N OUT
+ S OUT=0 ; assume nothing to report
+ D  ; make OBX segments, bail if a problem arises
+ . D  Q:OUT  ;subspecialty
+ . . N SUBSPEC ; subspecialty name
+ . . S SUBSPEC=$S(LRSS="AU":"AUTOPSY",LRSS="CY":"CYTOPATHOLOGY",LRSS="EM":"ELECTRON MICROSCOPY",LRSS="SP":"SURGICAL PATHOLOGY",1:"")
+ . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"SUBSPECIALTY","ST",SUBSPEC)
+ . . Q
+ . D  Q:OUT  ; block type/stage
+ . . I LRSS="CY" D  Q  ; blocks/stages for cytopathology
+ . . . S BLKTYPSTGSTR="SMEAR PREP^CELL BLOCK^MEMBRANE FILTER^PREPARED SLIDES^CYTOSPIN"
+ . . . F BLKTYPSTG=1:1:$L(BLKTYPSTGSTR,"^") D:$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG))  Q:OUT
+ . . . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"BLOCK TYPE/STAGE","ST",$P(BLKTYPSTGSTR,"^",BLKTYPSTG)) Q:OUT
+ . . . . ;S OUT=$$BLOCKSEGS^MAGT7SS2(MSG,DFN,LRDFN,LRSS,LRI,SPMIX,BLKTYPSTGIX)
+ . . . . Q
+ . . . Q
+ . . I LRSS="SP" D  Q  ; blocks/stages for surgical pathology
+ . . . S BLKTYPSTGSTR="PARAFFIN BLOCK^PLASTIC BLOCK^FROZEN TISSUE"
+ . . . F BLKTYPSTG=1:1:$L(BLKTYPSTGSTR,"^") D:$D(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG))  Q:OUT
+ . . . . S OUT=$$OBXSEG^MAGT7SX(.MSG,"BLOCK TYPE/STAGE","ST",$P(BLKTYPSTGSTR,"^",BLKTYPSTG)) Q:OUT
+ . . . . S BLKTYPSTGIX=0 ; block type/stage index
+ . . . . F  S BLKTYPSTGIX=$O(^LR(LRDFN,LRSS,LRI,.1,SPMIX,BLKTYPSTG,BLKTYPSTGIX)) Q:'BLKTYPSTGIX  D  Q:OUT
+ . . . . . S OUT=$$BLOKSEGS^MAGT7SS2(.MSG,DFN,LRDFN,LRSS,LRI,SPMIX,BLKTYPSTG,BLKTYPSTGIX)
+ . . . . . Q
+ . . . . Q
+ . . . Q
+ . . Q
+ . Q
+ Q OUT
+
+

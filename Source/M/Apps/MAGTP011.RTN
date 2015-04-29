@@ -1,0 +1,468 @@
+MAGTP011 ;WOIFO/FG,MLH - TELEPATHOLOGY RPCS ; 12/11/2012 11:41 am
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 1;Apr 03, 2013
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** RETRIEVE A LIST OF IENS AND NAMES
+ ;      GIVEN PART OF THE NAME AND THE FILE NUMBER
+ ; RPC: MAGTP GET LIST
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; FILE          File Number from which to retrieve the results
+ ;
+ ; PART          Part of a name used to retrieve a list containing it
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; @MAGRY@(0)   Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;
+ ; @MAGRY@(i)   Description
+ ;                ^01: IEN of entry
+ ;                ^02: Name of entry
+ ;                ^03: (SNOMED or CPT code for SNOMED or CPT files)
+ ;
+ ; Notes
+ ; =====
+ ;
+ ; The ^TMP("MAGTP",$J,"AC") global node is used by this procedure
+ ; if the count (CT) gets too large (CT>100).
+ ;
+GETUPART(MAGRY,FILE,PART) ; RPC [MAGTP GET LIST]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(FILE)="" S MAGRY(0)="0^0^No File # entered" Q
+ I $G(PART)="" S MAGRY(0)="0^0^No part of name entered" Q
+ S:FILE'=64 PART=$$UCASE^MAGXCVP(PART)         ; File (#64) has lowercase entries
+ ; Use indirection, work if an Array or a Global Array is returned
+ S MAGRY="MAGRY"
+ N INDEX,FIELD,PIECE,SCREEN,MAGOUT,MAGERR,CT,I
+ S INDEX=$S(FILE=200:"C",FILE=64:"C",1:"B")    ; Default to "C" only for some files
+ ; Field 2 only for CPT and SNOMED codes
+ S FIELD="@;"_$S(FILE=81:2,FILE["61":".01;2",FILE=64:".01;1",1:".01")
+ S PIECE=$S(FILE=81:2,1:1)                     ; Piece 2 only for CPT codes
+ S SCREEN="I $P(^(0),U,"_PIECE_")["_""""_PART_""""
+ I FILE=200 S SCREEN=SCREEN_",$D(^VA(200,""AK.PROVIDER"",$P(^(0),U)))"  ;add LR user filter
+ D LIST^DIC(FILE,"",FIELD,"P","","","",INDEX,SCREEN,"","MAGOUT","MAGERR")  ; IA #10060
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S CT=+MAGOUT("DILIST",0)
+ I CT>100 D ARY2GLB^MAGTP009(.MAGRY)
+ F I=1:1:CT S @MAGRY@(I)=MAGOUT("DILIST",I,0)
+ S @MAGRY@(0)="1^"_CT
+ Q  ;
+ ;
+ ;***** ADD SNOMED CODES TO A CASE
+ ; RPC: MAGTP PUT SNOMED CODES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          List of SNOMED codes
+ ;               Input array. The field numbers and entry data
+ ;               must be listed one on each line as:
+ ;
+ ;               ENT(n)   = Organ/Tissue Number ^ Label ^ N: Total Number of lines of data
+ ;               ENT(n+1) = Organ/Tissue Number ^ DATA (1)
+ ;               ...
+ ;               ENT(n+N) = Organ/Tissue Number ^ DATA (N)
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; 0^0^ ERROR explanation: When no other lines of output are generated
+ ;
+ ; 0^ Total Number of Lines: if an error occurred while
+ ; extracting one of the fields
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Number of Lines
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: "<Label Name> Updated" or "Updating Error: " <Error Message>
+ ;                ^02: <Added IEN>
+ ;
+PUTSNOMD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT SNOMED CODES]
+ K MAGRY
+ I $D(ENT)<10 S MAGRY(0)="0^0^No SNOMED codes entered" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
+ . S MAGRY(0)="0^0^One or more case input parameters are missing"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N LRFDA,ORIEN,MAGERR
+ N LRSF,IEN,CT,BDFLG,LINE,LABEL,N,I
+ N NVAL,VAL,SUBF,SUBFJ,SUBFJK,IENS
+ S LRSF=$P(INPUT,","),IEN=$P(INPUT,",",2,4)
+ S SUBF=+$$GET1^DID(LRSF,10,"","SPECIFIER")
+ S CT=0,BDFLG=1                                ; If BDFLG=0, one or more bad entries 
+ ;
+ ; Read input array
+ ;
+ S LINE="" F  S LINE=$O(ENT(LINE)) Q:LINE=""!('BDFLG)  D
+ . K LABEL,VAL,NVAL,SUBFJ,SUBFJK,LRFDA,ORIEN,MAGERR
+ . S CT=CT+1
+ . S N=$P(ENT(LINE),U)                         ; Organ/Tissue or O/T Morphology internal number
+ . S LABEL=$P(ENT(LINE),U,2)                   ; Subfield label
+ . S NVAL=$P(ENT(LINE),U,3)                    ; Number of lines of data after first line
+ . F I=1:1:NVAL S VAL(I)=$P(ENT(LINE+I),U,2)   ; Extract values from NVAL lines of ENT
+ . ;
+ . I LABEL["ORGAN/TISSUE" D                    ; CY and EM have "CYTOPATH" and "EM" in front
+ . . S SUBFJ=+$$GET1^DID(LRSF,10,"","SPECIFIER")  ; Use field number
+ . . F I=1:1:NVAL D                            ; Extract values from NVAL lines of ENT
+ . . . S:VAL(I)]"" LRFDA(SUBFJ,"+"_I_","_IEN,.01)=VAL(I)
+ . . D:$D(LRFDA) UPDATE^DIE("","LRFDA","ORIEN","MAGERR")
+ . . Q
+ . ;
+ . I LABEL'="ETIOLOGY",(LABEL'["ORGAN/TISSUE") D
+ . . S SUBFJ=+$$GET1^DID(SUBF,LABEL,"","SPECIFIER")
+ . . I SUBFJ=0!LABEL D  Q
+ . . . S MAGRY(CT)=LABEL_" Invalid"            ; LABEL must be text and valid
+ . . . S BDFLG=0
+ . . . Q
+ . . F I=1:1:NVAL D                            ; Extract values from NVAL lines of ENT
+ . . . S:VAL(I)]"" LRFDA(SUBFJ,"+"_I_","_N_","_IEN,.01)=VAL(I)
+ . . D:$D(LRFDA) UPDATE^DIE("","LRFDA","ORIEN","MAGERR")
+ . . Q
+ . ;
+ . I LABEL="ETIOLOGY" D                        ; ETIOLOGY is a subfield of MORPHOLOGY
+ . . S SUBFJ=+$$GET1^DID(SUBF,"MORPHOLOGY","","SPECIFIER")
+ . . S SUBFJK=+$$GET1^DID(SUBFJ,"ETIOLOGY","","SPECIFIER")
+ . . F I=1:1:NVAL D
+ . . . S:VAL(I)]"" LRFDA(SUBFJK,"+"_I_","_N_","_IEN,.01)=VAL(I)
+ . . D:$D(LRFDA) UPDATE^DIE("","LRFDA","ORIEN","MAGERR")
+ . . Q
+ . ; Update LINE number to next field entry
+ . S LINE=LINE+NVAL
+ . ; Error handling
+ . I $D(MAGERR) D  Q
+ . . S MAGRY(CT)=LABEL_" Failed: Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . . S BDFLG=0
+ . . Q
+ . S (I,IENS)="" F  S I=$O(ORIEN(I)) Q:I=""  S IENS=IENS_U_ORIEN(I)
+ . S:'$D(MAGRY(CT)) MAGRY(CT)=LABEL_" Updated"_IENS
+ . Q
+ S MAGRY(0)=BDFLG_U_CT
+ Q  ;
+ ;
+ ;***** GET SNOMED CODES FOR A CASE
+ ; RPC: MAGTP GET SNOMED CODES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure:
+ ;
+ ; 0^0^ ERROR explanation: When no other lines of output are generated
+ ;
+ ; 0^ Total Number of Lines: if an error occurred while
+ ; extracting one of the fields
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03:
+ ;                     |01: "N"
+ ;                     |02: "O/T Code"
+ ;                ^04: "O/T Name"  
+ ;                ^05: 
+ ;                     |01: "J"
+ ;                     |02: "Label"
+ ;                ^06: "SNOMED Code"
+ ;                ^07: "SNOMED Name"
+ ;                ^08:
+ ;                     |01: "K"
+ ;                     |02: "Label"
+ ;                ^09: "Etiology SNOMED Code"
+ ;                ^10: "Etiology SNOMED Name"
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01:
+ ;                     |01: Internal Number
+ ;                     |02: O/T Code
+ ;                ^02: O/T Name
+ ;                ^03:
+ ;                     |01: Internal Number
+ ;                     |02: <Label>
+ ;                ^04: SNOMED Code
+ ;                ^05: SNOMED Name
+ ;                ^06:
+ ;                     |01: Internal Number
+ ;                     |02: <Label>
+ ;                ^07: Etiology SNOMED Code
+ ;                ^08: Etiology SNOMED Name
+ ;
+GETSNOMD(MAGRY,LRSS,YEAR,LRAN) ; RPC [MAGTP GET SNOMED CODES]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N INPUT
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN) Q:'MAGRY(0)
+ N MAGOUT,MAGERR
+ N LRSF,IEN,SUBF,NIEN,CT,N,OTNM,ORTS,NUM,NUMJ
+ N LABEL,NIENJ,NJ,SNONUM,SNOMED,SUBFJ,FILE,SUBFK
+ N NIENJK,NJK,ETNM,ETIO,INDX,INDXJ,INDXJK,LAST
+ S LRSF=$P(INPUT,","),IEN=$P(INPUT,",",2,4)
+ ;
+ ; Get all info for Organ/Tissue(s), then sort through it
+ ;
+ D GETS^DIQ(LRSF,IEN,"10*","IE","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S SUBF=+$$GET1^DID(LRSF,10,"","SPECIFIER")    ; Subfields of Organ/Tissue
+ ;
+ ; Extract subfields: "FUNCTION","PROCEDURE","DISEASE","MORPHOLOGY"
+ ;      sub-subfield: "ETIOLOGY"
+ ;
+ F LABEL="FUNCTION","PROCEDURE","DISEASE","MORPHOLOGY" D
+ . S SUBFJ(LABEL)=+$$GET1^DID(SUBF,LABEL,"","SPECIFIER")
+ S SUBFK=+$$GET1^DID(SUBFJ("MORPHOLOGY"),"ETIOLOGY","","SPECIFIER")
+ ;
+ ; NIEN may be ordered incorrectly, set index
+ ;
+ S NIEN=""
+ F  S NIEN=$O(MAGOUT(SUBF,NIEN)) Q:NIEN=""  D
+ . S INDX($P(NIEN,","))=""
+ S (CT,N)=""
+ F  S N=$O(INDX(N)) Q:N=""  D
+ . S NIEN=N_","_IEN
+ . S OTNM=MAGOUT(SUBF,NIEN,.01,"I")
+ . S OTNM=$$GET1^DIQ(61,OTNM,2)                ; Field=2 in the LAB files gives SNOMED codes
+ . S ORTS=MAGOUT(SUBF,NIEN,.01,"E")
+ . S CT=CT+1
+ . S MAGRY(CT)=N_"|"_OTNM_U_ORTS               ; Record Organ/Tissue
+ . F LABEL="FUNCTION","PROCEDURE","DISEASE","MORPHOLOGY" D
+ . . ; Select the appropriate LAB file for each subfield
+ . . S FILE=$S(LABEL="FUNCTION":61.3,LABEL="PROCEDURE":61.5,LABEL="DISEASE":61.4,1:61.1)
+ . . K INDXJ                                   ; Subnodes: F, P, D, M
+ . . S NIENJ=""
+ . . F  S NIENJ=$O(MAGOUT(SUBFJ(LABEL),NIENJ)) Q:NIENJ=""  D
+ . . . S:$P(NIENJ,",",2)=N INDXJ($P(NIENJ,",",1,2))=""
+ . . Q:'$D(INDXJ)                              ; Quit if no subnodes, keep only O/T
+ . . S NJ=""
+ . . F  S NJ=$O(INDXJ(NJ)) Q:NJ=""  D
+ . . . S NIENJ=NJ_","_IEN
+ . . . S SNONUM=MAGOUT(SUBFJ(LABEL),NIENJ,.01,"I")
+ . . . S SNONUM=LABEL_U_$$GET1^DIQ(FILE,SNONUM,2)
+ . . . S SNOMED=MAGOUT(SUBFJ(LABEL),NIENJ,.01,"E")
+ . . . S NUM=$P(NJ,",")_"|"
+ . . . S MAGRY(CT)=N_"|"_OTNM_U_ORTS_U_NUM_SNONUM_U_SNOMED
+ . . . K INDXJK                                ; Sub-subnode: Etiology
+ . . . S NIENJK=""
+ . . . F  S NIENJK=$O(MAGOUT(SUBFK,NIENJK)) Q:NIENJK=""  D
+ . . . . S:$P(NIENJK,",",2,3)=NJ INDXJK($P(NIENJK,",",1,3))=""
+ . . . I '$D(INDXJK)!(LABEL'="MORPHOLOGY") S CT=CT+1 Q  ; Morphology only, quit if no sub-subnode
+ . . . S NJK=""
+ . . . F  S NJK=$O(INDXJK(NJK)) Q:NJK=""  D
+ . . . . S NIENJK=NJK_","_IEN
+ . . . . S ETNM=MAGOUT(SUBFK,NIENJK,.01,"I")
+ . . . . S ETNM="ETIOLOGY"_U_$$GET1^DIQ(61.2,ETNM,2)
+ . . . . S ETIO=MAGOUT(SUBFK,NIENJK,.01,"E")
+ . . . . S NUMJ=$P(NJK,",")_"|"
+ . . . . S MAGRY(CT)=N_"|"_OTNM_U_ORTS_U_NUM_SNONUM_U_SNOMED_U_NUMJ_ETNM_U_ETIO
+ . . . . S CT=CT+1
+ . . . . Q
+ . . . Q
+ . . Q
+ . Q
+ S LAST=$O(MAGRY(""),-1)
+ S MAGRY(0)="1^"_LAST_"^N|O/T Code^O/T Name^J|Label^SNOMED Code^SNOMED Name^K|Label^Etiology SNOMED Code^Etiology SNOMED Name"
+ Q  ;
+ ;
+ ;***** GET THE USER'S SETTING/PREFERENCES IN XML FORMAT
+ ;      FROM THE CONFIGURATION FILE (#2006.13)
+ ; RPC: MAGTP GET PREFERENCES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ENT           List of inputs:
+ ;                 ^01: DUZ of user whose preferences are to be retrieved
+ ;                 ^02: LABEL of preference section
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: <DUZ>: <LABEL>
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: XML Line of Text
+ ;
+GETUPREF(MAGRY,ENT) ; RPC [MAGTP GET PREFERENCES]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N LDUZ,FILE,FILE2,LABEL,CT,I
+ N MAGREC0,MAGREC1,MAGREC2,MAGOUT,MAGERR
+ S FILE=2006.13
+ S FILE2=2006.1371
+ ;
+ S LDUZ=$P($G(ENT),U)                          ; First line of ENT is LDUZ^LABEL
+ I LDUZ="" S LDUZ=DUZ                          ; Default to user's DUZ if null
+ I $$GET1^DIQ(200,LDUZ_",",.01)="" S MAGRY(0)="0^0^Invalid DUZ" Q  ; IA #10060
+ ;
+ ; Get configuration record IEN or bail
+ ;
+ S MAGREC0=$O(^MAG(FILE,0))
+ I 'MAGREC0 S MAGRY(0)="0^0^No configuration record defined" Q
+ ;
+ S MAGREC1=$O(^MAG(FILE,MAGREC0,7,"B",LDUZ,""))
+ I MAGREC1="" S MAGRY(0)="0^0^No preferences found for "_LDUZ Q
+ ;
+ S LABEL=$P(ENT,U,2)
+ I LABEL="" S MAGRY(0)="0^0^No Label entered" Q
+ S MAGREC2=$O(^MAG(FILE,MAGREC0,7,MAGREC1,1,"B",LABEL,""))
+ I MAGREC2="" D  Q
+ . S MAGRY(0)="0^0^No preferences found for "_LDUZ_": "_LABEL
+ ;
+ D GET1^DIQ(FILE2,MAGREC2_","_MAGREC1_","_MAGREC0_",",.02,"","MAGOUT","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1)
+ S (CT,I)=0
+ F  S I=$O(MAGOUT(I)) Q:I=""  D
+ . S CT=CT+1
+ . S MAGRY(CT)=MAGOUT(I)
+ . Q
+ S MAGRY(0)="1^"_CT_U_LDUZ_": "_LABEL
+ Q  ;
+ ;
+ ;***** SET THE USER'S SETTING/PREFERENCES IN XML FORMAT
+ ;      IN THE CONFIGURATION FILE (#2006.13)
+ ; RPC: MAGTP PUT PREFERENCES
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; .ENT          Input array:
+ ;
+ ;                 First Line:      DUZ^Label
+ ;                 Following Lines: One XML line of text
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: <DUZ>: <LABEL> " Preferences Updated"
+ ;
+PUTUPREF(MAGRY,ENT) ; RPC [MAGTP PUT PREFERENCES]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I $D(ENT)<10 S MAGRY(0)="0^0^No Input" Q
+ N LINE,LDUZ,FILE,FILE1,FILE2,LABEL
+ N MAGFDA,MAGERR,ORIEN
+ N MAGREC0,MAGREC1,MAGREC2,I
+ S FILE=2006.13
+ S FILE1=2006.137
+ S FILE2=2006.1371
+ ;
+ ; Get configuration record IEN or bail
+ ;
+ S MAGREC0=$O(^MAG(FILE,0))
+ I 'MAGREC0 S MAGRY(0)="0^0^No configuration record defined" Q
+ ; 
+ S LINE=$O(ENT(""))
+ S LDUZ=$P(ENT(LINE),U)                        ; First line of ENT is LDUZ^LABEL
+ I LDUZ="" S LDUZ=DUZ                          ; Default to user's DUZ if null
+ I $$GET1^DIQ(200,LDUZ_",",.01)="" S MAGRY(0)="0^0^Invalid DUZ" Q  ; IA #10060
+ S MAGREC1=$O(^MAG(FILE,MAGREC0,7,"B",LDUZ,""))
+ ;
+ ; If MAGREC1 is not defined add a DUZ record
+ ;
+ I MAGREC1="" D  Q:$P($G(MAGRY(0)),U)=0
+ . S MAGFDA(1,FILE1,"+1,"_MAGREC0_",",.01)=LDUZ
+ . D UPDATE^DIE("","MAGFDA(1)","ORIEN","MAGERR")
+ . I $D(MAGERR) D  Q
+ . . S MAGRY(0)="0^0^Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S MAGREC1=ORIEN(1)                          ; MAGREC1 generated
+ . K ORIEN
+ . Q
+ ;
+ S LABEL=$P(ENT(LINE),U,2)
+ I LABEL="" S MAGRY(0)="0^0^No Label entered" Q
+ S MAGREC2=$O(^MAG(FILE,MAGREC0,7,MAGREC1,1,"B",LABEL,""))
+ ;
+ ; If MAGREC2 is not defined add a label
+ ;
+ I MAGREC2="" D  Q:$P($G(MAGRY(0)),U)=0
+ . K MAGFDA,MAGERR
+ . S MAGFDA(1,FILE2,"+1,"_MAGREC1_","_MAGREC0_",",.01)=LABEL
+ . D UPDATE^DIE("","MAGFDA(1)","ORIEN","MAGERR")
+ . I $D(MAGERR) D  Q
+ . . S MAGRY(0)="0^0^Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ . S MAGREC2=ORIEN(1)                          ; MAGREC2 generated
+ . K ORIEN
+ . Q
+ ;
+ ; Set new preferences
+ ;
+ K MAGFDA,MAGERR
+ S I=0
+ F  S LINE=$O(ENT(LINE)) Q:LINE=""  D          ; Start from second line
+ . S I=I+1
+ . S MAGFDA(I)=ENT(LINE)                       ; FDA arrays cannot start from 0
+ . Q
+ D WP^DIE(FILE2,MAGREC2_","_MAGREC1_","_MAGREC0_",",.02,"K","MAGFDA","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
+ S MAGRY(0)="1^0^"_LDUZ_": "_LABEL_" - Preferences Updated"
+ Q
+
+

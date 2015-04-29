@@ -1,0 +1,134 @@
+Cache for Windows^INT^^~Format=Cache.S~
+%RO on 14 Jan 2013   1:18 PM
+MAGI138U^INT^1^62836,47521^0
+MAGI138U ;WOIFO/JL,MLH,NST - Install code for TP - default report template (CY) ; 1/14/2013 2:39 pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 86;Oct 30, 2012
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q
+ ;
+ ;+++++ INSTALL DEFAULT XML REPORT TEMPLATES
+ ;
+RPTXTPL ;
+ N XML,MAGERR,D0,FLD,XMLIX,XMLDTA
+ S D0=$O(^MAG(2006.13,0)) Q:'D0
+ S FLD=1 ;CY
+ Q:$D(^MAG(2006.13,D0,FLD))>0  ;EXIST
+ F XMLIX=1:1 S XMLDTA=$P($T(XML+XMLIX),";",2) Q:XMLDTA=""  S XML(XMLIX)=XMLDTA
+ D WP^DIE(2006.13,D0_",",FLD,"A","XML","MAGERR")
+ I $D(MAGERR) D MES^MAGKIDS($G(MAGERR("DIERR",1,"TEXT",1)))
+ Q
+XML ;;Begin contents of XML template for cytopathology
+ ;<ReportTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+ ;<ReportTypeShort>CY</ReportTypeShort>
+ ;<ReportTypeLong>Cytopathology</ReportTypeLong>
+ ;<ReportFields>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>SPECIMEN</DatabaseName>
+ ;<DisplayName>Specimens</DisplayName>
+ ;<FieldNumber>.012</FieldNumber>
+ ;<InputType>MultiText</InputType>
+ ;<DisplayPosition>1</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>BRIEF CLINICAL HISTORY</DatabaseName>
+ ;<DisplayName>Brief Clinical History</DisplayName>
+ ;<FieldNumber>.013</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>2</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>PREOPERATIVE DIAGNOSIS</DatabaseName>
+ ;<DisplayName>Preoperative Diagnosis</DisplayName>
+ ;<FieldNumber>.014</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>3</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>OPERATIVE FINDINGS</DatabaseName>
+ ;<DisplayName>Operative Findings</DisplayName>
+ ;<FieldNumber>.015</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>4</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>POSTOPERATIVE DIAGNOSIS</DatabaseName>
+ ;<DisplayName>Postoperative Diagnosis</DisplayName>
+ ;<FieldNumber>.016</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>5</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>GROSS DESCRIPTION</DatabaseName>
+ ;<DisplayName>Gross Description</DisplayName>
+ ;<FieldNumber>1</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>6</DisplayPosition>
+ ;<IsRequired>true</IsRequired>
+ ;<AlwaysRequired>true</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>MICROSCOPIC EXAMINATION</DatabaseName>
+ ;<DisplayName>Microscopic Examination</DisplayName>
+ ;<FieldNumber>1.1</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>7</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>REVIEWED BY PATHOLOGIST</DatabaseName>
+ ;<DisplayName>Reviewed by Pathologist</DisplayName>
+ ;<FieldNumber>.101</FieldNumber>
+ ;<InputType>Boolean</InputType>
+ ;<DisplayPosition>9</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>CYTOPATHOLOGY DIAGNOSIS</DatabaseName>
+ ;<DisplayName>Cytopathology Diagnosis</DisplayName>
+ ;<FieldNumber>1.4</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>8</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
+ ;</ReportFields>
+ ;</ReportTemplate>
+ ;;End contents of XML template for cytopathology
+
+
+

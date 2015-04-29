@@ -1,0 +1,254 @@
+KIDS Distribution saved on Jan 21, 2013@14:41:56
+VistA Imaging Version 3.0 Patch 138 File 2006.1 Fields 133, 134
+**KIDS**:Z VSS FILE 0.1T^
+
+**INSTALL NAME**
+Z VSS FILE 0.1T
+"BLD",1522,0)
+Z VSS FILE 0.1T^^0^3130121^n
+"BLD",1522,1,0)
+^^1^1^3130121^
+"BLD",1522,1,1,0)
+VistA Imaging Version 3.0 Patch 138 File 2006.1 Fields 133, 134
+"BLD",1522,4,0)
+^9.64PA^2006.1^1
+"BLD",1522,4,2006.1,0)
+2006.1
+"BLD",1522,4,2006.1,2,0)
+^9.641^2006.1^1
+"BLD",1522,4,2006.1,2,2006.1,0)
+IMAGING SITE PARAMETERS  (File-top level)
+"BLD",1522,4,2006.1,2,2006.1,1,0)
+^9.6411^134^2
+"BLD",1522,4,2006.1,2,2006.1,1,133,0)
+TIMEOUT WINDOWS TELEPATHOLOGY
+"BLD",1522,4,2006.1,2,2006.1,1,134,0)
+TELEPATH UNREAD-RETENTION DAYS
+"BLD",1522,4,2006.1,222)
+y^y^p^^^^n^^n
+"BLD",1522,4,2006.1,224)
+
+"BLD",1522,4,"APDD",2006.1,2006.1)
+
+"BLD",1522,4,"APDD",2006.1,2006.1,133)
+
+"BLD",1522,4,"APDD",2006.1,2006.1,134)
+
+"BLD",1522,4,"B",2006.1,2006.1)
+
+"BLD",1522,6.3)
+2
+"BLD",1522,"KRN",0)
+^9.67PA^779.2^20
+"BLD",1522,"KRN",.4,0)
+.4
+"BLD",1522,"KRN",.401,0)
+.401
+"BLD",1522,"KRN",.402,0)
+.402
+"BLD",1522,"KRN",.403,0)
+.403
+"BLD",1522,"KRN",.5,0)
+.5
+"BLD",1522,"KRN",.84,0)
+.84
+"BLD",1522,"KRN",3.6,0)
+3.6
+"BLD",1522,"KRN",3.8,0)
+3.8
+"BLD",1522,"KRN",9.2,0)
+9.2
+"BLD",1522,"KRN",9.8,0)
+9.8
+"BLD",1522,"KRN",9.8,"NM",0)
+^9.68A^^0
+"BLD",1522,"KRN",19,0)
+19
+"BLD",1522,"KRN",19.1,0)
+19.1
+"BLD",1522,"KRN",101,0)
+101
+"BLD",1522,"KRN",409.61,0)
+409.61
+"BLD",1522,"KRN",771,0)
+771
+"BLD",1522,"KRN",779.2,0)
+779.2
+"BLD",1522,"KRN",870,0)
+870
+"BLD",1522,"KRN",8989.51,0)
+8989.51
+"BLD",1522,"KRN",8989.52,0)
+8989.52
+"BLD",1522,"KRN",8994,0)
+8994
+"BLD",1522,"KRN","B",.4,.4)
+
+"BLD",1522,"KRN","B",.401,.401)
+
+"BLD",1522,"KRN","B",.402,.402)
+
+"BLD",1522,"KRN","B",.403,.403)
+
+"BLD",1522,"KRN","B",.5,.5)
+
+"BLD",1522,"KRN","B",.84,.84)
+
+"BLD",1522,"KRN","B",3.6,3.6)
+
+"BLD",1522,"KRN","B",3.8,3.8)
+
+"BLD",1522,"KRN","B",9.2,9.2)
+
+"BLD",1522,"KRN","B",9.8,9.8)
+
+"BLD",1522,"KRN","B",19,19)
+
+"BLD",1522,"KRN","B",19.1,19.1)
+
+"BLD",1522,"KRN","B",101,101)
+
+"BLD",1522,"KRN","B",409.61,409.61)
+
+"BLD",1522,"KRN","B",771,771)
+
+"BLD",1522,"KRN","B",779.2,779.2)
+
+"BLD",1522,"KRN","B",870,870)
+
+"BLD",1522,"KRN","B",8989.51,8989.51)
+
+"BLD",1522,"KRN","B",8989.52,8989.52)
+
+"BLD",1522,"KRN","B",8994,8994)
+
+"BLD",1522,"QUES",0)
+^9.62^^
+"FIA",2006.1)
+IMAGING SITE PARAMETERS
+"FIA",2006.1,0)
+^MAG(2006.1,
+"FIA",2006.1,0,0)
+2006.1P
+"FIA",2006.1,0,1)
+y^y^p^^^^n^^n
+"FIA",2006.1,0,10)
+
+"FIA",2006.1,0,11)
+
+"FIA",2006.1,0,"RLRO")
+
+"FIA",2006.1,2006.1)
+1
+"FIA",2006.1,2006.1,133)
+
+"FIA",2006.1,2006.1,134)
+
+"MBREQ")
+0
+"QUES","XPF1",0)
+Y
+"QUES","XPF1","??")
+^D REP^XPDH
+"QUES","XPF1","A")
+Shall I write over your |FLAG| File
+"QUES","XPF1","B")
+YES
+"QUES","XPF1","M")
+D XPF1^XPDIQ
+"QUES","XPF2",0)
+Y
+"QUES","XPF2","??")
+^D DTA^XPDH
+"QUES","XPF2","A")
+Want my data |FLAG| yours
+"QUES","XPF2","B")
+YES
+"QUES","XPF2","M")
+D XPF2^XPDIQ
+"QUES","XPI1",0)
+YO
+"QUES","XPI1","??")
+^D INHIBIT^XPDH
+"QUES","XPI1","A")
+Want KIDS to INHIBIT LOGONs during the install
+"QUES","XPI1","B")
+NO
+"QUES","XPI1","M")
+D XPI1^XPDIQ
+"QUES","XPM1",0)
+PO^VA(200,:EM
+"QUES","XPM1","??")
+^D MG^XPDH
+"QUES","XPM1","A")
+Enter the Coordinator for Mail Group '|FLAG|'
+"QUES","XPM1","B")
+
+"QUES","XPM1","M")
+D XPM1^XPDIQ
+"QUES","XPO1",0)
+Y
+"QUES","XPO1","??")
+^D MENU^XPDH
+"QUES","XPO1","A")
+Want KIDS to Rebuild Menu Trees Upon Completion of Install
+"QUES","XPO1","B")
+NO
+"QUES","XPO1","M")
+D XPO1^XPDIQ
+"QUES","XPZ1",0)
+Y
+"QUES","XPZ1","??")
+^D OPT^XPDH
+"QUES","XPZ1","A")
+Want to DISABLE Scheduled Options, Menu Options, and Protocols
+"QUES","XPZ1","B")
+NO
+"QUES","XPZ1","M")
+D XPZ1^XPDIQ
+"QUES","XPZ2",0)
+Y
+"QUES","XPZ2","??")
+^D RTN^XPDH
+"QUES","XPZ2","A")
+Want to MOVE routines to other CPUs
+"QUES","XPZ2","B")
+NO
+"QUES","XPZ2","M")
+D XPZ2^XPDIQ
+"VER")
+8.0^22.0
+"^DD",2006.1,2006.1,133,0)
+TIMEOUT WINDOWS TELEPATHOLOGY^NJ3,0^^KEYS;8^K:+X'=X!(X>600)!(X<0)!(X?.E1"."1N.N) X
+"^DD",2006.1,2006.1,133,3)
+Type a number between 0 and 600, 0 decimal digits.
+"^DD",2006.1,2006.1,133,21,0)
+^^6^6^3130121^
+"^DD",2006.1,2006.1,133,21,1,0)
+This is the number of Minutes used as Time Out for the Imaging Telepathology
+"^DD",2006.1,2006.1,133,21,2,0)
+Application.  If no activity occurs for this number of minutes, the user
+"^DD",2006.1,2006.1,133,21,3,0)
+will be prompted with a dialog window and given 30 seconds to
+"^DD",2006.1,2006.1,133,21,4,0)
+'Click' on the 'Stay Connected' button or the application will be closed.
+"^DD",2006.1,2006.1,133,21,5,0)
+ 
+"^DD",2006.1,2006.1,133,21,6,0)
+If the number of minutes entered is 0, timeouts will be disabled.
+"^DD",2006.1,2006.1,133,"DT")
+3130121
+"^DD",2006.1,2006.1,134,0)
+TELEPATH UNREAD-RETENTION DAYS^NJ2,0^^TELEPATH;1^K:+X'=X!(X>90)!(X<0)!(X?.E1"."1N.N) X
+"^DD",2006.1,2006.1,134,3)
+Type a number between 0 and 90, 0 decimal digits.
+"^DD",2006.1,2006.1,134,21,0)
+^.001^2^2^3121015^^^
+"^DD",2006.1,2006.1,134,21,1,0)
+This field is used as the default value, in days, by the TELAPATHOLOGY 
+"^DD",2006.1,2006.1,134,21,2,0)
+UNREAD WORKLIST for purges.
+"^DD",2006.1,2006.1,134,"DT")
+3121014
+**END**
+**END**
