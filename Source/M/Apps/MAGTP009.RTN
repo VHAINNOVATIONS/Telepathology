@@ -213,7 +213,7 @@ VERADCPT(MAGRY,LRSS,YEAR,LRAN,LRI,LRDFN) ;
  S LRAD=$S($D(^LR(LRX,200+YEAR)):200+YEAR,$D(^LR(LRX,300+YEAR)):300+YEAR,1:"")_"0000"
  ; Only two cases generate a CPT
  S X=$S(LRSS="SP":"SURGICAL PATH REPORTING",1:"CYTOLOGY REPORTING")
- D LRTX^MAGTP012(.MAGRY,X,.LRT)                ; Define array LRT for WKLD^LRAPRES2
+ D LRTX^MAGTP012(.MAGRY,X,.LRT)                ; Define array LRT for WKLD^LRAPRES
  Q:($P($G(MAGRY(0)),U)=0)                      ; Quit if errors
  D WKLD^LRAPRES                                ; Set workload CPT into file (#68)
  S MAGRY(0)="1^0"
