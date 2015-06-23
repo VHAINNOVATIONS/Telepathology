@@ -151,6 +151,8 @@ namespace VistA.Imaging.Telepathology.Communication
 
         CaseSpecimenList GetCaseDetail(string caseURN);
 
+        CaseSlideList GetCaseSlidesInfo(string caseURN);
+
         PathologyCaseUpdateAttributeResultType LockCaseForEditing(string caseURN, bool lockCase);
 
         bool IsSiteSupportTelepathology(string SiteStationNumber);

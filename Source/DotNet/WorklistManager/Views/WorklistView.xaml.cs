@@ -268,6 +268,14 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
                     // new _tree under construction, selections are lost
                     saveOldSelectedNodes(viewModel);
 
+                if ((e != null) &&
+                    ((e.AddedItems.Count == 0) && (e.RemovedItems.Count == 0) && (_oldSelectedItems != null)) || // no selection/tab switch OR
+                    ((e.AddedItems.Count > 0) && (e.RemovedItems.Count > 0) && ((((CaseListItem)((TreeNode)e.AddedItems[0]).Tag).CaseURN) != (((CaseListItem)((TreeNode)e.RemovedItems[0]).Tag).CaseURN)))) // item in scope is unselected
+                { // empty viewer's slide stack
+                    MainWindow.EraseCaseSlides(); // empty slides viewer application's content
+                    _oldSelectedItems = null;   // forget old selected item
+                }
+
                 ICollection<TreeNode> selectedNodes = this._tree.SelectedNodes;
                 Trace.WriteLine("Selected Node Count = " + selectedNodes.Count);
 
@@ -276,7 +284,7 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
                 {
                     selectedItems.Add((CaseListItem)node.Tag);
                 }
-
+                    
                 viewModel.SelectedItems = selectedItems;
             }
         }

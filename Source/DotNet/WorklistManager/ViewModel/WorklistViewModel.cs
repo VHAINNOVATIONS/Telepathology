@@ -398,20 +398,20 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
         public bool CanViewSnapshots()
         {
             // **** just for demo, return true without snapshots
-            if ((SelectedItems != null) && (SelectedItems.Count == 1) && 
-                (this.SelectedItems[0].Kind == CaseListItemKind.Case) )
-                return true;
+            //if ((SelectedItems != null) && (SelectedItems.Count == 1) && 
+            //    (this.SelectedItems[0].Kind == CaseListItemKind.Case) )
+            //    return true;
 
-            /* **** restore this !!!!
             if ((SelectedItems != null) && (SelectedItems.Count == 1) && 
                 (this.SelectedItems[0].Kind == CaseListItemKind.Case) &&
-                (!string.IsNullOrWhiteSpace(this.SelectedItems[0].SnapshotCount)))
+                // (!string.IsNullOrWhiteSpace(this.SelectedItems[0].SnapshotCount)))
+                (this.SelectedItems[0].SlidesAvailable.Equals("Yes")))
             {
                 int count;
                 bool result = Int32.TryParse(this.SelectedItems[0].SnapshotCount, out count);
                 if ((result) && (count > 0))
                     return true;
-            }  */
+            }
 
             return false;
         }

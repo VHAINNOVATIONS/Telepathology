@@ -32,6 +32,7 @@ import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCas
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseReportFieldType;
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseReserveResultType;
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseSaveSupplementalReportType;
+import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseSlideType;
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseSupplementalReportType;
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseTemplateFieldType;
 import gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseTemplateType;
@@ -58,6 +59,7 @@ import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultation;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSpecimen;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
@@ -1078,5 +1080,44 @@ public class PathologyFederationRestTranslator
 		if(saveCaseReportResult.isReleased())
 			return PathologySaveCaseReportResult.createReleasedResult(saveCaseReportResult.getMessage());
 		return PathologySaveCaseReportResult.createUnreleasedResult();
+	}
+	
+	public static PathologyFederationCaseSlideType [] translateCaseSlides(List<PathologyCaseSlide> slides)
+	{
+		if(slides == null)
+			return null;
+		PathologyFederationCaseSlideType [] result = new PathologyFederationCaseSlideType[slides.size()];
+		for(int i = 0; i < slides.size(); i++)
+		{
+			result[i] = translate(slides.get(i));
+		}
+		return result;
+	}
+	
+	private static PathologyFederationCaseSlideType translate(PathologyCaseSlide slide)
+	{
+		return new PathologyFederationCaseSlideType(slide.getSlideNumber(), slide.getDateTimeScanned(), slide.getUrl(), 
+				slide.getZoomFactor(), slide.getScanApplication(), slide.getSlideStatus(), slide.getViewApplication(),
+				slide.getDescription());
+	}
+	
+	public static List<PathologyCaseSlide> translate(PathologyFederationCaseSlideType [] slides)
+	{
+		if(slides == null)
+			return null;
+		List<PathologyCaseSlide> result = new ArrayList<PathologyCaseSlide>();
+		for(PathologyFederationCaseSlideType slide : slides)
+		{
+			result.add(translate(slide));
+		}
+		
+		return result;
+	}
+	
+	private static PathologyCaseSlide translate(PathologyFederationCaseSlideType slide )
+	{
+		return new PathologyCaseSlide(slide.getSlideNumber(), slide.getDateTimeScanned(), slide.getUrl(), 
+				slide.getZoomFactor(), slide.getScanApplication(), slide.getSlideStatus(), slide.getViewApplication(),
+				slide.getDescription());
 	}
 }

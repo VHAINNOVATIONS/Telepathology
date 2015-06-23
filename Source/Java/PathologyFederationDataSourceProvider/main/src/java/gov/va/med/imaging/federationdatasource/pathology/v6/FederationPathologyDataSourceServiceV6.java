@@ -51,6 +51,7 @@ import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSpecimen;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
@@ -555,6 +556,14 @@ implements PathologyDataSourceSpi
 	throws MethodException, ConnectionException
 	{
 		return getProxy().getCaseNote(pathologyCaseUrn);
+	}
+
+	@Override
+	public List<PathologyCaseSlide> getCaseSlideInformation(
+			PathologyCaseURN pathologyCaseUrn) 
+	throws MethodException, ConnectionException 
+	{
+		return getProxy().getCaseSlides(pathologyCaseUrn);
 	}
 
 

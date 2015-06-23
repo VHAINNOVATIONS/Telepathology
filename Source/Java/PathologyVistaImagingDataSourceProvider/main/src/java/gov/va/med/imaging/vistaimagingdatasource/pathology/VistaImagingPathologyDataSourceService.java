@@ -45,6 +45,7 @@ import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSpecimen;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
@@ -940,4 +941,38 @@ implements VistaImagingCodeGeneratorDataSourceService, PathologyDataSourceSpi
 			inputParametersDescription="pathologyCaseUrn.toString()")
 	public abstract String getCaseNote(PathologyCaseURN pathologyCaseUrn)
 	throws MethodException, ConnectionException;
+	
+	@Override
+	public List<PathologyCaseSlide> getCaseSlideInformation(
+			PathologyCaseURN pathologyCaseUrn) throws MethodException,
+			ConnectionException 
+	{
+		VistaCommonUtilities.setDataSourceMethodAndVersion("getCaseSlideInformation", getDataSourceVersion());
+		logger.info("getCaseSlideInformation (" + pathologyCaseUrn.toString() + ") TransactionContext (" + TransactionContextFactory.get().getDisplayIdentity() + ").");
+		VistaSession localVistaSession = null;
+		try 
+		{
+			localVistaSession = getVistaSession();			
+			VistaQuery query = VistaImagingPathologyQueryFactory.createGetCaseSlideInformationQuery(pathologyCaseUrn);
+			String rtn = localVistaSession.call(query);
+			return VistaImagingPathologyTranslator.translateCaseSlideInformation(rtn);						
+		}
+		catch(IOException ioX)
+		{
+			logger.error("Exception getting VistA session", ioX);
+        	throw new ConnectionException(ioX);
+		}
+		catch (InvalidVistaCredentialsException e)
+		{
+			throw new InvalidCredentialsException(e.getMessage());
+		}
+		catch (VistaMethodException e)
+		{
+			throw new MethodException(e.getMessage());
+		}
+		finally
+        {
+        	try{localVistaSession.close();}catch(Throwable t){}
+        }
+	}
 }

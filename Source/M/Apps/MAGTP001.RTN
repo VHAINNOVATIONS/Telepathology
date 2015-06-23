@@ -1,5 +1,8 @@
-MAGTP001 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 06/10/2012 2:50pm
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+Cache for Windows^INT^MAGTP001 with updates for TIU Processing^~Format=Cache.S~^RAW
+%RO on 20 Jun 2015   5:34 PM
+MAGTP001^INT^1^63723,63255.10082^
+MAGTP001 ;WOIFO/FG,JSL - TELEPATHOLOGY RPCS ; 06/10/2012 2:50pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3;Apr 03, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -215,13 +218,20 @@ PUTFIELD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT REPORT FIELD]
  . ; 1) Cancel the corresponding reservation on the case
  . ; 2) Send alert to ordering provider/PCP
  . ; 3) For CY or SP set default CPT codes
+ . ; 4) Mod I873: Prepare/Store report as TIU; set Caselist entry to (R)ead
  . I (NUM=.11),(VAL(1)]"") D  S:$P(MAGRY(0),U)'<0 BDFLG=2
  . . D LOCKR^MAGTP003(.MAGRY,0,LRSS,YEAR,LRAN) Q:MAGRY(0)<0
  . . D SNDALRT^MAGTP006(.LRMSG,LRDFN,LRSS,LRI,LRSF)
  . . D:("CYSP"[LRSS) VERADCPT^MAGTP009(.MAGRY,LRSS,YEAR,LRAN,LRI,LRDFN)
- . . ; MOD FOR I873 CT/3/21/2015
- . . ;N LRMSG,LRQUIT,...
- . . ;D TIUPREP^LRAPRES,STORE^LRAPRES
+ . . ; MOD FOR I873 CT-SF-DC/3/21/2015
+ . . I '$G(LRDPF) S LRDPF=$P($G(^LR(LRDFN,0)),"^",2)
+ . . I '$G(LRAU) S LRAU=0
+ . . I '$G(LRO(68)) S LRO(68)=LRSS
+ . . I '$G(LRSS) S LRAA=$O(^LRO(68,"B",LRSS,""))
+ . . S LRNTIME=$$NOW^XLFDT
+ . . D TIUPREP^LRAPRES
+ . . S LRDATA(1)=$P(INPUT,",",2)
+ . . S LRQUIT=0 D STORE^LRAPRES
  . . D EDIT^MAGT7MA ; build HL7 msg, and sets CaseList entry to Read
  . . ; END MOD FOR I873
  . . Q
@@ -236,5 +246,100 @@ PUTFIELD(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT REPORT FIELD]
  I $G(BDFLG)=2 S:$P(MAGRY(0),U)'<0 MAGRY(0)="1^0^"_$G(LRMSG)  ;And released
  Q  ;
  ;
+OUPDATE ;Process HL7 Order Update messages from an external DPS
+ ;
+ N SEG,MAGSEG,J,I
+ K MAGSEG
+ ;
+ I $G(HL("EID")),$G(HL("ETN"))="" D INIT^HLFNC2(HLEID,.HL)
+ ;
+ F I=1:1 X HLNEXT Q:HLQUIT'>0  S SEG=HLNODE,SG=$E(HLNODE,1,3) D  
+ . S MAGSEG(I)=SEG
+ . S J=0 F  S J=$O(HLNODE(J)) Q:'J  S MAGSEG(I,J)=HLNODE(J)
+ . Q
+ ;
+ S HLFS=$G(HL("FS"))
+ S HLECH=$G(HL("ECH"))
+ D PARSE(.MAGSEG)
+ Q
+ ;
+PARSE(MAGSEG) ;HL7 messages data
+ N HLNODE,ERROR,I,IEN,CASE,MAGERR,MAGFDA,X,Y,SLDCNT
+ N SLDNO,SLDDTM,SLDURL,SLDZMF,SCANAPP,SLDSTU,VIEWAPP,SLDNOTE
+ S ERROR=1,IEN=0 S:$G(HLFS)="" HLFS=$G(HL("FS"),"|") K MAGRY
+ S I="" F  S I=$O(MAGSEG(I)) Q:'I  S HLNODE=$G(MAGSEG(I)) D
+ . Q:$L(HLNODE)=0
+ . Q:$P(HLNODE,HLFS)=""
+ . Q:"^MSH^PID^PV1^OBR^OBX^ORC^ZID^"'[(U_$P(HLNODE,HLFS)_U)
+ . D @($P(HLNODE,HLFS))
+ . Q
+ I 'IEN S MAGRY(0)="0^0^Accession Record Not Found: "_$G(CASE) Q
+ S SLDCNT=$P($G(^MAG(2005.42,IEN,2,0)),U,4) I SLDCNT>0 D
+ . S MAGFDA(2005.42,IEN_",",.03)=1      ;SLIDES AVAILABLE
+ . S MAGFDA(2005.42,IEN_",",.08)=SLDCNT ;NO. of scan images
+ . D UPDATE^DIE("","MAGFDA","IEN","MAGERR")
+ . Q 
+ I $D(MAGERR) S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S MAGRY(0)="1^0^SLIDES HL7 Updated"
+ Q
+MSH ;
+ Q
+PID ;
+ Q
+PVI ;
+ Q
+OBR ; Pick data off the 'OBR' segment.
+ S CASE=$P(HLNODE,HLFS,3) Q:'$L(CASE)
+ S IEN=$O(^MAG(2005.42,"B",CASE,"")) Q:'IEN
+ S SCANAPP=$P(HLNODE,HLFS,5)
+ S VIEWAPP=$G(VIEWAPP,"IS")  ;default 'ImageScope' for now
+ Q
+ORC ;
+ Q
+OBX ;
+ Q
+ZID ; Pick data off the 'ZID' segment.
+ I 'IEN S MAGRY(0)="0^0^Accession Record Not Found: "_$G(CASE) Q
+ S SLDNO=$P(HLNODE,HLFS,3)   ;slide number .01
+ ;;S SLDDTM=$P(HLNODE,HLFS,8) ;slide date/time scanned
+ S SLDSTU=$P(HLNODE,HLFS,4)  ;slide status
+ S SLDURL=$P(HLNODE,HLFS,5)  ;url
+ S SLDZMF=$P(HLNODE,HLFS,23) ;zoom factor
+ ;;S SLDNODE=$P()            ;slide note
+ N MAGFDA K MAGERR  ;init
+ ;Add SLIDES multiple
+ S SLDNXT=$P($G(^MAG(2005.42,IEN,2)),U,3)+1,X=IEN,Y="+"_SLDNXT_","_X_"," 
+ I $L($G(SLDNO)) S MAGFDA(2005.422,Y,.01)=SLDNO
+ I $L($G(SLDDTM)) S MAGFDA(2005.422,Y,2)=SLDDTM
+ I $L($G(SLDURL)) S MAGFDA(2005.422,Y,3)=SLDURL
+ I $L($G(SLDZMF)) S MAGFDA(2005.422,Y,4)=SLDZMF
+ I $L($G(SCANAPP)) S MAGFDA(2005.422,Y,5)=SCANAPP
+ I $L($G(SLDSTU)) S MAGFDA(2005.422,Y,6)=SLDSTU
+ I $L($G(VIEWAPP)) S MAGFDA(2005.422,Y,7)=VIEWAPP
+ I $L($G(SLDNOTE)) S MAGFDA(2005.422,Y,8)=SLDNOTE
+ D UPDATE^DIE("","MAGFDA","IEN","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Updating SLIDES Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S ERROR=0
+ Q
+ ;
+SAVESTATE       ;
+ ; Move environment variables into ^XTMP
+ N NODE
+ S NODE=$NA(^STUART("MAGTP001",$J,$H))
+ S X=$TR(NODE,")",",")
+ D DOLRO^%ZOSV
+ Q
+ ; Now build VistA message from saved variables
+ N TMPSTR,DATA
+ N STOPNODE S STOPNODE=$P(NODE,")")
+ F  S NODE=$Q(@NODE) Q:NODE'[STOPNODE  D
+ .  S TMPSTR=$TR($TR($P(NODE,",",3),""""),")","=")
+ .  S:TMPSTR'["=" TMPSTR=TMPSTR_"("_$P(NODE,",",4,$QL(NODE))_"="
+ .  S TMPSTR=TMPSTR_@NODE
+ .  S DATA(0)=$G(DATA(0))+1
+ .  S DATA(DATA(0))=TMPSTR
+ ;
+ ;D MAILVARS^JJOHMVAR("IN MAGTP001 ")
+
 
 

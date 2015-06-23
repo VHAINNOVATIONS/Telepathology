@@ -140,6 +140,8 @@ namespace VistA.Imaging.Telepathology.Worklist.DataSource
 
         CaseSpecimenList GetCaseDetail(string caseURN);
 
+        CaseSlideList GetCaseSlidesInfo(string caseURN);
+
         PathologyCaseUpdateAttributeResultType LockCaseForEditing(string caseURN, bool lockCase);
 
         string GetReportLockTimeoutHour(string siteID);

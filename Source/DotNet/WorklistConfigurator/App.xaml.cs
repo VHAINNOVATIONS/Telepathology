@@ -59,6 +59,7 @@ namespace VistA.Imaging.Telepathology.Configurator
                 mainWindow.Login();
                 // show main window first
                 mainWindow.Show();
+                mainWindow.Activate();
             }
             catch (Exception ex)
             {

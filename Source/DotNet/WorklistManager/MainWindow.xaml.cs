@@ -54,6 +54,8 @@ using VistA.Imaging.Telepathology.Worklist.Views;
 using System.Runtime.InteropServices;
 using System.Net;
 using System.Collections.ObjectModel;
+using VistA.Imaging.Telepathology.Worklist.DataSource;
+using System.IO;
 
 namespace VistA.Imaging.Telepathology.Worklist
 {
@@ -63,6 +65,8 @@ namespace VistA.Imaging.Telepathology.Worklist
     public partial class MainWindow : Window
     {
         private static MagLogger Log = new MagLogger(typeof(MainWindow));
+
+        private static Boolean ActiveViewer=false;
 
         public MainWindow()
         {
@@ -121,6 +125,8 @@ namespace VistA.Imaging.Telepathology.Worklist
             AppMessages.UpdateStatusesMessage.Register(
                     this,
                     (action) => DispatcherHelper.CheckBeginInvokeOnUI(() => this.OnUpdateStatuses(action.GeneralStatus, action.UnreadTime, action.ReadTime)));
+            
+            ActiveViewer = false;
         }
 
         private void OnViewNotes(AppMessages.ViewNotesMessage.MessageData message)
@@ -576,6 +582,7 @@ namespace VistA.Imaging.Telepathology.Worklist
 
         private const int SW_RESTORE = 9;
 
+
         void OnViewSnapshots(CaseListItem item)
         {
             // check to see if the patient is restricted
@@ -615,22 +622,10 @@ namespace VistA.Imaging.Telepathology.Worklist
             //}
 
 
-            //**** This try-catch clause is for Aperio demo only *****.
-            try
-            {
-                string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                string filePathToInvokeExe = @"\Vista\Imaging\Telepathology\Vendor\Aperio\DigitalSlides.sis";
-                System.Diagnostics.Process.Start(progPath + filePathToInvokeExe); 
+            //**** This is for Vendor system integration getting/displaying (invoking vendor application) list of slides based on HL7 feed from scanner system *****.
+            ViewCaseSlides(item);
 
-                Log.Info("View slides for case " + item.SiteAbbr + " " + item.AccessionNumber);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Could not change patient and launch Aperio ImageScope.", ex);
-                MessageBox.Show("Could not launch Aperio ImageScope.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
-            /* **** This section is commented out for demo only *****
+            /* **** This section is commented out for not using MagImageDisplay *****
 
             // sync the context and open display to view snapshot images.
             try
@@ -674,6 +669,111 @@ namespace VistA.Imaging.Telepathology.Worklist
             {
                 ViewModelLocator.ContextManager.IsBusy = false;
             } */
+        }
+
+        // remove slides from viewer application
+        public static void EraseCaseSlides()
+        {
+            try
+            {
+                // set constants
+                // string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string fileSpec; // = "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\CaseSlides.sis";
+                string filePathToInvokeExe;
+
+                // remove slides from viewer application
+                if (!ActiveViewer)
+                   return;
+                fileSpec = "C:\\Temp\\NoSlides.sis";
+                Log.Info("Removing slides from viewer application.");
+
+                // invoke ImageScope with .sys file
+                filePathToInvokeExe = @fileSpec;
+                System.Diagnostics.Process.Start(filePathToInvokeExe);
+
+                ActiveViewer = false;
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not remove slides from Aperio ImageScope.", ex);
+                MessageBox.Show("Could not remove slides from Aperio ImageScope.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        public void ViewCaseSlides(CaseListItem item)
+        {
+
+            // This must be called only if Item has slides
+            //
+            // This try-catch clause is for Aperio system integration getting/displaying (invoking ImageScope.exe) list of slides based on HL7 feed from scanner system.
+            // Note: .sys extension must be assigned to ImageScope in Windows Explorer
+            try
+            {
+                // set constants
+                // string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string fileSpec; // = "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\CaseSlides.sis";
+                string filePathToInvokeExe;
+                string slideTitle = "";
+
+                    // show case slides (if any) in viewer application
+                    fileSpec = "C:\\Temp\\CaseSlides.sis";
+
+                    slideTitle = "    <Title>";
+                    slideTitle += item.PatientSensitive ? "<Sensitive Patient>," : (item.PatientName + "," + item.PatientID + ",");
+                    slideTitle += item.AccessionNumber + "," + item.StudyDateTime + "; @";
+
+                    // get Slides info
+                    MainViewModel viewModel = (MainViewModel)DataContext;
+                    CaseSlideList slideList = viewModel.DataSource.GetCaseSlidesInfo(item.CaseURN);
+                    if (slideList.Items.Count > 0)
+                    {
+                        string dotSisTxt = "<SIS>\n  <CloseAllImages />\n";
+
+                        foreach (CaseSlide cSlide in slideList.Items)
+                        {
+                            // compose one image entry
+                            dotSisTxt += "  <Image>\n" + "    <URL>" + cSlide.Url + "</URL>\n";
+                            dotSisTxt += slideTitle + cSlide.SlideNumber + " " + cSlide.ZoomFactor + "</Title>\n";
+                            dotSisTxt += "    <Authtok>Basic VmlzdEE6VGVsZXBhdGgxMjMh</Authtok>\n  </Image>\n";
+                        }
+                        dotSisTxt += "</SIS>\n";
+
+                        // (over)write .sis file for ImageScope
+                        try
+                        {
+                            if (File.Exists(fileSpec))
+                            {
+                                File.Delete(fileSpec);
+                            }
+
+                            // Create a file to write to. 
+                            using (StreamWriter sw = File.CreateText(fileSpec))
+                            {
+                                sw.Write(dotSisTxt);
+                                sw.Close();
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Log.Error("Error writing Slide info for case " + item.CaseURN + " of site: " + item.SiteAbbr + ", acc#: " + item.AccessionNumber + " -- " + ex);
+                            throw new Exception("Error writing " + fileSpec + " to local storage.");
+                        }
+                        // invoke ImageScope with .sys file
+                        filePathToInvokeExe = @fileSpec;
+                        System.Diagnostics.Process.Start(filePathToInvokeExe);
+
+                        Log.Info("Viewing slides for case " + item.CaseURN + " of site: " + item.SiteAbbr + ", acc#: " + item.AccessionNumber);
+                        ActiveViewer = true;
+                    }
+
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not process patient/case data and launch Aperio ImageScope.", ex);
+                MessageBox.Show("Could not process case slide data and launch Aperio ImageScope.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         void OnViewReport(CaseListItem item)
@@ -826,6 +926,8 @@ namespace VistA.Imaging.Telepathology.Worklist
         private void Window_Closed(object sender, EventArgs e)
         {
             Log.Info("Terminating VistA Imaging Pathology Worklist Manager.");
+            // empty viewer app context if it was invoked...
+            EraseCaseSlides();
         }
 
         private void mnuSavePrefNow_Click(object sender, RoutedEventArgs e)

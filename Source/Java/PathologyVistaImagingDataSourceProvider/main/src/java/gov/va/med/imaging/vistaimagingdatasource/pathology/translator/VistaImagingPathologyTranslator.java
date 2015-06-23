@@ -35,6 +35,7 @@ import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultation;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
 import gov.va.med.imaging.pathology.PathologyCaseTemplateField;
@@ -1140,6 +1141,46 @@ public class VistaImagingPathologyTranslator
 			return PathologySaveCaseReportResult.createReleasedResult(warningMsg);
 		}
 		return PathologySaveCaseReportResult.createUnreleasedResult();
+	}
+	
+	/**
+	 * 
+	 	1^4^Slide Number^Date/Time Scanned^URL^Zoom Factor^Scan Application^Slide Status^View Application^Description^
+		31^^//I873VSTWIN-T:82/@31^30x^SCANSCOPE^ADDED^IMAGESCOPE^^
+		32^^//I873VSTWIN-T:82/@32^30x^SCANSCOPE^ADDED^IMAGESCOPE^^
+		33^^//I873VSTWIN-T:82/@33^30x^SCANSCOPE^ADDED^IMAGESCOPE^^
+		34^^//I873VSTWIN-T:82/@34^30x^SCANSCOPE^ADDED^IMAGESCOPE^^
+	 * 
+	 * 
+	 * @param vistaResult
+	 * @return
+	 * @throws MethodException
+	 */
+	public static List<PathologyCaseSlide> translateCaseSlideInformation(String vistaResult)
+	throws MethodException
+	{
+		if(!vistaResult.startsWith("1"))
+		{
+			throw new MethodException("Error retrieving case slide information: " + vistaResult);
+		}
+		String [] lines = StringUtils.Split(vistaResult, StringUtils.NEW_LINE);
+		List<PathologyCaseSlide> result = new ArrayList<PathologyCaseSlide>();
+		for(int i = 1; i < lines.length; i++)
+		{
+			String [] pieces = StringUtils.Split(lines[i], StringUtils.CARET);
+
+			String slideNumber = pieces[0];
+			String dateTimeScanned = pieces[1];
+			String url = pieces[2];
+			String zoomFactor = pieces[3];
+			String scanApplication = pieces[4];
+			String slideStatus = pieces[5];
+			String viewApplication = pieces[6];
+			String description = pieces[7];
+			result.add(new PathologyCaseSlide(slideNumber, dateTimeScanned, url, zoomFactor, 
+					scanApplication, slideStatus, viewApplication, description));
+		}
+		return result;
 	}
 	
 }

@@ -86,6 +86,7 @@ public class VistaImagingPathologyQueryFactory
 	private final static String RPC_MAGTP_DEL_SNOMED_CODES = "MAGTP DEL SNOMED CODES";
 	private final static String RPC_MAGTP_GET_NOTE = "MAGTP GET NOTE";
 	private final static String RPC_MAGTP_PUT_NOTE = "MAGTP PUT NOTE";
+	private final static String RPC_MAGTP_GET_SLIDES_INFO = "MAGTP GET SLIDES INFO";
 	
 	public static VistaQuery createSaveCaseNoteQuery(PathologyCaseURN pathologyCaseUrn, String note)
 	{
@@ -679,6 +680,13 @@ public class VistaImagingPathologyQueryFactory
 	public static VistaQuery createGetConsultStatusQuery(PathologyCaseURN pathologyCaseUrn)
 	{
 		VistaQuery query = new VistaQuery(RPC_MAGTP_GET_CONSULT);
+		query.addParameter(VistaQuery.LITERAL, pathologyCaseUrn.toStringAccessionNumber());
+		return query;
+	}
+	
+	public static VistaQuery createGetCaseSlideInformationQuery(PathologyCaseURN pathologyCaseUrn)
+	{
+		VistaQuery query = new VistaQuery(RPC_MAGTP_GET_SLIDES_INFO);
 		query.addParameter(VistaQuery.LITERAL, pathologyCaseUrn.toStringAccessionNumber());
 		return query;
 	}

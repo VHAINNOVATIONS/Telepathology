@@ -784,7 +784,7 @@
 				{
                     this.CPTText = string.Empty;
                     this.LocationSearchText = string.Empty;
-                    this.SearchLocationItems = null;
+                    // this.SearchLocationItems = null; *** preserve previously searched Hosp loc list
 
 					CPTList = this.DataSource.GetCptCodesForCase(this.CaseURN);
                     if (CPTList == null)

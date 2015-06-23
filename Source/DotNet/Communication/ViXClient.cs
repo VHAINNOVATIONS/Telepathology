@@ -582,6 +582,36 @@ namespace VistA.Imaging.Telepathology.Communication
 
             return myCase;
         }
+        /// <summary>
+        /// Retrieve case deteail
+        /// </summary>
+        /// <param name="caseURN">case id to be retrieved</param>
+        /// <returns>detail of the case</returns>
+        public CaseSlideList GetCaseSlidesInfo (string caseURN)
+        {
+            Log.Debug("Retrieving case slides info...");
+
+            CaseSlideList myCase = new CaseSlideList();
+
+            string URI = String.Format("pathology/case/slidesinfo/{0}", caseURN);
+            IRestResponse response;
+            try
+            {
+                response = ExecuteGet(URI, VixServiceTypes.Pathology);
+                ValidateRestResponse(response);
+                myCase = ResponseParser.ParseGetCaseSlidesInfo(response.Content);
+            }
+            catch (MagVixFailureException vfe)
+            {
+                Log.Error("Unexpected response.", vfe);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Could not complete request to retrieve case slides info.", ex);
+            }
+
+            return myCase;
+        }
         
         /// <summary>
         /// Reserve a case for reading
@@ -1224,7 +1254,10 @@ namespace VistA.Imaging.Telepathology.Communication
         /// <returns>true if successfully done</returns>
         public PathologyCaseUpdateAttributeResultType LockCaseForEditing(string caseURN, bool lockCase)
         {
-            Log.Debug("Locking case for editing...");
+            if (lockCase)
+                Log.Debug("Locking case before editing...");
+            else
+                Log.Debug("Unocking case after editing...");
 
             PathologyCaseUpdateAttributeResultType result = new PathologyCaseUpdateAttributeResultType();
             if (string.IsNullOrWhiteSpace(caseURN))
@@ -1247,7 +1280,7 @@ namespace VistA.Imaging.Telepathology.Communication
             }
             catch (Exception ex)
             {
-                Log.Error("Could not complete request to lock the case.", ex);
+                Log.Error("Could not complete request to (un)lock the case.", ex);
             }
 
             return result;

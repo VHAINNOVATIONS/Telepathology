@@ -328,20 +328,35 @@ namespace VistA.Imaging.Telepathology.Communication
         //    }
         //}
 
-		internal static CaseSpecimenList ParseGetCaseDetail(string rawData)
-		{
-			CaseSpecimenList myList;
-			try
-			{
-				myList = DeserializeFromXml<CaseSpecimenList>(rawData);
-				return myList;
-			}
-			catch (MagResponseParsingFailureException rpf)
-			{
-				Log.Error("Could not parse response.", rpf);
-				return new CaseSpecimenList();
-			}
-		}
+        internal static CaseSpecimenList ParseGetCaseDetail(string rawData)
+        {
+            CaseSpecimenList myList;
+            try
+            {
+                myList = DeserializeFromXml<CaseSpecimenList>(rawData);
+                return myList;
+            }
+            catch (MagResponseParsingFailureException rpf)
+            {
+                Log.Error("Could not parse response.", rpf);
+                return new CaseSpecimenList();
+            }
+        }
+
+        internal static CaseSlideList ParseGetCaseSlidesInfo(string rawData)
+        {
+            CaseSlideList myList;
+            try
+            {
+                myList = DeserializeFromXml<CaseSlideList>(rawData);
+                return myList;
+            }
+            catch (MagResponseParsingFailureException rpf)
+            {
+                Log.Error("Could not parse response.", rpf);
+                return new CaseSlideList();
+            }
+        }
 
 		internal static bool ParseRequestInterpretation(string rawData)
 		{

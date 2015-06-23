@@ -1,0 +1,79 @@
+Cache for Windows^INT^MAG PATH II^~Format=Cache.S~^RAW
+%RO on 28 May 2015   2:23 PM
+MAGTP015^INT^1^63700,51711.120198^
+MAGTP015 ;WOIFO/FG,MLH - TELEPATHOLOGY II RPCS ; 25 Jun 2013 3:30 PM
+ ;;3.0;IMAGING;**138,200**;Mar 19, 2002;Build 0;MAY 28, 2015
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** GET SLIDE IMAGE INFO FOR A SPECIFIED CASE/Accession
+ ; RPC: MAGTP GET CASE SLIDES INFO
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ACCNO          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: "Slide Number"
+ ;                ^04: "Date/Time Scanned"
+ ;                ^05: "URL"
+ ;                ^06: "Zoom Factor"
+ ;                ^07: "Scan Application"
+ ;                ^08: "Slide Status"
+ ;                ^09: "View Application"
+ ;                ^10: "Description"
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: "Slide Number"  (#2005.422)
+ ;                ^02: "Date/Time Scanned"
+ ;                ^03: "URL"
+ ;                ^04: "Zoom Factor"
+ ;                ^05: "Scan Application"
+ ;                ^06: "Slide Status"
+ ;                ^07: "View Application"
+ ;                ^08: "Description"
+ ;
+GETSDINF(MAGRY,ACCNO) ; RPC [MAGTP GET SLIDES INFO]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N IEN,MAGOUT,MAGERR,FLD,SDN,CNT,Y
+ I $L($G(ACCNO)) S IEN=$O(^MAG(2005.42,"B",ACCNO,""))
+ I $G(IEN)="" S MAGRY(0)="0^0^Invalid Accession Code: "_$G(ACCNO) Q
+ D GETS^DIQ(2005.42,IEN,"**","E","MAGOUT","MAGERR")
+ I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
+ S SDN="" F CNT=0:1 S SDN=$O(MAGOUT(2005.422,SDN)) Q:SDN=""  DO  S:$L(Y) MAGRY(CNT)=Y
+ . S FLD=0,Y="" F  S FLD=$O(MAGOUT(2005.422,SDN,FLD)) Q:'FLD  S Y=Y_$G(MAGOUT(2005.422,SDN,FLD,"E"))_U
+ . Q
+ I CNT=0 S MAGRY(0)="0^0^No Slide Info for: "_$G(ACCNO) Q
+ S CNT=CNT-1,MAGRY(0)="1^"_CNT_"^Slide Number^Date/Time Scanned^URL^Zoom Factor^Scan Application^Slide Status^View Application^Description^"
+ Q
+ ;
+.
+
+
+

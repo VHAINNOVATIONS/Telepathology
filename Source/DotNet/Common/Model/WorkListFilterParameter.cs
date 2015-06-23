@@ -123,7 +123,10 @@ namespace VistA.Imaging.Telepathology.Common.Model
             SpecimenCount,
 
             [DescriptionAttribute("Image Count")]
-            SnapshotCount
+            SnapshotCount,
+
+            [DescriptionAttribute("Slides Available")]
+            SlidesAvailable
         }
 
         public enum OperatorType
@@ -205,7 +208,7 @@ namespace VistA.Imaging.Telepathology.Common.Model
                 case FilterFieldType.DateTime:
                 case FilterFieldType.ReportStatus:
                 case FilterFieldType.AcquisitionSite:
-                //case FilterFieldType.SlidesAvailable:
+                case FilterFieldType.SlidesAvailable:
                 case FilterFieldType.HasNotes:
                 case FilterFieldType.SpecimenCount:
                 case FilterFieldType.SnapshotCount:

@@ -55,6 +55,7 @@ namespace VistA.Imaging.Telepathology.Common.Model
             this.SiteAbbr = string.Empty;
             this.SiteID = string.Empty;
             this.SlidesAvailable = "No";
+            this.SnapshotCount = "0";
             this.SpecimenCount = "0";
             this.SpecimenTakenDate = string.Empty;
             this.ReportStatus = "In Progress";
@@ -69,6 +70,8 @@ namespace VistA.Imaging.Telepathology.Common.Model
             this.Reserver = caseObj.Reserver;
             this.ReportStatus = caseObj.ReportStatus;
             this.SlidesAvailable = caseObj.SlidesAvailable;
+            this.SnapshotCount = caseObj.SnapshotCount;
+            this.SpecimenCount = caseObj.SpecimenCount;
             this.HasNotes = caseObj.HasNotes;
             this.IsNoteAttached = caseObj.IsNoteAttached;
             this.ConsultationList.ConsultationList.Clear();
@@ -346,7 +349,7 @@ namespace VistA.Imaging.Telepathology.Common.Model
                 case WorkListFilterParameter.FilterFieldType.DateTime: return this.AccessionDateTime;
                 case WorkListFilterParameter.FilterFieldType.ReservedBy: return this.ReservedBy;
                 case WorkListFilterParameter.FilterFieldType.AcquisitionSite: return this.SiteAbbr;
-                //case WorkListFilterParameter.FilterFieldType.SlidesAvailable: return this.SlidesAvailable;
+                case WorkListFilterParameter.FilterFieldType.SlidesAvailable: return this.SlidesAvailable;
                 case WorkListFilterParameter.FilterFieldType.ReportStatus: return this.ReportStatus;
                 case WorkListFilterParameter.FilterFieldType.HasNotes: return this.IsNoteAttached.ToString();
                 case WorkListFilterParameter.FilterFieldType.SpecimenCount: return this.SpecimenCount;

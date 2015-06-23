@@ -38,6 +38,7 @@ import gov.va.med.imaging.pathology.AbstractPathologySite;
 import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
@@ -452,5 +453,8 @@ extends VersionableDataSourceSpi
 	throws MethodException, ConnectionException;
 	
 	public String getCaseNote(PathologyCaseURN pathologyCaseUrn)
+	throws MethodException, ConnectionException;
+	
+	public List<PathologyCaseSlide> getCaseSlideInformation(PathologyCaseURN pathologyCaseUrn)
 	throws MethodException, ConnectionException;
 }

@@ -432,6 +432,24 @@ using System.Collections.Concurrent;
         }
 
         /// <summary>
+        /// Retrieve case slides info
+        /// </summary>
+        /// <param name="caseURN">case id to be retrieved</param>
+        /// <returns>detail of the case</returns>
+        public CaseSlideList GetCaseSlidesInfo(string caseURN)
+        {
+            if (vixClient != null)
+            {
+                return vixClient.GetCaseSlidesInfo(caseURN);
+            }
+            else
+            {
+                Log.Error("VIX client is null.");
+                return new CaseSlideList();
+            }
+        }
+
+        /// <summary>
         /// Reserve a case for reading
         /// </summary>
         /// <param name="caseURN">case being read</param>

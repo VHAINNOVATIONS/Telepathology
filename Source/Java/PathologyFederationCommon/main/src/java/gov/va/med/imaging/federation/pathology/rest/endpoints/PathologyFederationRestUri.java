@@ -111,6 +111,7 @@ public class PathologyFederationRestUri
 	
 	public final static String getCaseNotePath = "case/note/{caseId}";
 	
+	public final static String getCaseSlidesPath = "case/slides/{caseId}";	
 }
 
 

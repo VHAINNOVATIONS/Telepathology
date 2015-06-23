@@ -1,0 +1,336 @@
+MAGTP012 ;WOIFO/FG,JSL - TELEPATHOLOGY RPCS ; 6/04/2013 2:50pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3;
+ ;; Per VHA Directive 2004-038, this routine should not be modified.
+ ;; +---------------------------------------------------------------+
+ ;; | Property of the US Government.                                |
+ ;; | No permission to copy or redistribute this software is given. |
+ ;; | Use of unreleased versions of this software requires the user |
+ ;; | to execute a written test agreement with the VistA Imaging    |
+ ;; | Development Office of the Department of Veterans Affairs,     |
+ ;; | telephone (301) 734-0100.                                     |
+ ;; | The Food and Drug Administration classifies this software as  |
+ ;; | a medical device.  As such, it may not be changed in any way. |
+ ;; | Modifications to this software may result in an adulterated   |
+ ;; | medical device under 21CFR820, the use of which is considered |
+ ;; | to be a violation of US Federal Statutes.                     |
+ ;; +---------------------------------------------------------------+
+ ;;
+ Q  ;
+ ;
+ ;***** COPY A SPECIFIED CASE
+ ; RPC: MAGTP COPY CASE
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; ENT           List of inputs:
+ ;      
+ ;                ^01: Patient's DFN
+ ;                ^02: Original Case Number (Ex. SP 12 1)
+ ;                ^03: Original Station Number
+ ;
+ ; Return Values
+ ; =============
+ ; 
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;                ^03: Case generated
+ ;                ^04: <Accession Code>
+ ;
+COPYCASE(MAGRY,ENT) ; RPC [MAGTP COPY CASE]
+ K MAGRY
+ I $G(ENT)="" S MAGRY(0)="0^0^No Input" Q
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ N LRAA,LRAD,LRSF,LRDFN,LRSD,LRI,LRSS
+ N DFN,LRLLOC,LRCAPLOC,LRT,LRAC,LOC,LRXR
+ N LRXREF,LRMD,LRAN,OLRAC,OSTAT,OSITE,ONAME
+ N DOD,MAGERR,X,LRW,SUBF,LRRC,LRCAPA
+ N LRC,LRDPF,LRWHN,LRH,LRT,LRABV
+ N ORIEN,IEN,IENS,IENS1
+ N LRFDA,LRSVC,LRU
+ S DFN=$P(ENT,U,1)                             ; Patient ID
+ I $$GET1^DIQ(2,DFN_",",.01)="" D  Q           ; Supported IA #10035
+ . S MAGRY(0)="0^0^Invalid Patient ID or Patient not in the system"
+ S LRSD=+$$NOW^XLFDT
+ S LRAD=$E(LRSD,1,3)_"0000"                    ; Must create case in present year
+ S OLRAC=$P(ENT,U,2)                           ; Original LRAC (ex.: SP 12 1) to be copied
+ S OSTAT=$P(ENT,U,3)                           ; Original Station Number
+ S OSITE=$$IEN^XUAF4(OSTAT)                    ; Original Site Number
+ S ONAME=$$NAME^XUAF4(OSITE)                   ; Original Site Name
+ S LRSS=$E(OLRAC,1,2)                          ; AP section
+ S LRSF=$S(LRSS="CY":63.09,LRSS="EM":63.02,LRSS="SP":63.08,1:"")
+ I LRSF="" S MAGRY(0)="0^0^Invalid AP Section" Q
+ S LRAA=$$FIND1^DIC(68,"","B",LRSS)
+ ;
+ ; Enter new LRFN if needed
+ ;
+ S LRDFN=$$GET1^DIQ(2,DFN_",",63)              ; Supported IA #10035
+ I LRDFN=""  D
+ . S LRDFN=$O(^LR("A"),-1)+1
+ . S LRFDA(63,"+1,",.01)=LRDFN
+ . S LRFDA(63,"+1,",.02)=2
+ . S LRFDA(63,"+1,",.03)=DFN
+ . ; Set Location
+ . S LOC=$$GET1^DIQ(2,DFN_",",.1)              ; Supported IA #10035
+ . S LOC=$$FIND1^DIC(42,"","B",LOC)            ; Supported IA #10039
+ . S:LOC LRLLOC=$$GET1^DIQ(44,$$GET1^DIQ(42,LOC,44,"I"),1)  ; Supported IA #10039, IA #10040
+ . S DOD=$$GET1^DIQ(2,DFN_",",.351,"I")        ; Date of Death ; Supported IA #10035
+ . S:DOD LRLLOC="DIED "_$TR($$FMTE^XLFDT(DOD,"1M"),"@"," ")
+ . S LRFDA(63,"+1,",.1)=$G(LRLLOC,"UNKNOWN")   ; Used in file (#63)
+ . ; Set Location Type
+ . I LOC S LRCAPLOC=$$GET1^DIQ(44,$$GET1^DIQ(42,LOC,44,"I"),2,"I")  ; Supported IA #10039, IA #10040
+ . S LRFDA(63,"+1,",.092)=$G(LRCAPLOC,"Z")
+ . D UPDATE^DIE("","LRFDA","","MAGERR")
+ . Q
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^LRDFN Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Location check
+ ;
+ S LOC=$$GET1^DIQ(63,LRDFN_",",.1)
+ S:LOC="" LOC=$$GET1^DIQ(2,DFN_",",.1)         ; Supported IA #10035
+ S LOC=$$FIND1^DIC(42,"","B",LOC)              ; Supported IA #10039
+ S LRCAPLOC=$$GET1^DIQ(63,LRDFN_",",.092,"I")
+ S:LRCAPLOC="" LRCAPLOC="Z"
+ I $G(LOC) D
+ . S LRLLOC=$$GET1^DIQ(44,$$GET1^DIQ(42,LOC,44,"I"),1)  ; Supported IA #10039, IA #10040
+ . S LRCAPLOC="W"
+ . Q
+ E  D
+ . S LRLLOC=$$GET1^DIQ(63,LRDFN_",",.1)
+ . I $L(LRLLOC) D
+ . . S X=+$$FIND1^DIC(44,"","X",LRLLOC)        ; Supported IA #10040
+ . . S LRSVC=$$GET1^DIQ(44,X_",",9.5)          ; Supported IA #...
+ . . Q
+ . Q
+ S:LRLLOC=""!(LRLLOC="UNKNOWN") LRLLOC="???"   ; Used in file (#68)
+ ;
+ ; Create entry in Accession file (#68)
+ ;
+ I '$D(^LRO(68,LRAA,1,LRAD,0)) D
+ . S ORIEN(1)=LRAD
+ . S IENS="+1,"_LRAA_","
+ . S LRFDA(1,68.01,IENS,.01)=LRAD
+ . D UPDATE^DIE("","LRFDA(1)","ORIEN","MAGERR")
+ . Q
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Accession File Header Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Update Accession file (#68)
+ ;
+ S LRH(2)=$E(LRAD,1,3)
+ L +^LRO(68,LRAA,1,LRAD):5 I '$T D  Q
+ . S MAGRY(0)="0^0^This record is locked by another user"
+ S LRAN=$P($G(^LRO(68,LRAA,1,LRAD,1,0)),"^",4)
+ F  S LRAN=LRAN+1 Q:'$D(^LRO(68,LRAA,1,LRAD,1,LRAN,0))
+ S LRXR="A"_LRSS,LRXREF=LRXR_"A"
+ I $D(^LR(LRXREF,LRH(2),LRSS,LRAN)) D
+ . F  S LRAN=LRAN+1 Q:'$D(^LR(LRXREF,LRH(2),LRSS,LRAN))
+ K ORIEN,LRFDA
+ S ORIEN(1)=LRAN
+ S IENS1="+1,"_LRAD_","_LRAA_","
+ S LRFDA(1,68.02,IENS1,.01)=LRDFN
+ D UPDATE^DIE("","LRFDA(1)","ORIEN","MAGERR")
+ L -^LRO(68,LRAA,1,LRAD)
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Accession Number Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Create LR entry in file (#63)
+ ;
+ S LRABV=LRSS
+ S LRI=9999999-LRSD                            ; Define inverse date
+ F  Q:'$D(^LR(LRDFN,LRSS,LRI,0))  S LRI=LRI-.00001
+ S LRC(5)="Reference to "_OLRAC_" at "_ONAME   ; Comment (Free text) in file (#68) 
+ ;
+ ; Header of case
+ ;
+ K ORIEN,LRFDA
+ S LRAC=LRSS_" "_$E(LRAD,2,3)_" "_LRAN
+ S ORIEN(1)=LRI
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.01)=LRSD      ; Date/Time specimen taken
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.02)=DUZ       ; Pathologist
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.03)=LRSD      ; Date report completed
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.06)=LRAC      ; Case number
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.08)=$S(LRLLOC["?":"UNKNOWN",1:LRLLOC)  ; Location
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.011)=LRC(5)   ; Specimen submitted by
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.1)=LRSD       ; Date/Time specimen received
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.11)=LRSD      ; Report release Date/Time
+ S LRFDA(1,LRSF,"+1,"_LRDFN_",",.13)=DUZ       ; Released by
+ D UPDATE^DIE("","LRFDA(1)","ORIEN","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Case Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Enter Specimen
+ ;
+ K LRFDA
+ S IEN=LRI_","_LRDFN_","
+ S SUBF=+$$GET1^DID(LRSF,.012,"","SPECIFIER")  ; SubField for Specimen
+ S LRFDA(SUBF,"+1,"_IEN,.01)=LRC(5)
+ D UPDATE^DIE("E","LRFDA","","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Specimen Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Enter Gross Description
+ ;
+ K LRFDA
+ S LRFDA(1)=LRC(5)                             ; Gross Description
+ D WP^DIE(LRSF,IEN,1,"","LRFDA","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Gross Description Update Error: "_MAGERR("DIERR",1,"TEXT",1)
+ ;
+ ; Variables used by LRUWLF
+ S LRDPF=2,LRRC=LRSD,(LRMD(1),LRU)=""
+ S LRH(0)=LRH(2)+1700,LRWHN=$E(LRAD,2,3)
+ ;
+ D ^LRUWLF                                     ; Populate case in file (#68)
+ D ADD^MAGTP005(LRAC)                          ; Populate file (#2005.42) with new case entry
+ ;
+ ; Is workload turned on? If not quit
+ ;
+ S LRCAPA=+$$GET1^DIQ(69.9,"1,",17,"I")&(+$$GET1^DIQ(68,LRAA_",",10,"I"))
+ I 'LRCAPA S MAGRY(0)="1^0^Case generated^"_LRAC Q
+ ;
+ D @(LRSS_"^LRAPSWK")
+ I '$D(X) S MAGRY(0)="0^0^Related CPT codes not found" Q
+ I LRSS="CY" D                                 ; Set CYTOLOGY Lab test
+ . S X="CYTOLOGY"
+ . S LRT=$O(^LAB(60,"B",X,0))
+ . Q
+ I 'LRT D  Q
+ . S MAGRY(0)="0^0^Must have test in LAB TEST file (#60) called '"_X_"'"
+ S LRT(LRW("S"))=""                            ; Set results in LRT array          
+ D WKLD^LRAPRES   ;2                           ; Populate CPT codes in file (#68)
+ ;
+ ; For CY or SP set default verification CPT codes
+ ;
+ I ("CYSP"[LRSS) D  Q:($P($G(MAGRY(0)),U)=0)
+ . S X=$S(LRSS="SP":"SURGICAL PATH REPORTING",1:"CYTOLOGY REPORTING")
+ . D LRTX^MAGTP012(.MAGRY,X,.LRT)              ; Define array LRT
+ . D WKLD^LRAPRES  ;2                          ; Set workload into file (#68)
+ . Q
+ ;
+ I ($P($G(MAGRY(0)),U)'=0)!'$D(MAGRY(0)) D
+ . S MAGRY(0)="1^0^Case generated^"_LRAC
+ Q  ;
+ ;
+ ;+++++ CHECK FOR LABORATORY TEST
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to
+ ;
+ ; X             Name of required Laboratory test
+ ;
+ ; LRT           Laboratory test workload codes
+ ;               if test X is in the LAB TEST file (#60)
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: 0
+ ;
+ ; LRT           Laboratory test workload code
+ ;               if test X is in the LAB TEST file (#60)
+ ;
+ ; LRT(i)        CPT codes in file (#64)
+ ;
+LRTX(MAGRY,X,LRT) ;
+ K MAGRY,LRT
+ N B,TEXT
+ S LRT=$O(^LAB(60,"B",X,0))
+ S TEXT="0^0^Must have test in LAB TEST file (#60) called '"_X_"'"
+ S TEXT=TEXT_" with VERIFY WKLD CODES"
+ I 'LRT S MAGRY(0)=TEXT Q
+ F B=0:0 S B=$O(^LAB(60,LRT,9,B)) Q:'B  S LRT(B)=""
+ I $D(LRT)=11 S MAGRY(0)="1^0" Q
+ S MAGRY(0)=TEXT
+ Q
+ ;
+ ;***** EXTRACT CPT CODES AND VISIT LIST FOR A SPECIFIED CASE
+ ; RPC: MAGTP GET CPT CODE
+ ;
+ ; .MAGRY        Reference to a local variable where the results
+ ;               are returned to.
+ ;
+ ; LRSS          AP Section
+ ;
+ ; YEAR          Accession Year (Two figures)
+ ;
+ ; LRAN          Accession Number
+ ;
+ ; Return Values
+ ; =============
+ ;
+ ; If MAGRY(0) 1st '^'-piece is 0, then an error
+ ; occurred during execution of the procedure: 0^0^ ERROR explanation
+ ;
+ ; Otherwise, the output array is as follows:
+ ;
+ ; MAGRY(0)     Description
+ ;                ^01: 1
+ ;                ^02: Total Number of Lines
+ ;                ^03: "CPT Code"
+ ;                ^04: "CPT Description"
+ ;                ^05: "Multiply Factor"
+ ;                ^06: "Date/Time Entered"
+ ;                ^07: "User"
+ ;                ^08: "Visit List: " <Visit List if any>
+ ;
+ ; MAGRY(i)     Description
+ ;                ^01: CPT Code
+ ;                ^02: CPT Description
+ ;                ^03: Multiply Factor
+ ;                ^04: Date/Time Entered
+ ;                ^05: User
+ ;
+GETCPT(MAGRY,LRSS,YEAR,LRAN) ; RPC [MAGTP GET CPT CODE]
+ K MAGRY
+ N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
+ I '$D(LRSS) S MAGRY(0)="0^0^Missing AP Section" Q
+ I '$D(YEAR) S MAGRY(0)="0^0^Missing Year" Q
+ I '$D(LRAN) S MAGRY(0)="0^0^Missing Accession Number" Q
+ N MAGOUT,MAGERR,INPUT,LRX,LRAA,LRAD
+ N LRSF,IEN,VSLST,TEST,CT,I,DATE,CODE,CODE81
+ S INPUT=$$CONTEXT^MAGTP006(.MAGRY,LRSS,YEAR,LRAN)
+ I 'MAGRY(0) S MAGRY(0)="0^0^No Entries for '"_LRSS_" "_YEAR_" "_LRAN_"'" Q
+ S LRX="A"_LRSS_"A"
+ S LRAD=$S($D(^LR(LRX,200+YEAR)):200+YEAR,$D(^LR(LRX,300+YEAR)):300+YEAR,1:"")_"0000"
+ S LRSF=$P(INPUT,","),IEN=$P(INPUT,",",2,4)
+ S LRAA=$$FIND1^DIC(68,"","B",LRSS)
+ S IEN=LRAN_","_LRAD_","_LRAA_","
+ S VSLST=$$GET1^DIQ(68.02,IEN,30)              ; List of PCE Encounters, separated by ';'
+ S IEN=","_IEN                                 ; IEN must have comma in front for LIST
+ D LIST^DIC(68.04,IEN,"@;.01;","P","","","","","","","MAGOUT","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Accession Tests Error: "_MAGERR("DIERR",1,"TEXT",1)
+ S TEST=+$G(MAGOUT("DILIST",1,0))
+ I TEST=0 D  Q  ;no test taken
+ . I VSLST="" S MAGRY(0)="1^0^No Entries or Visits" Q    ; No visits, no CPT Codes
+ . S MAGRY(0)="1^0^No Tests But Visit "_VSLST
+ K MAGOUT
+ S IEN=","_TEST_IEN                            ; Add TEST to IEN for file (#68.14)
+ D LIST^DIC(68.14,IEN,"@;.01;.02;1I;2","P","","","","","","","MAGOUT","MAGERR")
+ I $D(MAGERR) D  Q
+ . S MAGRY(0)="0^0^Accession WKLD Codes Error: "_MAGERR("DIERR",1,"TEXT",1)
+ S CT=+MAGOUT("DILIST",0)
+ F I=1:1:CT D
+ . S MAGRY(I)=MAGOUT("DILIST",I,0)
+ . S DATE=$P(MAGRY(I),U,4)                     ; Convert date/time into MM/DD/YYYY hh:mm format
+ . S $P(MAGRY(I),U,4)=$TR($$FMTE^XLFDT(DATE,"5Z"),"@"," ")
+ . S CODE=$P(MAGRY(I),U)                       ; Get CPT code from file (#81) if present
+ . S CODE81=$$GET1^DIQ(64.018,"1,"_CODE_",",.01,"E")
+ . I CODE81]"" S $E(CODE81,$F(CODE81," ")-1)=U,$P(MAGRY(I),U,1,2)=CODE81 Q
+ . S $P(MAGRY(I),U)=$P($$GET1^DIQ(64,CODE_",",1),".")  ; Else show CPT Code from file (#64)
+ . Q
+ S MAGRY(0)="1^"_CT_"^CPT Code^CPT Description^Multiply Factor^Date/Time Entered^User^Visit List: "_VSLST
+ Q  ;

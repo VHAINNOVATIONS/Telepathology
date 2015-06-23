@@ -279,6 +279,11 @@ namespace VistA.Imaging.Telepathology.Worklist.DataSource
             return vistaClient.GetCaseDetail(caseURN);
         }
 
+        public CaseSlideList GetCaseSlidesInfo(string caseURN)
+        {
+            return vistaClient.GetCaseSlidesInfo(caseURN);
+        }
+
         public PathologyCaseUpdateAttributeResultType LockCaseForEditing(string caseURN, bool lockCase)
         {
             return vistaClient.LockCaseForEditing(caseURN, lockCase);
