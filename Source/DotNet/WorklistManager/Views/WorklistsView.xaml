@@ -30,12 +30,12 @@
             <Button Content="_Refresh" 
                     Width="100"
                     Command="{Binding RefreshCommand}"/>
-            <Button Content="Re_serve Case" 
+            <!--<Button Content="Re_serve Case" 
                     Width="100"
                     Command="{Binding ReserveCaseCommand}"/>
             <Button Content="_Un-Reserve Case" 
                     Width="100"
-                    Command="{Binding UnreserveCaseCommand}"/>
+                    Command="{Binding UnreserveCaseCommand}"/> -->
             <Button Content="E_dit Report" 
                     Width="100"
                     Command="{Binding EditReportCommand}"/>

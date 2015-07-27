@@ -534,8 +534,32 @@ namespace VistA.Imaging.Telepathology.Worklist
                     // open the report normally
                     window = new ReportView(new ReportViewModel(viewModel.DataSource, item, isTotalReadOnly, currentSiteType));
 
+                    // (Reserve Case now to) Show user in Reserved by column of WL
+                    try
+                    {
+                        viewModel.DataSource.ReserveCase(item.CaseURN, true);
+                        Log.Info(string.Format("Reserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Cannot reserve case.", ex);
+                        MessageBox.Show("Case cannot be reserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+
                     ViewModelLocator.ContextManager.IsBusy = true;
                     window.ShowDialog();
+
+                    // (UnReserve Case now to) Remove user from Reserved by column of WL
+                    try
+                    {
+                        viewModel.DataSource.ReserveCase(item.CaseURN, false);
+                        Log.Info(string.Format("Unreserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Cannot unreserve case.", ex);
+                        MessageBox.Show("Case cannot be unreserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
 
                     // unlock the case once the user has closed the report GUI
                     locked = viewModel.DataSource.LockCaseForEditing(item.CaseURN, false);
@@ -677,21 +701,21 @@ namespace VistA.Imaging.Telepathology.Worklist
             try
             {
                 // set constants
-                // string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                string fileSpec; // = "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\CaseSlides.sis";
+                string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string fileSpec = progPath + "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\NoSlides.sis";
                 string filePathToInvokeExe;
 
                 // remove slides from viewer application
                 if (!ActiveViewer)
                    return;
-                fileSpec = "C:\\Temp\\NoSlides.sis";
+                // fileSpec = "C:\\Temp\\NoSlides.sis";
                 Log.Info("Removing slides from viewer application.");
 
                 // invoke ImageScope with .sys file
                 filePathToInvokeExe = @fileSpec;
                 System.Diagnostics.Process.Start(filePathToInvokeExe);
 
-                ActiveViewer = false;
+                // ActiveViewer = false; -- viewer stays active if it was invoked by this app!
 
             }
             catch (Exception ex)
@@ -711,13 +735,13 @@ namespace VistA.Imaging.Telepathology.Worklist
             try
             {
                 // set constants
-                // string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
-                string fileSpec; // = "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\CaseSlides.sis";
+                string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+                string fileSpec= progPath + "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\CaseSlides.sis";
                 string filePathToInvokeExe;
                 string slideTitle = "";
 
                     // show case slides (if any) in viewer application
-                    fileSpec = "C:\\Temp\\CaseSlides.sis";
+                    // fileSpec = "C:\\Temp\\CaseSlides.sis";
 
                     slideTitle = "    <Title>";
                     slideTitle += item.PatientSensitive ? "<Sensitive Patient>," : (item.PatientName + "," + item.PatientID + ",");
@@ -766,6 +790,7 @@ namespace VistA.Imaging.Telepathology.Worklist
 
                         Log.Info("Viewing slides for case " + item.CaseURN + " of site: " + item.SiteAbbr + ", acc#: " + item.AccessionNumber);
                         ActiveViewer = true;
+
                     }
 
             }
@@ -926,8 +951,15 @@ namespace VistA.Imaging.Telepathology.Worklist
         private void Window_Closed(object sender, EventArgs e)
         {
             Log.Info("Terminating VistA Imaging Pathology Worklist Manager.");
-            // empty viewer app context if it was invoked...
-            EraseCaseSlides();
+            // // empty viewer app context if it was invoked...
+            // EraseCaseSlides();
+            if (ActiveViewer)
+            {
+                // kill ImageScope
+                foreach (Process Proc in Process.GetProcesses())
+                    if (Proc.ProcessName.Equals("ImageScope"))
+                        Proc.Kill();
+            }
         }
 
         private void mnuSavePrefNow_Click(object sender, RoutedEventArgs e)

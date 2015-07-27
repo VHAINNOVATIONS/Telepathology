@@ -183,9 +183,9 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 
             this.RefreshCommand = new RelayCommand(Refresh);
 
-            this.ReserveCaseCommand = new RelayCommand(ReserveCases, () => CanReserveCases());
+            // this.ReserveCaseCommand = new RelayCommand(ReserveCases, () => CanReserveCases());
 
-            this.UnreserveCaseCommand = new RelayCommand(UnreserveCases, () => CanUnreserveCases());
+            // this.UnreserveCaseCommand = new RelayCommand(UnreserveCases, () => CanUnreserveCases());
 
             this.RequestConsultationCommand = new RelayCommand(RequestConsultation, () => CanRequestConsultation());
 
@@ -230,96 +230,96 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 
         #endregion
 
-        #region Reserve Cases
+        //#region Reserve Cases
 
-        public RelayCommand ReserveCaseCommand { get; private set; }
+        //public RelayCommand ReserveCaseCommand { get; private set; }
 
-        public void ReserveCases()
-        {
-            try
-            {
-                _refreshTimer.Stop();
-                foreach (CaseListItem item in this.SelectedItems)
-                {
-                    // attempt to reserve case 
-                    _dataSource.ReserveCase(item.CaseURN, true);
-                    Log.Info(string.Format("Reserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
-                }
-                _refreshTimer.Start();
+        //public void ReserveCases()
+        //{
+        //    try
+        //    {
+        //        _refreshTimer.Stop();
+        //        foreach (CaseListItem item in this.SelectedItems)
+        //        {
+        //            // attempt to reserve case 
+        //            _dataSource.ReserveCase(item.CaseURN, true);
+        //            Log.Info(string.Format("Reserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+        //        }
+        //        _refreshTimer.Start();
 
-                this.Refresh(this.SelectedItems, keepCaseOn);
-            }
-            catch (Exception ex)
-            {
-                Log.Error("Cannot reserve case.", ex);
-                MessageBox.Show("Case cannot be reserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        //        this.Refresh(this.SelectedItems, keepCaseOn);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Log.Error("Cannot reserve case.", ex);
+        //        MessageBox.Show("Case cannot be reserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
 
-        public bool CanReserveCases()
-        {
-            return ((UserContext.UserHasKey("LRLAB")) &&
-                    (this.Type != ExamListViewType.Patient) &&
-                    (SelectedItems != null) &&
-                    (SelectedItems.Count == 1) &&
-                    (this.SelectedItems[0].Kind == CaseListItemKind.Case));
-        }
+        //public bool CanReserveCases()
+        //{
+        //    return ((UserContext.UserHasKey("LRLAB")) &&
+        //            (this.Type != ExamListViewType.Patient) &&
+        //            (SelectedItems != null) &&
+        //            (SelectedItems.Count == 1) &&
+        //            (this.SelectedItems[0].Kind == CaseListItemKind.Case));
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Un-Reserve Cases
+        //#region Un-Reserve Cases
 
-        public RelayCommand UnreserveCaseCommand { get; private set; }
+        //public RelayCommand UnreserveCaseCommand { get; private set; }
 
-        public void UnreserveCases()
-        {
-            if ((this.SelectedItems != null) && (this.SelectedItems.Count > 0))
-            {
-                try
-                {
-                    _refreshTimer.Stop();
-                    foreach (CaseListItem item in this.SelectedItems)
-                    {
-                        // attempt to un- reserve the case
-                        _dataSource.ReserveCase(item.CaseURN, false);
-                        Log.Info(string.Format("Unreserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
-                    }
-                    _refreshTimer.Start();
+        //public void UnreserveCases()
+        //{
+        //    if ((this.SelectedItems != null) && (this.SelectedItems.Count > 0))
+        //    {
+        //        try
+        //        {
+        //            _refreshTimer.Stop();
+        //            foreach (CaseListItem item in this.SelectedItems)
+        //            {
+        //                // attempt to un- reserve the case
+        //                _dataSource.ReserveCase(item.CaseURN, false);
+        //                Log.Info(string.Format("Unreserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+        //            }
+        //            _refreshTimer.Start();
 
-                    this.Refresh(this.SelectedItems, keepCaseOn);
-                }
-                catch (Exception ex)
-                {
-                    Log.Error("Cannot unreserve case.", ex);
-                    MessageBox.Show("Case cannot be unreserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-        }
+        //            this.Refresh(this.SelectedItems, keepCaseOn);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Log.Error("Cannot unreserve case.", ex);
+        //            MessageBox.Show("Case cannot be unreserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //    }
+        //}
 
-        public bool CanUnreserveCases()
-        {
-            if ((UserContext.UserHasKey("LRLAB")) &&
-                (this.Type != ExamListViewType.Patient) && 
-                (this.SelectedItems != null) &&
-                (this.SelectedItems.Count == 1) &&
-                (this.SelectedItems[0].Kind == CaseListItemKind.Case))
-            {
-                // all selected items have to reserved by the current user
-                foreach (CaseListItem item in this.SelectedItems)
-                {
-                    if (item.ReserveState != "1")
-                    {
-                        return false;
-                    }
-                }
+        //public bool CanUnreserveCases()
+        //{
+        //    if ((UserContext.UserHasKey("LRLAB")) &&
+        //        (this.Type != ExamListViewType.Patient) && 
+        //        (this.SelectedItems != null) &&
+        //        (this.SelectedItems.Count == 1) &&
+        //        (this.SelectedItems[0].Kind == CaseListItemKind.Case))
+        //    {
+        //        // all selected items have to reserved by the current user
+        //        foreach (CaseListItem item in this.SelectedItems)
+        //        {
+        //            if (item.ReserveState != "1")
+        //            {
+        //                return false;
+        //            }
+        //        }
 
-                return true;
-            }
+        //        return true;
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
 
-        #endregion
+        //#endregion
 
         #region Edit Report
 

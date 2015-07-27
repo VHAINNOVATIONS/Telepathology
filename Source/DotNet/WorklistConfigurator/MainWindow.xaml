@@ -39,6 +39,9 @@
             <TabItem Header="_Worklist Settings" Name="tabItem4">
                 <views:OtherSettingsView x:Name="otherSettingsView"/>
             </TabItem>
+            <!--<TabItem Header="_CPT Shorthands" x:Name="tabItem5" Margin="-2,-2,-2,-1">
+                <views:CptShorthandsView x:Name="cptCodeShorthands"/>
+            </TabItem>-->
         </TabControl>
 
         <StatusBar Grid.Row="2" Height="25" Name="statusBar">

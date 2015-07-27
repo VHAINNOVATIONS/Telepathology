@@ -187,7 +187,7 @@
                                     <GridViewColumnHeader Tag="ReservedBy" Click="GridViewColumnHeader_Click">
                                         <GridViewColumnHeader.ContentTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text ="Reserved By" Style="{StaticResource ColumnHeaderTextStyle}"/>
+                                                <TextBlock Text ="Locked By" Style="{StaticResource ColumnHeaderTextStyle}"/>
                                             </DataTemplate>
                                         </GridViewColumnHeader.ContentTemplate>
                                     </GridViewColumnHeader>

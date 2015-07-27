@@ -619,21 +619,22 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 					this.SelectedSR.Verified = "Yes";
 					this.SelectedSR.VerifiedBy = UserContext.UserCredentials.Fullname;
 
-					MessageBoxResult result = MessageBox.Show("An alert has been sent to " + Practitioner + ".\r\nDo you want to send to additional recipient or mailgroups?",
-															  "Infomation", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
-					if (result == MessageBoxResult.Yes)
-					{
-						try
-							{
-								string subject = SRSelectedDate.GetValueOrDefault().ToShortDateString() + " supplementary report for " + AccessionNumber + " has been verified.";
-								Process.Start("mailto:?subject=" + subject);
-							}
-						catch (Exception ex)
-						{
-							MessageBox.Show("Email client could not be initiated.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-							Log.Error("Failed to start email client process.", ex);
-						}
-					}
+                    // *** removed send mail section for SR verify (it's enough on Main Report verify)
+                    //MessageBoxResult result = MessageBox.Show("An alert has been sent to " + Practitioner + ".\r\nDo you want to send to additional recipient or mailgroups?",
+                    //                                          "Infomation", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                    //if (result == MessageBoxResult.Yes)
+                    //{
+                    //    try
+                    //        {
+                    //            string subject = SRSelectedDate.GetValueOrDefault().ToShortDateString() + " supplementary report for " + AccessionNumber + " has been verified.";
+                    //            Process.Start("mailto:?subject=" + subject);
+                    //        }
+                    //    catch (Exception ex)
+                    //    {
+                    //        MessageBox.Show("Email client could not be initiated.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    //        Log.Error("Failed to start email client process.", ex);
+                    //    }
+                    //}
 
                     ClearSR();
 

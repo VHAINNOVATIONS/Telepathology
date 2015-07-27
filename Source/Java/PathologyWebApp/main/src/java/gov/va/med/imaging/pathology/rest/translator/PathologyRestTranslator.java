@@ -44,6 +44,7 @@ import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultation;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
 import gov.va.med.imaging.pathology.PathologyCaseTemplateField;
@@ -65,6 +66,8 @@ import gov.va.med.imaging.pathology.rest.types.PathologyCaseConsultationUpdateSt
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseReportFieldType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseReportFieldsType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseReserveResultType;
+import gov.va.med.imaging.pathology.rest.types.PathologyCaseSlideType;
+import gov.va.med.imaging.pathology.rest.types.PathologyCaseSlidesType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseSupplementalReportType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseSupplementalReportsType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseTemplateFieldType;
@@ -714,6 +717,27 @@ public class PathologyRestTranslator
 	public static PathologySaveCaseReportResultType translate(PathologySaveCaseReportResult saveCaseReport)
 	{
 		return new PathologySaveCaseReportResultType(saveCaseReport.isReleased(), saveCaseReport.getMessage());
+	}
+	
+	public static PathologyCaseSlidesType translateCaseSlides(List<PathologyCaseSlide> slides)
+	{
+		if(slides == null)
+			return null;
+		
+		PathologyCaseSlideType [] result = new PathologyCaseSlideType[slides.size()];
+		for(int i = 0; i < slides.size(); i++)
+		{
+			result[i] = translate(slides.get(i));
+		}
+		
+		return new PathologyCaseSlidesType(result);
+	}
+	
+	private static PathologyCaseSlideType translate(PathologyCaseSlide slide)
+	{
+		return new PathologyCaseSlideType(slide.getSlideNumber(), slide.getDateTimeScanned(), slide.getUrl(), 
+				slide.getZoomFactor(), slide.getScanApplication(), slide.getSlideStatus(), slide.getViewApplication(),
+				slide.getDescription());
 	}
 }
 

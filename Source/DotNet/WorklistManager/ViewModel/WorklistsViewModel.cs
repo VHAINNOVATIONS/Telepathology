@@ -59,9 +59,9 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 
             this.RefreshCommand = new RelayCommand(Refresh);
 
-            this.ReserveCaseCommand = new RelayCommand(ReserveCases, () => CanReserveCases());
+            // this.ReserveCaseCommand = new RelayCommand(ReserveCases, () => CanReserveCases());
 
-            this.UnreserveCaseCommand = new RelayCommand(UnreserveCases, () => CanUnreserveCases());
+            // this.UnreserveCaseCommand = new RelayCommand(UnreserveCases, () => CanUnreserveCases());
 
             this.RequestConsultationCommand = new RelayCommand(RequestConsultation, () => CanRequestConsultation());
 
@@ -91,37 +91,37 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 
         #endregion
 
-        #region Reserve Cases
+        //#region Reserve Cases
 
-        public RelayCommand ReserveCaseCommand { get; private set; }
+        //public RelayCommand ReserveCaseCommand { get; private set; }
 
-        public void ReserveCases()
-        {
-            if (this.CurrentWorkList != null) this.CurrentWorkList.ReserveCases();
-        }
+        //public void ReserveCases()
+        //{
+        //    if (this.CurrentWorkList != null) this.CurrentWorkList.ReserveCases();
+        //}
 
-        public bool CanReserveCases()
-        {
-            return (this.CurrentWorkList != null) ? this.CurrentWorkList.CanReserveCases() : false;
-        }
+        //public bool CanReserveCases()
+        //{
+        //    return (this.CurrentWorkList != null) ? this.CurrentWorkList.CanReserveCases() : false;
+        //}
 
-        #endregion
+        //#endregion
 
-        #region Un-Reserve Cases
+        //#region Un-Reserve Cases
 
-        public RelayCommand UnreserveCaseCommand { get; private set; }
+        //public RelayCommand UnreserveCaseCommand { get; private set; }
 
-        public void UnreserveCases()
-        {
-            if (this.CurrentWorkList != null) this.CurrentWorkList.UnreserveCases();
-        }
+        //public void UnreserveCases()
+        //{
+        //    if (this.CurrentWorkList != null) this.CurrentWorkList.UnreserveCases();
+        //}
 
-        public bool CanUnreserveCases()
-        {
-            return (this.CurrentWorkList != null) ? this.CurrentWorkList.CanUnreserveCases() : false;
-        }
+        //public bool CanUnreserveCases()
+        //{
+        //    return (this.CurrentWorkList != null) ? this.CurrentWorkList.CanUnreserveCases() : false;
+        //}
 
-        #endregion
+        // #endregion
 
         #region Edit Report
 

@@ -1018,21 +1018,22 @@ public class VistaImagingPathologyTranslator
 		String noteAttachedString = pieces[17];
 		String isSensitive = "0";
 		int numberOfImages = 0;
-		if(pieces.length >= 19)
+		String numberOfImagesString = null;
+		if(pieces.length > 19)
 			isSensitive = pieces[18];
+		else // length==19
+			numberOfImagesString = pieces[18];
 		if(pieces.length >= 20)
+			numberOfImagesString = pieces[19];
+		if(numberOfImagesString != null && numberOfImagesString.length() > 0)
 		{
-			String numberOfImagesString = pieces[19];
-			if(numberOfImagesString != null && numberOfImagesString.length() > 0)
+			try
 			{
-				try
-				{
-					numberOfImages = Integer.parseInt(numberOfImagesString);
-				}
-				catch(Exception ex)
-				{
-					logger.warn("Error parsing number of images string [" + numberOfImagesString + "], " + ex.getMessage());
-				}
+				numberOfImages = Integer.parseInt(numberOfImagesString);
+			}
+			catch(Exception ex)
+			{
+				logger.warn("Error parsing number of images string [" + numberOfImagesString + "], " + ex.getMessage());
 			}
 		}
 		
