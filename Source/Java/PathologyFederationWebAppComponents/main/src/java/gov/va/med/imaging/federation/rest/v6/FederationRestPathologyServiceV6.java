@@ -34,6 +34,7 @@ import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetAl
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseCptCodesCommand;
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseNoteCommand;
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseReportCommand;
+import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseSlidesCommand;
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseSnomedCodesCommand;
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseSpecimensCommand;
 import gov.va.med.imaging.federation.commands.pathology.FederationPathologyGetCaseSupplementalReportsCommand;
@@ -719,6 +720,18 @@ extends AbstractFederationRestService
 		FederationPathologyGetCaseNoteCommand command = 
 			new FederationPathologyGetCaseNoteCommand(caseId, 
 					getInterfaceVersion());
+		return wrapResultWithResponseHeaders(command.execute());
+	}
+	
+	@GET
+	@Path(PathologyFederationRestUri.getCaseSlidesPath)
+	@Produces(MediaType.APPLICATION_XML)
+	public Response getCaseSlides(
+			@PathParam("caseId") String caseId)
+	throws MethodException, ConnectionException
+	{
+		FederationPathologyGetCaseSlidesCommand command = 
+			new FederationPathologyGetCaseSlidesCommand(caseId, getInterfaceVersion());
 		return wrapResultWithResponseHeaders(command.execute());
 	}
 }

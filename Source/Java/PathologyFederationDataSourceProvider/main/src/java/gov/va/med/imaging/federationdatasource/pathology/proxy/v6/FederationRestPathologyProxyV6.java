@@ -45,6 +45,7 @@ import gov.va.med.imaging.pathology.PathologyAcquisitionSite;
 import gov.va.med.imaging.pathology.PathologyCase;
 import gov.va.med.imaging.pathology.PathologyCaseConsultationURN;
 import gov.va.med.imaging.pathology.PathologyCaseReportField;
+import gov.va.med.imaging.pathology.PathologyCaseSlide;
 import gov.va.med.imaging.pathology.PathologyCaseSpecimen;
 import gov.va.med.imaging.pathology.PathologyCaseSupplementalReport;
 import gov.va.med.imaging.pathology.PathologyCaseTemplate;
@@ -558,5 +559,15 @@ extends AbstractFederationRestProxy
 			inputParametersDescription="caseId:pathologyCaseUrn.toString()",
 			translationResultMethodName="RestCoreTranslator.translate")
 	public abstract String getCaseNote(PathologyCaseURN pathologyCaseUrn)
+	throws MethodException, ConnectionException;
+	
+	@FederationGeneratedDataSourceProxyMethod(
+			federationMethodUri=PathologyFederationRestUri.getCaseSlidesPath,
+			translationResultMethodName="gov.va.med.imaging.federation.pathology.rest.translator.PathologyFederationRestTranslator.translate",
+			federationReturnType="gov.va.med.imaging.federation.pathology.rest.types.PathologyFederationCaseSlideType[]", 
+			restQueryParameters="caseId:pathologyCaseUrn.toString()",
+			inputParametersDescription="caseId:pathologyCaseUrn.toString()")
+	public abstract List<PathologyCaseSlide> getCaseSlides(
+			PathologyCaseURN pathologyCaseUrn) 
 	throws MethodException, ConnectionException;
 }

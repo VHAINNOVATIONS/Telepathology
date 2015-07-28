@@ -34,6 +34,7 @@ import gov.va.med.imaging.pathology.commands.PathologyGetAcquisitionSitesCommand
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseCptCodesCommand;
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseNoteCommand;
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseReportCommand;
+import gov.va.med.imaging.pathology.commands.PathologyGetCaseSlidesCommand;
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseSnomedCodesCommand;
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseSpecimensCommand;
 import gov.va.med.imaging.pathology.commands.PathologyGetCaseSupplementalReportsCommand;
@@ -73,6 +74,7 @@ import gov.va.med.imaging.pathology.rest.types.PathologyAcquisitionSitesType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseConsultationUpdateStatusType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseReportFieldsType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseReserveResultType;
+import gov.va.med.imaging.pathology.rest.types.PathologyCaseSlidesType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseSupplementalReportsType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseTemplateInputFieldsType;
 import gov.va.med.imaging.pathology.rest.types.PathologyCaseTemplateType;
@@ -704,5 +706,15 @@ public class PathologyRestService
 	throws MethodException, ConnectionException
 	{		
 		return new PathologyGetCaseNoteCommand(caseId).execute();
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_XML)
+	@Path("pathology/case/slidesinfo/{caseId}")
+	public PathologyCaseSlidesType getCaseSlideInformation(
+			@PathParam("caseId") String caseId)
+	throws MethodException, ConnectionException
+	{		
+		return new PathologyGetCaseSlidesCommand(caseId).execute();
 	}
 }

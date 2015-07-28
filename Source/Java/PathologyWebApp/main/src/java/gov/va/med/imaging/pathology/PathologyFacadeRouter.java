@@ -327,4 +327,9 @@ extends FacadeRouter
 	public String getCaseNote(
 			PathologyCaseURN pathologyCaseUrn)
 	throws MethodException, ConnectionException;
+	
+	@FacadeRouterMethod(asynchronous=false, commandClassName="GetPathologyCaseSlideInformationCommand")
+	public List<PathologyCaseSlide> getCaseSlideInformation(
+			PathologyCaseURN pathologyCaseUrn)
+	throws MethodException, ConnectionException;
 }
