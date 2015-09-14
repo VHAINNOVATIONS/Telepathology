@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 14 Jan 2013   1:19 PM
-MAGI138V^INT^1^62836,47512^0
-MAGI138V ;WOIFO/JL,MLH,NST - Install code for TP - default report template (EM) ; 1/14/2013 3:07 pm
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 86;Oct 30, 2012
+MAGI873W ;WOIFO/JL,MLH,NST - Install code for TP - default report template (SP) ; 1/14/2013 3:20 pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Oct 30, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -25,16 +22,16 @@ MAGI138V ;WOIFO/JL,MLH,NST - Install code for TP - default report template (EM) 
 RPTXTPL ;
  N XML,MAGERR,D0,FLD,XMLIX,XMLDTA
  S D0=$O(^MAG(2006.13,0)) Q:'D0
- S FLD=2 ;EM
+ S FLD=3 ;SP
  Q:$D(^MAG(2006.13,D0,FLD))>0  ;EXIST
  F XMLIX=1:1 S XMLDTA=$P($T(XML+XMLIX),";",2) Q:XMLDTA=""  S XML(XMLIX)=XMLDTA
  D WP^DIE(2006.13,D0_",",FLD,"A","XML","MAGERR")
  I $D(MAGERR) D MES^MAGKIDS($G(MAGERR("DIERR",1,"TEXT",1)))
  Q
-XML ;;Begin contents of XML template for electron microscopy
+XML ;;Begin contents of XML template for cytopathology
  ;<ReportTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
- ;<ReportTypeShort>EM</ReportTypeShort>
- ;<ReportTypeLong>Electron Microscopy</ReportTypeLong>
+ ;<ReportTypeShort>SP</ReportTypeShort>
+ ;<ReportTypeLong>Surgical Pathology</ReportTypeLong>
  ;<ReportFields>
  ;<ReportFieldTemplate>
  ;<DatabaseName>SPECIMEN</DatabaseName>
@@ -97,8 +94,8 @@ XML ;;Begin contents of XML template for electron microscopy
  ;<TemplateList>Display</TemplateList>
  ;</ReportFieldTemplate>
  ;<ReportFieldTemplate>
- ;<DatabaseName>MICROSCOPIC EXAMINATION</DatabaseName>
- ;<DisplayName>Microscopic Examination</DisplayName>
+ ;<DatabaseName>MICROSCOPIC DESCRIPTION</DatabaseName>
+ ;<DisplayName>Microscopic Description</DisplayName>
  ;<FieldNumber>1.1</FieldNumber>
  ;<InputType>WordProcessing</InputType>
  ;<DisplayPosition>7</DisplayPosition>
@@ -107,18 +104,25 @@ XML ;;Begin contents of XML template for electron microscopy
  ;<TemplateList>Display</TemplateList>
  ;</ReportFieldTemplate>
  ;<ReportFieldTemplate>
- ;<DatabaseName>EM DIAGNOSIS</DatabaseName>
- ;<DisplayName>EM Diagnosis</DisplayName>
- ;<FieldNumber>1.4</FieldNumber>
+ ;<DatabaseName>FROZEN SECTION</DatabaseName>
+ ;<DisplayName>Frozen Section</DisplayName>
+ ;<FieldNumber>1.3</FieldNumber>
  ;<InputType>WordProcessing</InputType>
  ;<DisplayPosition>8</DisplayPosition>
  ;<IsRequired>false</IsRequired>
  ;<AlwaysRequired>false</AlwaysRequired>
  ;<TemplateList>Display</TemplateList>
  ;</ReportFieldTemplate>
+ ;<ReportFieldTemplate>
+ ;<DatabaseName>SURGICALPATH DIAGNOSIS</DatabaseName>
+ ;<DisplayName>Surgical Pathology Diagnosis</DisplayName>
+ ;<FieldNumber>1.4</FieldNumber>
+ ;<InputType>WordProcessing</InputType>
+ ;<DisplayPosition>9</DisplayPosition>
+ ;<IsRequired>false</IsRequired>
+ ;<AlwaysRequired>false</AlwaysRequired>
+ ;<TemplateList>Display</TemplateList>
+ ;</ReportFieldTemplate>
  ;</ReportFields>
  ;</ReportTemplate>
- ;;End contents of XML template for electron microscopy
-
-
-
+ ;;End contents of XML template for surgical pathology

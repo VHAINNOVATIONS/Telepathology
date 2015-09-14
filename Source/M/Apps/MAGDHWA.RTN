@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 25 Jul 2012  04:31 PM
-MAGDHWA^INT^1^62663,58259^0
 MAGDHWA ;WOIFO/PMK - Capture Consult/Request data ; 19 Mar 2009 6:36 AM
- ;;3.0;IMAGING;**10,51,50,49**;Mar 19, 2002;Build 2033;Apr 07, 2011
+ ;;3.0;IMAGING;**10,51,50,49**;Mar 19, 2002;Build 4;Apr 07, 2011
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -185,6 +182,3 @@ TIUXLINK ; create the cross-linkages to TIU EXTERNAL DATA LINK file
  . S X="ERR^MAGGTERR",@^%ZOSF("TRAP")
  . Q
  Q
-
-
-

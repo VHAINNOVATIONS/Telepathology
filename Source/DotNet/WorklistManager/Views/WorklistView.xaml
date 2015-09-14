@@ -86,8 +86,8 @@
                     <tree:TreeList.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Refresh" Command="{Binding RefreshCommand}"/>
-                            <MenuItem Header="Reserve Case" Command="{Binding ReserveCaseCommand}" />
-                            <MenuItem Header="Un-Reserve Case" Command="{Binding UnreserveCaseCommand}" />
+                            <!-- <MenuItem Header="Reserve Case" Command="{Binding ReserveCaseCommand}" />
+                            <MenuItem Header="Un-Reserve Case" Command="{Binding UnreserveCaseCommand}" /> -->
                             <MenuItem Header="Edit Report" Command="{Binding EditReportCommand}" />
                             <MenuItem Header="View Report" Command="{Binding ViewReportCommand}" />
                             <MenuItem Header="View Images" Command="{Binding ViewSnapshotsCommand}" />

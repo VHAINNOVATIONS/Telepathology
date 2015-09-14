@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 14 Jan 2013   1:18 PM
-MAGI138U^INT^1^62836,47521^0
-MAGI138U ;WOIFO/JL,MLH,NST - Install code for TP - default report template (CY) ; 1/14/2013 2:39 pm
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 86;Oct 30, 2012
+MAGI873V ;WOIFO/JL,MLH,NST - Install code for TP - default report template (EM) ; 1/14/2013 3:07 pm
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Oct 30, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -25,16 +22,16 @@ MAGI138U ;WOIFO/JL,MLH,NST - Install code for TP - default report template (CY) 
 RPTXTPL ;
  N XML,MAGERR,D0,FLD,XMLIX,XMLDTA
  S D0=$O(^MAG(2006.13,0)) Q:'D0
- S FLD=1 ;CY
+ S FLD=2 ;EM
  Q:$D(^MAG(2006.13,D0,FLD))>0  ;EXIST
  F XMLIX=1:1 S XMLDTA=$P($T(XML+XMLIX),";",2) Q:XMLDTA=""  S XML(XMLIX)=XMLDTA
  D WP^DIE(2006.13,D0_",",FLD,"A","XML","MAGERR")
  I $D(MAGERR) D MES^MAGKIDS($G(MAGERR("DIERR",1,"TEXT",1)))
  Q
-XML ;;Begin contents of XML template for cytopathology
+XML ;;Begin contents of XML template for electron microscopy
  ;<ReportTemplate xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
- ;<ReportTypeShort>CY</ReportTypeShort>
- ;<ReportTypeLong>Cytopathology</ReportTypeLong>
+ ;<ReportTypeShort>EM</ReportTypeShort>
+ ;<ReportTypeLong>Electron Microscopy</ReportTypeLong>
  ;<ReportFields>
  ;<ReportFieldTemplate>
  ;<DatabaseName>SPECIMEN</DatabaseName>
@@ -107,18 +104,8 @@ XML ;;Begin contents of XML template for cytopathology
  ;<TemplateList>Display</TemplateList>
  ;</ReportFieldTemplate>
  ;<ReportFieldTemplate>
- ;<DatabaseName>REVIEWED BY PATHOLOGIST</DatabaseName>
- ;<DisplayName>Reviewed by Pathologist</DisplayName>
- ;<FieldNumber>.101</FieldNumber>
- ;<InputType>Boolean</InputType>
- ;<DisplayPosition>9</DisplayPosition>
- ;<IsRequired>false</IsRequired>
- ;<AlwaysRequired>false</AlwaysRequired>
- ;<TemplateList>Display</TemplateList>
- ;</ReportFieldTemplate>
- ;<ReportFieldTemplate>
- ;<DatabaseName>CYTOPATHOLOGY DIAGNOSIS</DatabaseName>
- ;<DisplayName>Cytopathology Diagnosis</DisplayName>
+ ;<DatabaseName>EM DIAGNOSIS</DatabaseName>
+ ;<DisplayName>EM Diagnosis</DisplayName>
  ;<FieldNumber>1.4</FieldNumber>
  ;<InputType>WordProcessing</InputType>
  ;<DisplayPosition>8</DisplayPosition>
@@ -128,7 +115,4 @@ XML ;;Begin contents of XML template for cytopathology
  ;</ReportFieldTemplate>
  ;</ReportFields>
  ;</ReportTemplate>
- ;;End contents of XML template for cytopathology
-
-
-
+ ;;End contents of XML template for electron microscopy

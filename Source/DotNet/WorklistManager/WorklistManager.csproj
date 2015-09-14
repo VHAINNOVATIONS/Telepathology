@@ -157,6 +157,9 @@
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditReportTimeout.xaml.cs">
+      <DependentUpon>EditReportTimeout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MagTimeout.xaml.cs">
       <DependentUpon>MagTimeout.xaml</DependentUpon>
     </Compile>
@@ -275,6 +278,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\EditReportTimeout.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -472,6 +479,7 @@
       <Link>Bapi32_47_1.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Vendors\Aperio\NoSlides.sis" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

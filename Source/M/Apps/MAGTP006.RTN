@@ -1,5 +1,5 @@
 MAGTP006 ;WOIFO/FG,JSL - TELEPATHOLOGY TAGS ; May 14 2013 5:07pm
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Apr 03, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -526,5 +526,3 @@ RELEASE(MAGRY,LRFILE1,LRIENS,LRDFN,LRSS,LRI,LRSF,LRDA) ;
  D SNDALRT^MAGTP006(.LRMSG,LRDFN,LRSS,LRI,LRSF)  ;
  S MAGRY(0)="1^0^Supplementary Report Released"_$G(LRMSG)
  Q  ;
-
-

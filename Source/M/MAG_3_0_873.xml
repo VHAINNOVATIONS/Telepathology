@@ -4,18 +4,18 @@
 
   name="MAG*3.0*873"
   patch="873"
-  patchName="VistA Imaging V3.0 Patch 873 - Telepathology Worklist Innovation"
+  patchName="VistA Imaging V3.0 138 Upgrade i873 - Telepathology Worklist Innovation"
   envCheckRoutine=""
   deleteEnvCheckRoutine=""
-  preInstallRoutine="PRE^MAGIP873"
+  preInstallRoutine="PRE^MAGIP138"
   deletePreInstalltRoutine="Yes"
-  postInstallRoutine="POS^MAGIP873"
+  postInstallRoutine="POS^MAGIP138"
   deletePostInstallRoutine="Yes"
   packageName="IMAGING"
   packageNumber="454"
   packageVersion="3.0"
   packagePrefix="MAG"
-  packageDateDestributed="3020901"
+  packageDateDestributed="3020914"
   alphaBetaTesting="YES"
   installationMessage="YES"
   addressForUsageReporting="G.IMAGING DEVELOPMENT TEAM@FORUM.VA.GOV"
@@ -31,32 +31,33 @@
   <components>
     <dataDictionaries>
 
-	<!--   patch 138 -->
+    <!--   patch 873 - none -->
       <dataDictionary name="2005.42" export="DD_2005_42.KID"/>
+	
+	<!--   patch 138 -->
       <dataDictionary name="2005.43" export="DD_2005_43.KID"/>
       <dataDictionary name="2006.13" export="DD_2006_13.KID"/>
       <dataDictionary name="2006.5838" export="DD_2006_5838.KID"/>
       <dataDictionary name="2006.1" export="DD_2006_1_P138.KID"/>
 
-    <!--   patch 873 - none -->
-	
     </dataDictionaries>
     <routines>
-      <!--   patch 873  -->
-      <routine name="MAGIP873" export="MAGIP873.RTN"/>
+ 	<!--   patch 138 -->
+  	  <routine name="MAGIP138" export="MAGIP138.RTN"/>
+    <!--   patch 873  -->
       <routine name="MAG7RS"   export="MAG7RS.RTN"/>
       <routine name="MAGDGMRC" export="MAGDGMRC.RTN"/>
       <routine name="MAGDHWA"  export="MAGDHWA.RTN"/>
       <routine name="MAGDHWC"  export="MAGDHWC.RTN"/>
       <routine name="MAGDHWS"  export="MAGDHWS.RTN"/>
-      <routine name="MAGI138T" export="MAGI138T.RTN"/>
-      <routine name="MAGI138U" export="MAGI138U.RTN"/>
-      <routine name="MAGI138V" export="MAGI138V.RTN"/>
-      <routine name="MAGI138W" export="MAGI138W.RTN"/>
+      <routine name="MAGI873T" export="MAGI873T.RTN"/>
+      <routine name="MAGI873U" export="MAGI873U.RTN"/>
+      <routine name="MAGI873V" export="MAGI873V.RTN"/>
+      <routine name="MAGI873W" export="MAGI873W.RTN"/>
       <routine name="MAGT7SS1" export="MAGT7SS1.RTN"/>
       <routine name="MAGT7SS2" export="MAGT7SS2.RTN"/>
       <routine name="MAGTP001" export="MAGTP001.RTN"/>
-      <routine name="MAGTP002" export="MAGTP002.RTN"/> -->
+      <routine name="MAGTP002" export="MAGTP002.RTN"/>
       <routine name="MAGTP003" export="MAGTP003.RTN"/>
       <!-- <routine name="MAGTP004" export="MAGTP004.RTN"/> -->
       <routine name="MAGTP005" export="MAGTP005.RTN"/>
@@ -64,15 +65,18 @@
       <routine name="MAGTP007" export="MAGTP007.RTN"/>
       <routine name="MAGTP008" export="MAGTP008.RTN"/>
       <routine name="MAGTP009" export="MAGTP009.RTN"/>
+      <!-- <routine name="MAGTP010" export="MAGTP010.RTN"/> -->
       <routine name="MAGTP011" export="MAGTP011.RTN"/>
       <routine name="MAGTP012" export="MAGTP012.RTN"/>
       <routine name="MAGTP013" export="MAGTP013.RTN"/>
       <!-- <routine name="MAGTP014" export="MAGTP014.RTN"/> -->
+      <routine name="MAGTP015" export="MAGTP015.RTN"/>
       <routine name="MAGUE006" export="MAGUE006.RTN"/>
       <routine name="MAGUE008" export="MAGUE008.RTN"/>
     </routines>
     <rpcs>
       <!--   patch 873  -->
+      <rpc name="RPC MAGTP GET SLD INFO" export="RPC_MAGTP_GET_SLD_INFO.KID"/>
       <rpc name="MAGTP CHANGE CONS STATUS" export="RPC_MAGTP_CHANGE_CONS_STATUS.KID"/>
       <rpc name="MAGTP CHANGE SLIDES AVAIL" export="RPC_MAGTP_CHANGE_SLIDES_AVAIL.KID"/>
       <rpc name="MAGTP CHECK CONS" export="RPC_MAGTP_CHECK_CONS.KID"/>

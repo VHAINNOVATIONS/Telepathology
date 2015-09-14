@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 25 Jul 2012  04:31 PM
-MAGDHWS^INT^1^62663,57454^0
 MAGDHWS ;WOIFO/PMK - Capture Consult/GMRC data ; 05/18/2007 11:23
- ;;3.0;IMAGING;**10,11,51,84,85,54**;03-July-2009;;Build 1424
+ ;;3.0;IMAGING;**10,11,51,84,85,54**;03-July-2009;Build 4;Build 1424
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -144,6 +141,3 @@ OBX1(RECORD) ; store one OBX segment into the HL7 array
  S OBXSEGNO=$P(RECORD,DEL,2) ; get the highest value of OBXSEGNO
  S NEXT=NEXT+1
  Q
-
-
-

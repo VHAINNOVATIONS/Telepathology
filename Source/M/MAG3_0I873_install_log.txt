@@ -1,0 +1,196 @@
+TEST_P1>D ^XUP
+ 
+Setting up programmer environment
+This is a TEST account.
+ 
+Terminal Type set to: C-VT320
+ 
+You have 243 new messages.
+Select OPTION NAME: XPD MAIN       Kernel Installation & Distribution System
+ 
+ 
+          Edits and Distribution ...
+          Utilities ...
+          Installation ...
+          Patch Monitor Main Menu ...
+ 
+ 
+You've got PRIORITY mail!
+ 
+ 
+Select Kernel Installation & Distribution System <TEST ACCOUNT> Option: INstalla
+tion
+ 
+ 
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+ 
+ 
+You've got PRIORITY mail!
+ 
+ 
+Select Installation <TEST ACCOUNT> Option: LOAD a Distribution
+Enter a Host File: C:\TEMP\MAG3_0I873.KID
+ 
+KIDS Distribution saved on Sep 10, 2015@17:55:31
+Comment: Innovation 873 - Imaging Updates for Telepathology
+ 
+This Distribution contains Transport Globals for the following Package(s):
+   MAG*3.0*873
+Distribution OK!
+ 
+Want to Continue with Load? YES//
+Loading Distribution...
+ 
+   MAG*3.0*873
+Use INSTALL NAME: MAG*3.0*873 to install this Distribution.
+ 
+ 
+ 
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+ 
+ 
+You've got PRIORITY mail!
+ 
+ 
+Select Installation <TEST ACCOUNT> Option: BAckup a Transport Global
+Select INSTALL NAME:    MAG*3.0*873    9/10/15@18:46:07
+     => Innovation 873 - Imaging Updates for Telepathology  ;Created on Sep 10
+ 
+This Distribution was loaded on Sep 10, 2015@18:46:07 with header of
+   Innovation 873 - Imaging Updates for Telepathology  ;Created on Sep 10, 2015@
+17:55:31
+   It consisted of the following Install(s):
+    MAG*3.0*873
+Subject: Backup of MAG*3.0*873 install on Sep 10, 2015
+  Replace
+Loading Routines for MAG*3.0*873..
+Routine MAGDHWA is not on the disk..
+Routine MAGDHWC is not on the disk..
+Routine MAGDHWS is not on the disk..
+Routine MAGI873T is not on the disk..
+Routine MAGI873U is not on the disk..
+Routine MAGI873V is not on the disk..
+Routine MAGI873W is not on the disk..
+Routine MAGT7SS1 is not on the disk..
+Routine MAGT7SS2 is not on the disk..
+Routine MAGTP001 is not on the disk..
+Routine MAGTP002 is not on the disk.........
+Routine MAGTP012 is not on the disk...
+Routine MAGTP015 is not on the disk...
+Routine MAGUE008 is not on the disk..
+Send mail to: FRANK,STUART//   FRANK,STUART
+Select basket to send to: IN//
+And Send to:
+ 
+ 
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+ 
+ 
+You've got PRIORITY mail!
+ 
+ 
+Select Installation <TEST ACCOUNT> Option: INStall Package(s)
+Select INSTALL NAME:    MAG*3.0*873    9/10/15@18:46:07
+     => Innovation 873 - Imaging Updates for Telepathology  ;Created on Sep 10
+ 
+This Distribution was loaded on Sep 10, 2015@18:46:07 with header of
+   Innovation 873 - Imaging Updates for Telepathology  ;Created on Sep 10, 2015@
+17:55:31
+   It consisted of the following Install(s):
+    MAG*3.0*873
+Checking Install for Package MAG*3.0*873
+ 
+Install Questions for MAG*3.0*873
+ 
+Incoming Files:
+ 
+ 
+   2005.42   MAG PATH CASELIST  (Partial Definition)
+Note:  You already have the 'MAG PATH CASELIST' File.
+ 
+Want KIDS to Rebuild Menu Trees Upon Completion of Install? NO//
+ 
+ 
+Want KIDS to INHIBIT LOGONs during the install? NO//
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//
+ 
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+ 
+DEVICE: HOME// ;P-OTHER;9999  CONSOLE
+ 
+ 
+ Install Started for MAG*3.0*873 :
+               Sep 10, 2015@18:46:50
+ 
+Build Distribution Date: Sep 10, 2015
+ 
+ Installing Routines:..........................
+               Sep 10, 2015@18:46:50
+ 
+ Installing Data Dictionaries: ..
+               Sep 10, 2015@18:46:50
+ 
+ Installing PACKAGE COMPONENTS:
+ 
+ Installing HL LOGICAL LINK..
+ 
+ Installing HL7 APPLICATION PARAMETER...
+ 
+ Installing PROTOCOL.
+  Located in the MAG (IMAGING) namespace..
+  Located in the MAG (IMAGING) namespace..
+ 
+ Installing REMOTE PROCEDURE.......................................
+ 
+ Installing OPTION..
+               Sep 10, 2015@18:46:50
+ 
+ Running Post-Install Routine: RPTXTPL^MAGI873T.
+ 
+ Updating Routine file......
+ 
+ Updating KIDS files.......
+ 
+ MAG*3.0*873 Installed.
+               Sep 10, 2015@18:46:50
+ 
+ NO Install Message sent
+ 
+ 
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+ 
+ 
+You've got PRIORITY mail!
+ 
+ 
+Select Installation <TEST ACCOUNT> Option:

@@ -40,6 +40,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Practices.ServiceLocation;
 using VistA.Imaging.Telepathology.Common.Exceptions;
@@ -54,7 +55,6 @@ using VistA.Imaging.Telepathology.Worklist.Views;
 using System.Runtime.InteropServices;
 using System.Net;
 using System.Collections.ObjectModel;
-using VistA.Imaging.Telepathology.Worklist.DataSource;
 using System.IO;
 
 namespace VistA.Imaging.Telepathology.Worklist
@@ -531,9 +531,6 @@ namespace VistA.Imaging.Telepathology.Worklist
                 ReportView window;
                 if (locked.BoolSuccess)
                 {
-                    // open the report normally
-                    window = new ReportView(new ReportViewModel(viewModel.DataSource, item, isTotalReadOnly, currentSiteType));
-
                     // (Reserve Case now to) Show user in Reserved by column of WL
                     try
                     {
@@ -545,6 +542,11 @@ namespace VistA.Imaging.Telepathology.Worklist
                         Log.Error("Cannot reserve case.", ex);
                         MessageBox.Show("Case cannot be reserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
+                    // refresh WL here to show Locked By on Case
+                    viewModel.WorklistsViewModel.CurrentWorkList._refresh();
+
+                    // open the report normally
+                    window = new ReportView(new ReportViewModel(viewModel.DataSource, item, isTotalReadOnly, currentSiteType));
 
                     ViewModelLocator.ContextManager.IsBusy = true;
                     window.ShowDialog();
@@ -704,6 +706,25 @@ namespace VistA.Imaging.Telepathology.Worklist
                 string progPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
                 string fileSpec = progPath + "\\Vista\\Imaging\\Telepathology\\Vendor\\Aperio\\NoSlides.sis";
                 string filePathToInvokeExe;
+
+                if (!File.Exists(fileSpec))
+                {
+                    var assembly = Assembly.GetExecutingAssembly();
+                    var resourceStream = assembly.GetManifestResourceStream("VistA.Imaging.Telepathology.Worklist.Vendors.Aperio.NoSlides.sis");
+
+                    if (resourceStream != null)
+                    {
+                        using (StreamReader reader = new StreamReader(resourceStream))
+                        {
+                            string contents = reader.ReadToEnd();
+                            File.WriteAllText(fileSpec, contents);
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception("Could not find embedded resource 'NoSlides.sis'");
+                    }
+                }
 
                 // remove slides from viewer application
                 if (!ActiveViewer)
@@ -893,52 +914,92 @@ namespace VistA.Imaging.Telepathology.Worklist
                 }
             }
 
-            // retrieve a list of reading sites that read for the site own the case
+            // retrieve a list of reading sites that read for the site on the case with Consultation type
             // this way, only sites that are in agreement with the acquisition can access the data 
             ReadingSiteList readSites = viewModel.DataSource.GetReadingSites(item.SiteCode);
 
-            foreach (ReadingSiteInfo readSite in readSites.Items)
+            //foreach (ReadingSiteInfo readSite in readSites.Items)
+            //{
+            //    // if the user site is a consultation site, the user can't request more consultation on remote item,
+            //    // however he/she must be able to refuse one that was just requested (report status id "Pending Verification") 
+            //    if ((readSite.SiteStationNumber == UserContext.LocalSite.PrimarySiteStationNUmber) && (readSite.SiteType == ReadingSiteType.consultation))
+            //    {
+            //        MessageBox.Show("Your site is configured as a consultation site at " + item.AcquisitionSite + ".\r\nOnly primary interpreting site can request consultations.");
+
+            //        if (item.ReportStatus == "Pending Verification")
+            //        {
+            //            MessageBoxResult result = MessageBox.Show("From site " + item.AcquisitionSite + " for Case <" + item.AccessionNumber +
+            //                            "> Consultation is requested.\r\nDo you want to Decline this request?", "Choice", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No /* default to No */);
+            //            if (result == MessageBoxResult.Yes)
+            //            {
+            //                // update Consult status to refused!
+            //                ConsultationStatusViewModel consultSVM = new ConsultationStatusViewModel(item, readSites);
+            //                consultSVM.SelectedSites = new ObservableCollection<SiteConsultationStatusViewModel>();
+            //                SiteConsultationStatusViewModel itemVM = new SiteConsultationStatusViewModel();
+            //                itemVM.Item = item;
+            //                itemVM.SiteInfo = readSite; // ReadingSiteInfo
+            //                itemVM.IsCurrentSite = false;
+            //                itemVM.CanRefuseConsultation = true;
+            //                itemVM.CanRequestConsultation = false;
+            //                itemVM.IsRecalled = false;
+            //                // Consultations are returned from originating DB if we got here
+            //                int lastConsultIndex = item.ConsultationList.ConsultationList.Count;
+            //                itemVM.ConsultationID = item.ConsultationList.ConsultationList[lastConsultIndex-1].ConsultationID;
+            //                itemVM.IsPending = true;
+            //                consultSVM.SelectedSites.Add(itemVM);
+
+            //                consultSVM.RefuseConsultation();
+            //                return;
+            //            }
+            //        }
+            //        return;
+            //    }
+            //}
+
+            // attempt lock the case to prevent other people from accessing the report 
+            PathologyCaseUpdateAttributeResultType locked = viewModel.DataSource.LockCaseForEditing(item.CaseURN, true);
+
+            if (locked.BoolSuccess)
             {
-                // if the user site is a consultation site, the user can't request more consultation on remote item,
-                // however he/she must be able to refuse one that was just requested (report status id "Pending Verification") 
-                if ((readSite.SiteStationNumber == UserContext.LocalSite.PrimarySiteStationNUmber) && (readSite.SiteType == ReadingSiteType.consultation))
-                {
-                    MessageBox.Show("Your site is configured as a consultation site at " + item.AcquisitionSite + ".\r\nOnly primary interpreting site can request consultations.");
+                // (Reserve Case now to) Show user in Locked By column of WL
+               try
+               {
+                    viewModel.DataSource.ReserveCase(item.CaseURN, true);
+                    Log.Info(string.Format("Reserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+               }
+               catch (Exception ex)
+               {
+                    Log.Error("Cannot reserve case.", ex);
+                    MessageBox.Show("Case cannot be reserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+               }
+               // refresh WL here to show Locked By on Case
+               viewModel.WorklistsViewModel.CurrentWorkList._refresh();
 
-                    if (item.ReportStatus == "Pending Verification")
-                    {
-                        MessageBoxResult result = MessageBox.Show("From site " + item.AcquisitionSite + " for Case <" + item.AccessionNumber +
-                                        "> Consultation is requested.\r\nDo you want to Decline this request?", "Choice", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No /* default to No */);
-                        if (result == MessageBoxResult.Yes)
-                        {
-                            // update Consult status to refused!
-                            ConsultationStatusViewModel consultSVM = new ConsultationStatusViewModel(item, readSites);
-                            consultSVM.SelectedSites = new ObservableCollection<SiteConsultationStatusViewModel>();
-                            SiteConsultationStatusViewModel itemVM = new SiteConsultationStatusViewModel();
-                            itemVM.Item = item;
-                            itemVM.SiteInfo = readSite; // ReadingSiteInfo
-                            itemVM.IsCurrentSite = false;
-                            itemVM.CanRefuseConsultation = true;
-                            itemVM.CanRequestConsultation = false;
-                            itemVM.IsRecalled = false;
-                            // Consultations are returned from originating DB if we got here
-                            int lastConsultIndex = item.ConsultationList.ConsultationList.Count;
-                            itemVM.ConsultationID = item.ConsultationList.ConsultationList[lastConsultIndex-1].ConsultationID;
-                            itemVM.IsPending = true;
-                            consultSVM.SelectedSites.Add(itemVM);
+               ConsultationStatusViewModel dialogViewModel = new ConsultationStatusViewModel(item, readSites);
+               ConsultationStatusView dialog = new ConsultationStatusView(dialogViewModel);
+               dialog.Owner = this;
+               dialog.ShowDialog();
 
-                            consultSVM.RefuseConsultation();
-                            return;
-                        }
-                    }
-                    return;
-                }
+               // (UnReserve Case now to) Remove user from Locked By column of WL
+               try
+               {
+                    viewModel.DataSource.ReserveCase(item.CaseURN, false);
+                    Log.Info(string.Format("Unreserved case: {0} {1}.", item.SiteAbbr, item.AccessionNumber));
+               }
+               catch (Exception ex)
+               {
+                    Log.Error("Cannot unreserve case.", ex);
+                    MessageBox.Show("Case cannot be unreserved.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+               }
+
+               // unlock the case once the user has closed the report GUI
+               locked = viewModel.DataSource.LockCaseForEditing(item.CaseURN, false);
             }
-
-            ConsultationStatusViewModel dialogViewModel = new ConsultationStatusViewModel(item, readSites);
-            ConsultationStatusView dialog = new ConsultationStatusView(dialogViewModel);
-            dialog.Owner = this;
-            dialog.ShowDialog();
+            else
+            {
+               // some one else is locking the case
+                MessageBox.Show("Case is locked by another user. Please, try it later!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         private void MessageLog_Click(object sender, RoutedEventArgs e)

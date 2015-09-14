@@ -1,8 +1,5 @@
-Cache for Windows NT^INT^Saved from DVA,ROU (ISW-KUZMAKP3-LT)^~Format=Cache.S~
-%RO on 04/08/2013  16:11
-MAG7RS^INT^1^62920,58266.857528^0
 MAG7RS ;WOIFO/PMK,MLH,SAF - copy radiology message from HLSDATA to ^MAGDHL7 - add segment data ; 08 Apr 2013 4:11 PM
- ;;3.0;IMAGING;**11,40,30,123,110**;Mar 19, 2002;Build 52;Jul 02, 2012
+ ;;3.0;IMAGING;**11,40,30,123,110**;Mar 19, 2002;Build 4;Jul 02, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -227,6 +224,3 @@ PV1RAD ; SUBROUTINE - called by ADDVSDG
  . . Q
  . Q
  Q
-
-
-

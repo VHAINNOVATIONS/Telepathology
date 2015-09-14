@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 10 Sep 2012  10:10 AM
-MAGTP002^INT^1^62707,46312^
 MAGTP002 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 03/28/2012 2:50pm
- ;;3.0;IMAGING;**???**;Mar 28, 2012;Build 8;Mar 28, 2012
+ ;;3.0;IMAGING;**???**;Mar 28, 2012;Build 4;Mar 28, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -50,7 +47,7 @@ MAGTP002 ;WOIFO/FG - TELEPATHOLOGY RPCS ; 03/28/2012 2:50pm
  ;                ^03: Name of provider who verified (if Verified = YES)
  ;                ^04: SR Text [entries separated by pipes (|)]
  ;
-GETSR(MAGRY,LRSS,YEAR,LRAN)                    ; RPC [MAGTP GET SUP REPORTS]
+GETSR(MAGRY,LRSS,YEAR,LRAN) ; RPC [MAGTP GET SUP REPORTS]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
@@ -139,7 +136,7 @@ GETSR(MAGRY,LRSS,YEAR,LRAN)                    ; RPC [MAGTP GET SUP REPORTS]
  ;
  ; The ^TMP("MAGTP",$J,"SR") global node is used by this procedure.
  ;
-PUTSR(MAGRY,ENT,LRSS,YEAR,LRAN)                ; RPC [MAGTP PUT SUP REPORT]
+PUTSR(MAGRY,ENT,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT SUP REPORT]
  K MAGRY
  I $D(ENT)<10 S MAGRY(0)="0^0^No Input" Q
  I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
@@ -222,6 +219,3 @@ PUTSR(MAGRY,ENT,LRSS,YEAR,LRAN)                ; RPC [MAGTP PUT SUP REPORT]
  ;
  Q  ;
  ;
-
-
-

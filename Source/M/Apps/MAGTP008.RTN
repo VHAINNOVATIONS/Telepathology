@@ -1,5 +1,5 @@
 MAGTP008 ;WOIFO/FG,MLH,JSL - TELEPATHOLOGY TAGS ; 17 Apr 2013 2:52 PM
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3447;Jan 15, 2013
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Jan 15, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -262,7 +262,7 @@ SECNLOCK(MAGRY,LFLAG,LRSS,YEAR,LRAN) ; RPC [MAGTP SECOND LOCK]
  D UPDATE^DIE("","MAGFDA","","MAGERR")
  I $D(MAGERR) S MAGRY(0)="-5^^Update Error: "_MAGERR("DIERR",1,"TEXT",1) Q
  S MAGRY(0)="0^"_$S(LFLAG:"1^File Locked",1:"0^File Unlocked")
- Q  ;
+Q ;
  ;
  ;+++++ GET THE ABBREVIATION FOR A SITE IEN FROM FILE (#2006.19)
  ;
@@ -279,5 +279,3 @@ GETABBR(SITE) ;
  S MAGREC=$O(^MAG(2006.19,"D",SITE,""))
  S ABBR=$S(MAGREC:$P($G(^MAG(2006.19,MAGREC,0)),U,4),1:"")
  Q ABBR
-
-

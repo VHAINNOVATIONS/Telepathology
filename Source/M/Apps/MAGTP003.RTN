@@ -1,5 +1,5 @@
 MAGTP003 ;WOIFO/FG,MLH,JSL - TELEPATHOLOGY RPCS ; 25 June 2013 10:19 PM
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 1;Apr 03, 2013
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Apr 03, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -275,5 +275,3 @@ PUTLMINS(MAGRY,MINS) ; RPC [MAGTP PUT LOCK MINS]
  . S MAGRY(0)="0^0^Updating Error: "_MAGERR("DIERR",1,"TEXT",1)
  S MAGRY(0)="1^0^Number of Locking Minutes Updated"
  Q  ;
-
-

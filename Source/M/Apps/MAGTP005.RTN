@@ -1,8 +1,5 @@
-Cache for Windows NT^INT^Saved from DVA,ROU (ISW-KUZMAKP3-LT)^~Format=Cache.S~
-%RO on 06/28/2013  19:48
-MAGTP005^INT^1^63001,71301.156286^0
 MAGTP005 ;WOIFO/FG/PMK - TELEPATHOLOGY RPCS ; 28 Jun 2013 7:48 PM
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4257;Apr 03, 2013
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Apr 03, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -43,7 +40,7 @@ MAGTP005 ;WOIFO/FG/PMK - TELEPATHOLOGY RPCS ; 28 Jun 2013 7:48 PM
  ; MAGRY(i)     Description
  ;                ^01: XML Line of Text
  ;
-GETXT(MAGRY,LRSS)                              ; RPC [MAGTP GET TEMPLATE XML]
+GETXT(MAGRY,LRSS) ; RPC [MAGTP GET TEMPLATE XML]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  N MAGOUT,MAGERR
@@ -85,7 +82,7 @@ GETXT(MAGRY,LRSS)                              ; RPC [MAGTP GET TEMPLATE XML]
  ;                ^02: 0
  ;                ^03: "<LRSS> Template Updated"
  ;
-PUTXT(MAGRY,ENT,LRSS)                          ; RPC [MAGTP PUT TEMPLATE XML]
+PUTXT(MAGRY,ENT,LRSS) ; RPC [MAGTP PUT TEMPLATE XML]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $D(ENT)<10 S MAGRY(0)="0^0^No Input" Q      ; Input: Text on each line
@@ -131,7 +128,7 @@ PUTXT(MAGRY,ENT,LRSS)                          ; RPC [MAGTP PUT TEMPLATE XML]
  ;                ^02: 0
  ;                ^03: "Priority Updated"
  ;
-PUTPRI(MAGRY,PRI,LRSS,YEAR,LRAN)               ; RPC [MAGTP PUT PRIORITY]
+PUTPRI(MAGRY,PRI,LRSS,YEAR,LRAN) ; RPC [MAGTP PUT PRIORITY]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  N INPUT
@@ -217,6 +214,3 @@ IMAGECNT(LRAC,COUNT) ; update the number of images of the case
  S MAGFDA(2005.42,IENS,.08)=TOTAL             ; Number of Images
  D UPDATE^DIE("","MAGFDA","","MAGERR")
  Q
-
-
-

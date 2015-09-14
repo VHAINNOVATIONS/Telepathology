@@ -1,5 +1,5 @@
 MAGUE008 ;WOIFO/MLH - find an accession identifier for a LAB DATA entry ; 11 Apr 2013 1:05 PM
- ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 3447;Jan 15, 2013
+ ;;3.0;IMAGING;**138**;Mar 19, 2002;Build 4;Jan 15, 2013
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -32,9 +32,9 @@ MAGUE008 ;WOIFO/MLH - find an accession identifier for a LAB DATA entry ; 11 Apr
  ; Return Values
  ; =============
  ;
- ; .ACCID		Accession identifier if one exists for this order
+ ; .ACCID  Accession identifier if one exists for this order
  ; 
-FIND(ACCID,LRSS,LRDFN,LRI) 
+FIND(ACCID,LRSS,LRDFN,LRI) ;
  N LRSSIX,YR,ACCIX
  Q:$G(LRSS)=""  Q:$G(LRDFN)=""  Q:$G(LRI)=""
  ; is accession recorded on LAB DATA file (#63)?
@@ -50,5 +50,3 @@ FIND(ACCID,LRSS,LRDFN,LRI)
  . . Q
  . Q
  Q
-
-

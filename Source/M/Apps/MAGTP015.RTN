@@ -1,8 +1,5 @@
-Cache for Windows^INT^MAG PATH II^~Format=Cache.S~^RAW
-%RO on 28 May 2015   2:23 PM
-MAGTP015^INT^1^63700,51711.120198^
 MAGTP015 ;WOIFO/FG,MLH - TELEPATHOLOGY II RPCS ; 25 Jun 2013 3:30 PM
- ;;3.0;IMAGING;**138,200**;Mar 19, 2002;Build 0;MAY 28, 2015
+ ;;3.0;IMAGING;**138,200**;Mar 19, 2002;Build 4;MAY 28, 2015
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -66,14 +63,12 @@ GETSDINF(MAGRY,ACCNO) ; RPC [MAGTP GET SLIDES INFO]
  I $G(IEN)="" S MAGRY(0)="0^0^Invalid Accession Code: "_$G(ACCNO) Q
  D GETS^DIQ(2005.42,IEN,"**","E","MAGOUT","MAGERR")
  I $D(MAGERR) S MAGRY(0)="0^0^Access Error: "_MAGERR("DIERR",1,"TEXT",1) Q
- S SDN="" F CNT=0:1 S SDN=$O(MAGOUT(2005.422,SDN)) Q:SDN=""  DO  S:$L(Y) MAGRY(CNT)=Y
+ S SDN="" F CNT=0:1 S SDN=$O(MAGOUT(2005.422,SDN)) Q:SDN=""  DO  I $L(Y) S MAGRY(CNT+1)=Y
  . S FLD=0,Y="" F  S FLD=$O(MAGOUT(2005.422,SDN,FLD)) Q:'FLD  S Y=Y_$G(MAGOUT(2005.422,SDN,FLD,"E"))_U
  . Q
+ U 0 W CNT,!
  I CNT=0 S MAGRY(0)="0^0^No Slide Info for: "_$G(ACCNO) Q
- S CNT=CNT-1,MAGRY(0)="1^"_CNT_"^Slide Number^Date/Time Scanned^URL^Zoom Factor^Scan Application^Slide Status^View Application^Description^"
+ S CNT=CNT,MAGRY(0)="1^"_CNT_"^Slide Number^Date/Time Scanned^URL^Zoom Factor^Scan Application^Slide Status^View Application^Description^"
  Q
  ;
-.
-
-
-
+ 

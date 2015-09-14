@@ -1,0 +1,106 @@
+PACKAGE: MAG*3.0*873     Sep 10, 2015 5:56 pm                            PAGE 1
+-------------------------------------------------------------------------------
+TYPE: SINGLE PACKAGE                               TRACK NATIONALLY: NO
+NATIONAL PACKAGE: IMAGING                        ALPHA/BETA TESTING: NO
+ 
+DESCRIPTION:
+ 
+IMAGING UPDATES TO SUPPORT TELEPATHOLOGY
+ 
+ENVIRONMENT CHECK:                               DELETE ENV ROUTINE:
+ PRE-INIT ROUTINE:                          DELETE PRE-INIT ROUTINE:
+POST-INIT ROUTINE: RPTXTPL^MAGI873T        DELETE POST-INIT ROUTINE: No
+PRE-TRANSPORT RTN:
+ 
+                                           UP    SEND  DATA                USER
+                                           DATE  SEC.  COMES   SITE  RSLV  OVER
+FILE #      FILE NAME                      DD    CODE  W/FILE  DATA  PTRS  RIDE
+-------------------------------------------------------------------------------
+ 
+2005.42     MAG PATH CASELIST              YES   YES   NO                  NO
+Partial DD: subDD: 2005.422
+ 
+ROUTINE:                                       ACTION:
+   MAG7RS                                         SEND TO SITE
+   MAGDGMRC                                       SEND TO SITE
+   MAGDHWA                                        SEND TO SITE
+   MAGDHWC                                        SEND TO SITE
+   MAGDHWS                                        SEND TO SITE
+   MAGI873T                                       SEND TO SITE
+   MAGI873U                                       SEND TO SITE
+   MAGI873V                                       SEND TO SITE
+   MAGI873W                                       SEND TO SITE
+   MAGT7SS1                                       SEND TO SITE
+   MAGT7SS2                                       SEND TO SITE
+   MAGTP001                                       SEND TO SITE
+   MAGTP002                                       SEND TO SITE
+   MAGTP003                                       SEND TO SITE
+   MAGTP005                                       SEND TO SITE
+   MAGTP006                                       SEND TO SITE
+   MAGTP007                                       SEND TO SITE
+   MAGTP008                                       SEND TO SITE
+   MAGTP009                                       SEND TO SITE
+   MAGTP011                                       SEND TO SITE
+   MAGTP012                                       SEND TO SITE
+   MAGTP013                                       SEND TO SITE
+   MAGTP015                                       SEND TO SITE
+   MAGUE006                                       SEND TO SITE
+   MAGUE008                                       SEND TO SITE
+ 
+OPTION:                                        ACTION:
+   MAGTP WORKLIST MGR                             SEND TO SITE
+ 
+PROTOCOL:                                      ACTION:
+   MAGTP TCP DPS                                  SEND TO SITE
+   MAGTP TCP SERVER DPS                           SEND TO SITE
+ 
+HL7 APPLICATION PARAMETER:                     ACTION:
+   ESLIDEMANAGER                                  SEND TO SITE
+   MAGTP-DPS-SERVER                               SEND TO SITE
+ 
+HL LOGICAL LINK:                               ACTION:
+   DPS-MAGTP                                      SEND TO SITE
+ 
+REMOTE PROCEDURE:                              ACTION:
+   MAGTP CHANGE CONS STATUS                       SEND TO SITE
+   MAGTP CHANGE SLIDES AVAIL                      SEND TO SITE
+   MAGTP CHECK CONS                               SEND TO SITE
+   MAGTP COPY CASE                                SEND TO SITE
+   MAGTP DEL SNOMED CODES                         SEND TO SITE
+   MAGTP GET CASES                                SEND TO SITE
+   MAGTP GET CONSULT                              SEND TO SITE
+   MAGTP GET CPRS REPORT                          SEND TO SITE
+   MAGTP GET CPT CODE                             SEND TO SITE
+   MAGTP GET ESIGN                                SEND TO SITE
+   MAGTP GET LIST                                 SEND TO SITE
+   MAGTP GET LOCK MINS                            SEND TO SITE
+   MAGTP GET NOTE                                 SEND TO SITE
+   MAGTP GET PATIENT                              SEND TO SITE
+   MAGTP GET PREFERENCES                          SEND TO SITE
+   MAGTP GET RETENTION DAYS                       SEND TO SITE
+   MAGTP GET SITE CONFIG                          SEND TO SITE
+   MAGTP GET SITES                                SEND TO SITE
+   MAGTP GET SLIDES INFO                          SEND TO SITE
+   MAGTP GET SNOMED CODES                         SEND TO SITE
+   MAGTP GET SUP REPORTS                          SEND TO SITE
+   MAGTP GET TEMPLATE DATA                        SEND TO SITE
+   MAGTP GET TEMPLATE XML                         SEND TO SITE
+   MAGTP GET USER                                 SEND TO SITE
+   MAGTP PUT CONSULT                              SEND TO SITE
+   MAGTP PUT CPT CODE                             SEND TO SITE
+   MAGTP PUT LOCK MINS                            SEND TO SITE
+   MAGTP PUT METHOD                               SEND TO SITE
+   MAGTP PUT NOTE                                 SEND TO SITE
+   MAGTP PUT PREFERENCES                          SEND TO SITE
+   MAGTP PUT PRIORITY                             SEND TO SITE
+   MAGTP PUT REPORT FIELD                         SEND TO SITE
+   MAGTP PUT SITE CONFIG                          SEND TO SITE
+   MAGTP PUT SNOMED CODES                         SEND TO SITE
+   MAGTP PUT SUP REPORT                           SEND TO SITE
+   MAGTP PUT TEMPLATE XML                         SEND TO SITE
+   MAGTP SECOND LOCK                              SEND TO SITE
+   MAGTP SET RETENTION DAYS                       SEND TO SITE
+ 
+REQUIRED BUILDS:                               ACTION:
+   MAG*3.0*138                                    Don't install, leave global
+ 

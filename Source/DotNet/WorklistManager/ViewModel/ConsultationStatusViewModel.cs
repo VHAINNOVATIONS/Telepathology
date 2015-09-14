@@ -178,8 +178,16 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
                     itemVM.IsCurrentSite = true;
                     itemVM.ConsultationID = consult.ConsultationID;
                     itemVM.IsPending = true;
-
-                    this.Sites.Add(itemVM);
+                    
+                    // make sure item is not a duplicate; don't add dups
+                    Boolean addToList = true;
+                    foreach (SiteConsultationStatusViewModel itemInList in this.Sites)
+                    {
+                        if (itemInList.SiteDisplayName == itemVM.SiteDisplayName)
+                            addToList = false;
+                    }
+                    if (addToList)
+                        this.Sites.Add(itemVM);
                 }
             }
         }
@@ -327,12 +335,12 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
 
         public void RefuseConsultation()
         {
-            // This question is in OnViewConsultationStatus of MainWindow.xaml.cs
-            // MessageBoxResult result = MessageBox.Show("Are you sure you want to decline the request(s)?", "Confirmation",
-            //                                            MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            // This question might be in OnViewConsultationStatus of MainWindow.xaml.cs
+             MessageBoxResult result = MessageBox.Show("Are you sure you want to decline the request(s)?", "Confirmation",
+                                                        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
 
-            // if (result == MessageBoxResult.Yes)
-            //{
+             if (result == MessageBoxResult.Yes)
+            {
                 foreach (SiteConsultationStatusViewModel item in this.SelectedSites)
                 {
                     AppMessages.EditConsultationStatusMessage.MessageData data = new AppMessages.EditConsultationStatusMessage.MessageData
@@ -352,7 +360,7 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
                 }
 
                 CloseCommand.Execute(null);
-            // }
+            }
         }
 
         public bool CanRefuseConsultation()

@@ -1,8 +1,5 @@
-Cache for Windows NT^INT^Saved from DVA,ROU (ISW-KUZMAKP3-LT)^~Format=Cache.S~
-%RO on 02/07/2013  17:15
-MAGDGMRC^INT^1^62860,62074^0
 MAGDGMRC ;WOIFO/PMK,EdM,MLH - Read a DICOM image file ; 07 Feb 2013 5:14 PM
- ;;3.0;IMAGING;**10,51,50,85,118**;Mar 19, 2002;Build 169;Nov 06, 2012
+ ;;3.0;IMAGING;**10,51,50,85,118**;Mar 19, 2002;Build 4;Nov 06, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -184,6 +181,3 @@ ISCLINIC(SERVICE,CLINIC) ; is a particular clinic defined for a given service?
  I SERVICE,CLINIC,$D(^MAG(2006.5831,SERVICE,1,"B",CLINIC)) S ISCLINIC=1
  Q ISCLINIC
  ;
-
-
-

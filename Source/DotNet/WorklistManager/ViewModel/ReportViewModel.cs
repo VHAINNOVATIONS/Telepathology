@@ -31,6 +31,7 @@
 		private PathologyElectronicSignatureNeedType LocalEsigStatus;
 
         private PathologySaveCaseReportResultType saveResult = null;
+        private string LockedBy;
 
 		public ReportViewModel(IWorkListDataSource dataSource, CaseListItem caseItem, bool isGlobalReadOnly = false, ReadingSiteType siteType = ReadingSiteType.interpretation)
 		{
@@ -45,6 +46,7 @@
 			this.SiteAbbr = caseItem.SiteAbbr;
 			this.SiteCode = caseItem.SiteCode;
 			this.AccessionNumber = caseItem.AccessionNumber;
+            this.LockedBy = caseItem.ReservedBy;
 			ChangeList = new PathologyCaseReportFieldsType();
 			
 			// patient's info
@@ -463,8 +465,11 @@
 					Title += " - Pending Verification";
 				else
 					Title += " - Released on " + ReleasedDate + " by " + ReleasedBy;
-
-				return Title;
+                 if (IsEditorReadOnly)
+                    Title += " - <<< Case  L_O_C_K_E_D  by " + this.LockedBy + ": READ ONLY mode! >>>";
+                //else
+                //    Title += " - <<< Case  L_O_C_K_E_D  by You now; Close/X this window to Unlock it! >>>";
+                return Title;
 			}
 		}
 

@@ -1,8 +1,5 @@
-Cache for Windows^INT^^~Format=Cache.S~
-%RO on 10 Sep 2012  10:10 AM
-MAGTP007^INT^1^62706,32665^
 MAGTP007 ;WOIFO/FG - TELEPATHOLOGY TAGS ; 04/19/2012 1:50pm
- ;;3.0;IMAGING;**???**;Apr 19, 2012;Build 8;Apr 19, 2012
+ ;;3.0;IMAGING;**???**;Apr 19, 2012;Build 4;Apr 19, 2012
  ;; Per VHA Directive 2004-038, this routine should not be modified.
  ;; +---------------------------------------------------------------+
  ;; | Property of the US Government.                                |
@@ -54,7 +51,7 @@ MAGTP007 ;WOIFO/FG - TELEPATHOLOGY TAGS ; 04/19/2012 1:50pm
  ;                ^05: Site Abbreviation
  ;                ^06: Status
  ;
-GETINTRP(MAGRY,LRAC)                           ; RPC [MAGTP GET CONSULT]
+GETINTRP(MAGRY,LRAC) ; RPC [MAGTP GET CONSULT]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(LRAC)="" S MAGRY(0)="0^0^No Case Number" Q
@@ -112,7 +109,7 @@ GETINTRP(MAGRY,LRAC)                           ; RPC [MAGTP GET CONSULT]
  ;                ^03: Interpretation File Updated
  ;                ^04: CKDFN: See description in CHECKDFN^MAGTP013
  ;
-PUTINTRP(MAGRY,LRAC,TYPE,STAT)                 ; RPC [MAGTP PUT CONSULT]
+PUTINTRP(MAGRY,LRAC,TYPE,STAT) ; RPC [MAGTP PUT CONSULT]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(LRAC)="" S MAGRY(0)="0^0^No Case Number" Q
@@ -207,7 +204,7 @@ PUTINTRP(MAGRY,LRAC,TYPE,STAT)                 ; RPC [MAGTP PUT CONSULT]
  ;
  ; The ^TMP("ORDATA",$J) global node is used by this procedure
  ;
-GETREP(MAGRY,LRSS,YEAR,LRAN)                   ; RPC [MAGTP GET CPRS REPORT]
+GETREP(MAGRY,LRSS,YEAR,LRAN) ; RPC [MAGTP GET CPRS REPORT]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(LRSS)=""!($G(YEAR)="")!($G(LRAN)="") D  Q
@@ -258,7 +255,7 @@ GETREP(MAGRY,LRSS,YEAR,LRAN)                   ; RPC [MAGTP GET CPRS REPORT]
  ;                ^02: 0
  ;                ^03: "Slides Available? Updated"
  ;
-PUTSLIDE(MAGRY,SLIDES,LRAC)                    ; RPC [MAGTP CHANGE SLIDES AVAIL]
+PUTSLIDE(MAGRY,SLIDES,LRAC) ; RPC [MAGTP CHANGE SLIDES AVAIL]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  S:$G(SLIDES)="" SLIDES=0                      ; Default to 0:"NO" if no entry
@@ -310,7 +307,7 @@ PUTSLIDE(MAGRY,SLIDES,LRAC)                    ; RPC [MAGTP CHANGE SLIDES AVAIL]
  ;                ^03: <Label> <Entry> - Added/Updated or
  ;                     <Label> <Entry> - Deleted
  ;
-PUTCONF(MAGRY,ENT)                             ; RPC [MAGTP PUT SITE CONFIG]
+PUTCONF(MAGRY,ENT) ; RPC [MAGTP PUT SITE CONFIG]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(ENT)="" S MAGRY(0)="0^0^No Input" Q
@@ -437,7 +434,7 @@ PUTCONF(MAGRY,ENT)                             ; RPC [MAGTP PUT SITE CONFIG]
  ;                ^08: Primary Site Abbreviation
  ;                ^09: Primary Site Name
  ;
-GETCONF(MAGRY,ENT)                             ; RPC [MAGTP GET SITE CONFIG]
+GETCONF(MAGRY,ENT) ; RPC [MAGTP GET SITE CONFIG]
  K MAGRY
  N $ETRAP,$ESTACK S $ETRAP="D ERRA^MAGGTERR"
  I $G(ENT)="" S MAGRY(0)="0^0^No Input" Q
@@ -478,6 +475,3 @@ GETCONF(MAGRY,ENT)                             ; RPC [MAGTP GET SITE CONFIG]
  . Q
  S MAGRY(0)="1^"_CT_U_LABEL
  Q  ;
-
-
-

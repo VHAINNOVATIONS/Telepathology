@@ -692,7 +692,7 @@ namespace VistA.Imaging.Telepathology.Worklist.ViewModel
             }
         }
 
-        private void _refresh()
+        public void _refresh()
         {
             // get cases
             GetCases();

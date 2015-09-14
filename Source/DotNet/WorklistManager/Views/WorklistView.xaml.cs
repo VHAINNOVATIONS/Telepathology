@@ -111,15 +111,17 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
 
         void _tree_RowExpanded(TreeNode node)
         {
+            WorklistViewModel viewModel = (WorklistViewModel)DataContext;
+
             CaseListItem item = (CaseListItem)node.Tag;
             if ((item.Slides.Count == 1) && (item.Slides[0].Kind == CaseListItemKind.PlaceHolder))
             {
                 // get case details
-                WorklistViewModel viewModel = (WorklistViewModel)DataContext;
-
                 viewModel.FillCaseDetails(item);
 
                 this._tree.RefreshNode(node);
+
+                this._tree.recordExpandedNodes(item.CaseURN, false);
             }
         }
 
@@ -195,7 +197,7 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
             RefreshTree();
         }
 
-        static ObservableCollection<CaseListItem> _oldSelectedItems=null;
+        static ObservableCollection<CaseListItem> _oldSelectedItems = null;
 
         private void saveOldSelectedNodes(WorklistViewModel viewModel)
         {
@@ -228,16 +230,82 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
             }
         }
 
-        private List<TreeNode> matchingCaseListItems(TreeNode treeNode, ObservableCollection<CaseListItem> oldSelectedItems)
+        private List<TreeNode> matchingCaseListItems(TreeNode treeNode, ObservableCollection<CaseListItem> rememberedItems)
         {
             List<TreeNode> tNodes = new List<TreeNode>();
             CaseListItem cli = (CaseListItem)treeNode.Tag;
-            foreach (CaseListItem selectedItem in oldSelectedItems)
+            foreach (CaseListItem selectedItem in rememberedItems)
             {
                 if (cli.CaseURN.Equals(selectedItem.CaseURN))
                     tNodes.Add(treeNode);
             }
             return tNodes;
+        }
+
+        //public static ObservableCollection<String> _expandedItemURNs = null;
+
+        //public void recordExpandedNodes(TreeNode node, Boolean removeNode)
+        //{
+        //    if (_expandedItemURNs==null)
+        //        _expandedItemURNs = new ObservableCollection<String>();
+            
+        //    CaseListItem item = (CaseListItem)node.Tag;
+        //    String urn = item.CaseURN;
+            
+        //    String savedURN = null;
+        //    foreach (String oldURN in _expandedItemURNs)
+        //    {
+        //        if (oldURN.Equals(urn))
+        //        {
+        //            savedURN = oldURN; // item in list
+        //            break;
+        //        }
+        //    }
+        //    if (savedURN!=null)
+        //    {
+        //        if (removeNode) 
+        //        {
+        //            _expandedItemURNs.Remove(urn);
+        //        }
+        //    }
+        //    else
+        //           _expandedItemURNs.Add(urn);
+        //}
+
+        private List<TreeNode> matchingNodes(TreeNode treeNode, ObservableCollection<String> rememberedNodes)
+        {
+            List<TreeNode> tNodes = new List<TreeNode>();
+            CaseListItem cli = (CaseListItem)treeNode.Tag;
+            foreach (String selectedURN in rememberedNodes)
+            {
+                if (cli.CaseURN.Equals(selectedURN))
+                    tNodes.Add(treeNode);
+            }
+            return tNodes;
+        }
+
+        private void restoreExpandedNodes()
+        {
+            // restore node expansions, by looking for tag (CaseListItem) match(es); on hit(s) populate _tree._expandedItemTags by matched node.Tag-s
+            if (this._tree.ExpandedItemURNs != null)
+            {
+                if (this._tree.Nodes.Count > 0)
+                {
+                    for (int i = 0; i < _tree.Nodes.Count; i++)
+                    {
+                        List<TreeNode> treeNodes = matchingNodes(this._tree.Root.Children[i], this._tree.ExpandedItemURNs);
+                        foreach (TreeNode node in treeNodes)
+                        {
+                            if (!node.IsExpanded)
+                            {
+                                // node.IsExpanded = true; // ultimately forces '-' (collapseability) on top node instead of '+' (expandability)
+                                _tree.SetIsExpanded(node, true);
+                                _tree_RowExpanded(node);
+                            } 
+                        }
+                    }
+                }
+            }
         }
 
         public void RefreshTree()
@@ -254,8 +322,8 @@ namespace VistA.Imaging.Telepathology.Worklist.Views
                 {
                     this._tree.Sort(_CurSortCol.Tag as string, _CurAdorner.Direction);
                 }
-                if (_oldSelectedItems != null)
-                   restoreOldSelectedNodes();
+                restoreExpandedNodes();
+                restoreOldSelectedNodes();
             }
         }
 
