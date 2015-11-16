@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans default-autowire="no" default-lazy-init="false" default-dependency-check="none">
+	<!-- 
+	EvictionTimer implementations are Timer derivations that "intelligently" schedule
+	eviction sweeps based on the max age.
+	FYI, there are:
+	 3600000 milliseconds in one hour
+	 86400000 milliseconds in one day
+	 604800000 milliseconds in one week
+	-->
+	<bean 
+		id="evictionTimer" 
+		class="gov.va.med.imaging.storage.cache.impl.timer.EvictionTimerImpl"
+		singleton="true"
+		lazy-init="false"
+	>
+		<constructor-arg>
+			<description>
+			The constructor arg provided to EvictionTimerImpl maps the maximum age (in milliseconds)
+			to the next scheduled sweep.  The map is sorted internally so the lowest value greater than
+			the max age is used when scheduling.
+			There may be only one key value = "default", which indicates the default scheduling.
+			The value specifies the next sweep time, either as an interval or as an
+			interval plus a specific Date (if the @ sign is present).
+			The interval and specific date time format is yyyy:MM:dd:hh:mm:ss.  
+			All fields MUST BE specified and the lengths MUST BE as specified, i.e. month="1" is illegal
+			Everything is zero based, including months, i.e. April is 03, January is 00.
+			Hours are zero-based on a 24 hour schedule, i.e. 00..23.
+			
+			If no @ sign is present then the task will be run in the interval specified.
+			Examples:
+			1.) if key="3600000" and value= "0000:00:00:00:01:00"
+			    then for tasks with an aging of less than one hour (3600000 milliseconds) run the task every minute.
+			2.) if key="86400000" and value= "0000:00:00:00:01:00"
+			    then for tasks with an aging of less than one day (86400000 milliseconds) run the task every hour.
+			3.) if key="60000" and value= "0000:00:00:00:00:36"
+			    then for tasks with an aging of less than one minute (60000 milliseconds) run the task every 36 seconds.
+
+			If the @ sign is present then the task will be run in the delta specified, at the specified time.
+			Examples:
+			1.) if key="3600000" and value= "0000:00:00:00:01:00@0000:00:00:00:00:20"
+			    then for tasks with an aging of less than one hour (3600000 milliseconds) run the task every minute on the 20 second boundary
+			2.) if key="default" and value= "0000:00:01:00:00:00@0000:00:00:03:00:00"
+			    then for tasks with an aging greater than any explicitly defined run the task every day at 3AM
+			3.) if key="default" and value= "0001:00:00:00:00:00@0000:04:07:03:23:34"
+			    then for tasks with an aging greater than any explicitly defined run the task every year at 3:23:34 on April 7
+			If the @ sign is present then the magnitutude of the boundary (the right of the @ sign) MUST BE less than the magnitude of
+			the interval (the left of the @ sign).  i.e. scheduling something to run every minute at 3AM will result in an error, scheduling
+			something to run every 10 minutes on a 2 minute boundary will also fail (... okay, it should work but geeze ain't this enough!).
+			The difference must be between components (i.e. hours/minutes or days/hours).
+			</description>
+			<map>
+				<entry key="60000"><value>0000:00:00:00:00:10</value></entry>			<!-- if less than a minute then next 10 seconds, this is mostly here for testing -->
+				<entry key="3600000"><value>0000:00:00:00:01:00</value></entry>			<!-- if less than an hour then next minute -->
+				<entry key="86400000"><value>0000:00:00:01:00:00</value></entry>		<!-- if less than a day then next hour -->
+				<entry key="default"><value>0000:00:01:00:00:00@0000:00:00:03:00:00</value></entry>		<!-- else, run it at 3AM -->
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="instanceByteChannelFactory" class="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactoryImpl" singleton="true" lazy-init="false">
+		<!-- maxChannelOpenDuration -->
+		<constructor-arg type="java.lang.Long" index="0"><value>60000</value></constructor-arg>
+		<!-- sweepTime -->
+		<constructor-arg type="java.lang.Long" index="1"><value>10000</value></constructor-arg>
+		<!-- close on timeout -->
+		<constructor-arg type="java.lang.Boolean" index="2"><value>false</value></constructor-arg>
+	</bean>
+
+	<bean id="one-minute-lifespan" class="gov.va.med.imaging.storage.cache.impl.LastAccessedExpirationDateEvictionStrategy">
+		<constructor-arg type="java.lang.String"><value>one-minute-lifespan</value></constructor-arg>
+		<constructor-arg type="java.lang.Long"><value>60000</value></constructor-arg>
+		<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionTimer"><ref bean="evictionTimer"/></constructor-arg>
+	</bean>
+	<bean id="one-hour-lifespan" class="gov.va.med.imaging.storage.cache.impl.LastAccessedExpirationDateEvictionStrategy" >
+		<constructor-arg type="java.lang.String"><value>one-hour-lifespan</value></constructor-arg>
+		<constructor-arg type="java.lang.Long"><value>3600000</value></constructor-arg>
+		<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionTimer"><ref bean="evictionTimer"/></constructor-arg>
+	</bean>
+	<bean id="one-day-lifespan" class="gov.va.med.imaging.storage.cache.impl.LastAccessedExpirationDateEvictionStrategy" >
+		<constructor-arg type="java.lang.String"><value>one-day-lifespan</value></constructor-arg>
+		<constructor-arg type="java.lang.Long"><value>86400000</value></constructor-arg>
+		<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionTimer"><ref bean="evictionTimer"/></constructor-arg>
+	</bean>
+	<bean id="seven-day-lifespan" class="gov.va.med.imaging.storage.cache.impl.LastAccessedExpirationDateEvictionStrategy" >
+		<constructor-arg type="java.lang.String"><value>seven-day-lifespan</value></constructor-arg>
+		<constructor-arg type="java.lang.Long"><value>604800000</value></constructor-arg>
+		<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionTimer"><ref bean="evictionTimer"/></constructor-arg>
+	</bean>
+	<bean id="thirty-day-lifespan" class="gov.va.med.imaging.storage.cache.impl.LastAccessedExpirationDateEvictionStrategy" >
+		<constructor-arg type="java.lang.String"><value>thirty-day-lifespan</value></constructor-arg>
+		<constructor-arg type="java.lang.Long"><value>2592000000</value></constructor-arg>
+		<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionTimer"><ref bean="evictionTimer"/></constructor-arg>
+	</bean>
+
+	<!-- cache must be a realization of gov.va.med.imaging.storage.cache.Cache -->
+	<bean 
+		id="cache"
+		class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCache"
+		singleton="true"
+		lazy-init="true"
+		factory-method="create"
+		>
+		<constructor-arg> <!-- rootDirectoryName -->
+			<value>/ViX/Cache</value>
+		</constructor-arg>
+		<constructor-arg> <!-- enabled -->
+			<value>true</value>
+		</constructor-arg>
+		<constructor-arg>
+			<ref local="instanceByteChannelFactory"/>
+		</constructor-arg>
+		<constructor-arg>
+			<description>Create a default set of eviction strategies for this cache.</description>
+			<list>
+				<ref local="one-minute-lifespan"/>
+				<ref local="one-hour-lifespan"/>
+				<ref local="one-day-lifespan"/>
+				<ref local="seven-day-lifespan"/>
+				<ref local="thirty-day-lifespan"/>
+			</list>
+		</constructor-arg>
+ 		<constructor-arg>
+			<description>Create a default set of Regions with associated eviction strategies.</description>
+			<list>
+				<bean id="test-metadata-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg index="0"><value>test-metadata-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory" index="1"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg index="2"><value>TEST</value></constructor-arg>
+					<constructor-arg index="3"><ref local="one-minute-lifespan"/></constructor-arg>
+				</bean>
+				<bean id="test-image-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg type="java.lang.String"><value>test-image-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg type="java.lang.String"><value>TEST</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionStrategy"><ref local="one-minute-lifespan"/></constructor-arg>
+				</bean>
+				
+				<bean id="dod-metadata-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg type="java.lang.String"><value>dod-metadata-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg type="java.lang.String"><value>TEST</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionStrategy"><ref local="one-hour-lifespan"/></constructor-arg>
+				</bean>
+				<bean id="dod-image-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg type="java.lang.String"><value>dod-image-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg type="java.lang.String"><value>TEST</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionStrategy"><ref local="seven-day-lifespan"/></constructor-arg>
+				</bean>
+				
+				<bean id="va-metadata-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg type="java.lang.String"><value>va-metadata-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg type="java.lang.String"><value>TEST</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionStrategy"><ref local="one-hour-lifespan"/></constructor-arg>
+				</bean>
+				<bean id="va-image-region" class="gov.va.med.imaging.storage.cache.impl.filesystem.FileSystemCacheRegion" factory-method="create">
+					<constructor-arg type="java.lang.String"><value>va-image-region</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.impl.filesystem.InstanceByteChannelFactory"><ref local="instanceByteChannelFactory"/></constructor-arg>
+					<constructor-arg type="java.lang.String"><value>TEST</value></constructor-arg>
+					<constructor-arg type="gov.va.med.imaging.storage.cache.EvictionStrategy"><ref local="one-day-lifespan"/></constructor-arg>
+				</bean>
+			</list>
+		</constructor-arg>
+		<constructor-arg> <!-- cluster root name -->
+			<value>TEST</value>
+		</constructor-arg>
+	</bean>
+	
+</beans>

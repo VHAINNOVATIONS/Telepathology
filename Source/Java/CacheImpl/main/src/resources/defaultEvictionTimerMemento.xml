@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="gov.va.med.imaging.storage.cache.impl.timer.EvictionTimerImplMemento"> 
+  <void property="sweepIntervalMap"> 
+   <void method="put"> 
+    <long>3600000</long> 
+    <string>0000:00:00:00:01:00</string> 
+   </void> 
+   <void method="put"> 
+    <long>86400000</long> 
+    <string>0000:00:00:01:00:00</string> 
+   </void> 
+   <void method="put"> 
+    <long>9223372036854775807</long> 
+    <string>0000:00:01:00:00:00@0000:00:00:03:00:00</string> 
+   </void> 
+  </void> 
+ </object> 
+</java> 

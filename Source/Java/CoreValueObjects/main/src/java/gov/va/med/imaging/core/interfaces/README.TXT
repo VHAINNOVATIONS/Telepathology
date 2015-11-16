@@ -1,0 +1,1 @@
+The classes within this package and its subpackages, define the interface to the VIX core.

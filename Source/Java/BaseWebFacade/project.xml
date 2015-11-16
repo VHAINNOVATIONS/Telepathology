@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+	<pomVersion>1</pomVersion>
+	<artifactId>BaseWebFacade</artifactId>
+	<name>BaseWebFacade</name>
+	<package>gov.va.med.imaging</package>
+	<shortDescription>Vix Base Web Facade</shortDescription>
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>
+			main/test/java
+		</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingCommon</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>TransactionContext</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreValueObjects</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>CoreRouter</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreRouterSemantics</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<!-- 
+			The following dependencies are required to compile this project but they are NOT required to
+			run it.  They are annotations that are not retained in class files, 
+			annotation processors (and supporting libraries). 
+		-->
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreRouterAnnotation</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreRouterAnnotationProcessor</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.14</version>
+			<type>jar</type>
+			<properties>
+				<jar.manifest.classpath>true</jar.manifest.classpath>
+			</properties>
+		</dependency>
+
+		<!-- Non-Imaging dependencies -->
+		<dependency>
+			<groupId>springframework</groupId>
+			<artifactId>spring</artifactId>
+			<version>1.2.9</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>
+

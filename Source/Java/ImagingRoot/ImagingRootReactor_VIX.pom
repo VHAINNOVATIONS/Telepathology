@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>ImagingRootReactor</artifactId>
+	<groupId>Imaging</groupId>
+	<name>ImagingRootReactor</name>
+	<packaging>pom</packaging>
+	<version>2.0.0-SNAPSHOT</version>
+	<inceptionYear>2012</inceptionYear>
+	<description>
+		A simple reactor project to build a VIX. 
+	</description>
+	
+	<modules>
+		<module>../ClinicalDisplayConnection</module>
+		<module>../ExchangeConnection</module>
+		<module>../FederationConnection</module>
+		<module>../VistaConnection</module>
+		<module>../XCAConnection</module>
+		<module>../XCASConnection</module>
+		<module>../VistaImagingConnection</module>
+		<module>../AwivConnection</module>
+		<module>../ImagingCommon</module>
+		<module>../ImagingVistaRealmClient</module>
+		<module>../TomcatAdapter</module>		
+		<module>../TransactionContext</module>
+		<module>../CoreRouterSemantics</module>
+		<module>../CoreRouterAnnotation</module>
+		<module>../CoreValueObjects</module>
+		<module>../VixCommon</module>
+		<module>../ExchangeCommon</module>
+		<module>../CoreRouterAnnotationProcessor</module>
+		<module>../DataSourceServiceProvider</module>
+		<module>../SiteServiceSOAPClient</module>
+		<module>../SiteServiceDataSourceProvider</module>
+		<module>../VistaStorage</module>
+		<module>../ImagingExchangeBaseWebProxy</module>
+		<module>../ExchangeCommonDataSource</module>
+		<module>../ImagingTestResources</module>
+		<module>../CacheAPI</module>
+		<module>../CacheImpl</module>
+		<module>../ImagingExchangeCache</module>
+		<module>../ImagingDicomCommon</module>
+		<module>../ImagingDicomDCFCommon</module>
+		<module>../ImagingDicomDCFUtilities</module>
+		<module>../ImagingDicomUtilities</module>
+		<module>../ImagingExchangeImageConversion</module>
+		<module>../ImageConversion</module>
+		<module>../FederationCommon</module>
+		<module>../ExchangeDataSource</module>
+		<module>../FederationDataSourceProvider</module>
+		<module>../VistaDataSourceCommon</module>
+		<module>../VistaDataSource</module>
+		<module>../VistaImagingDataSourceProvider</module>
+		<module>../VixVistaImagingDataSourceProvider</module>
+		<module>../VixServerHealth</module>
+		<module>../ImagingVistaRealm</module>
+		<module>../CoreRouter</module>
+		<module>../ImagingRouterCache</module>
+		<module>../ImagingRouter</module>
+		<module>../BaseWebFacade</module>
+		<module>../TransactionLoggerLocalDataSourceProvider</module>
+		<module>../ExchangeSiteServiceSOAPServer</module>
+		<module>../SiteServiceSOAPServer</module>
+		<module>../ClinicalDisplayWebApp</module>
+		<module>../DefaultVISAWebApp</module>
+		<module>../ExchangeWebApp</module>
+		<module>../FederationWebApp</module>
+		<module>../IDSWebApp</module>
+		<module>../VixGuiWebApp</module>
+		<module>../SiteServiceWebApp</module>
+		<module>../VistaRadWebApp</module>
+		<module>../VixServerHealthWebApp</module>
+		<module>../DicomImporterWebApp</module>
+		<module>../UserWebApp</module>
+		<module>../PatientWebApp</module>
+		<module>../StorageWebApp</module>
+		<module>../CacheWeb</module>
+    </modules>
+</project>

@@ -1,0 +1,124 @@
+$$BEGIN DATA1
+PATIENTS_NAME=ADAUTO,ALFREDO A
+PATIENTS_ID=458-18-7937
+PATIENTS_BIRTH_DATE=OCT 25,1921
+PATIENTS_AGE=80
+PATIENTS_SEX=M
+IMAGE_DATE=<unknown>
+IMAGE_TIME=<unknown>
+IMAGE_DATE=<unknown>
+IMAGE_TIME=<unknown>
+MODALITY=CR
+MANUFACTURER=FUJI FILM CO
+INSTITUTION_NAME=El Paso
+STATION_NAME=C023
+MANUFACTURERS_MODEL_NAME=FCRAC3
+CONTRAST_BOLUS_AGENT=
+PATIENT_POSITION=<unknown>
+STUDY_ID=319
+SERIES_NUMBER=<unknown>
+INSTANCE_NUMBER=588514
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=2140
+COLUMNS=1760
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=0.20
+PIXEL_SPACING(2)=0.20
+BITS_STORED=12
+HIGH_BIT=11
+PIXEL_REPRESENTATION=0
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|206
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.7
+0002,0003|Media Storage SOP Instance UID^UI|1,1|2.16.840.1.113709.1.9.2.484849767068.3.588514.1
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2.1
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.2.5
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V2.5
+0002,0016|Source Application Entity Title^AE|1,1|QueryRetrieve
+0008,0000|Group Length^UL|1,1|446
+0008,0001|Length to End^UL|1,1|7534266
+0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.7
+0008,0018|SOP Instance UID^UI|1,1|2.16.840.1.113709.1.9.2.484849767068.3.588514.1
+0008,0020|Study Date^DA|1,1|20020501
+0008,0023|Image Date^DA|1,1|<unknown>
+0008,0030|Study Time^TM|1,1|132300.000
+0008,0033|Image Time^TM|1,1|<unknown>
+0008,0050|Accession Number^SH|1,1|050102-319
+0008,0060|Modality^CS|1,1|CR
+0008,0064|Conversion Type^CS|1,1|WSD
+0008,0070|Manufacturer^LO|1,1|FUJI FILM CO
+0008,0080|Institution Name^LO|1,1|El Paso
+0008,0090|Referring Physician's Name^PN|1,1|Rosana^Monge E.
+0008,1010|Station Name^SH|1,1|C023
+0008,1030|Study Description^LO|1,1|ABDOMEN 1 VIEW
+0008,1070|Operators' Name^PN|1,1|
+0008,1090|Manufacturer's Model Name^LO|1,1|FCRAC3
+0009,0000|Group Length^UL|1,1|94
+0009,0010|Owner of Group^LO|1,1|SPI Release 1
+0009,xx10,SPI Release 1|Private group element^UN|1,1|SPI Release 1   
+0009,xx15,SPI Release 1|Private group element^UN|1,1|<binary data>
+0010,0000|Group Length^UL|1,1|258
+0010,0010|Patient's Name^PN|1,1|ADAUTO^ALFREDO A
+0010,0020|Patient ID^LO|1,1|458-18-7937
+0010,0030|Patient's Birth Date^DA|1,1|19211025
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1040|Patient's Address^LO|1,1|
+0018,0000|Group Length^UL|1,1|430
+0018,0010|Contrast/Bolus Agent^LO|1,1|
+0018,0020|Scanning Sequence^CS|1,1|<unknown>
+0018,0060|KVP^DS|1,1|
+0018,1010|Secondary Capture Device ID^LO|1,1|D045
+0018,1012|Date of Secondary Capture^DA|1,1|20020501
+0018,1014|Time of Secondary Capture^TM|1,1|150039.96
+0018,1016|Secondary Capture Device Manufacturer^LO|1,1|General Electric Company IIS
+0018,1018|Secondary Capture Device Manufacturer's Model Name^LO|1,1|GE PACS Modality Interface Unit
+0018,1019|Secondary Capture Device Software Version(s)^LO|1,1|PACS 7.12 MIU
+0018,1020|Software Version(s)^LO|1,1|
+0018,1030|Protocol Name^LO|1,1|Plain
+0018,1110|Distance Source to Detector^DS|1,1|
+0018,1152|Exposure^IS|1,1|
+0018,4000|Comments^LO|1,1|
+0018,5100|Patient Position^CS|1,1|<unknown>
+0019,0000|Length of Private Group^UL|1,1|168
+0019,0010|Name of Private Group^LO|1,1|SGI-SIENET
+0019,xx20,SGI-SIENET|Private group element^UN|1,1|[ABDOMEN,GENERAL   ]      000000000100A8
+0019,xx21,SGI-SIENET|Private group element^UN|1,1|0400
+0019,xx22,SGI-SIENET|Private group element^UN|1,1|AUTO  
+0019,xx23,SGI-SIENET|Private group element^UN|1,1|419   
+0019,xx24,SGI-SIENET|Private group element^UN|1,1|1.6   
+0019,xx27,SGI-SIENET|Private group element^UN|1,1|0AC30141        
+0020,0000|Group Length^UL|1,1|178
+0020,000D|Study Instance UID^UI|1,1|2.16.840.1.113709.1.9.2.484849767068.1.92871.1
+0020,000E|Series Instance UID^UI|1,1|2.16.840.1.113709.1.9.2.484849767068.2.92871.76086.1
+0020,0010|Study ID^SH|1,1|319
+0020,0011|Series Number^IS|1,1|<unknown>
+0020,0013|Instance Number^IS|1,1|588514
+0020,0020|Patient Orientation^CS|1,1|
+0020,0050|Location^DS|1,1|<unknown>
+0020,1002|Images in Acquisition^IS|1,1|1
+0028,0000|Group Length^UL|1,1|164
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0010|Rows^US|1,1|2140
+0028,0011|Columns^US|1,1|1760
+0028,0030|Pixel Spacing^DS|1,1|0.20
+0028,0030|Pixel Spacing^DS|2,1|0.20
+0028,0050|Manipulated Image^LO|1,1|
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|12
+0028,0102|High Bit^US|1,1|11
+0028,0103|Pixel Representation^US|1,1|0
+0028,1050|Window Center^DS|1,1|540
+0028,1051|Window Width^DS|1,1|1081
+7FD1,0000|Length of Private Group^UL|1,1|26
+7FD1,0010|Name of Private Group^LO|1,1|GEIIS
+7FD1,xx10,GEIIS|Private group element^UN|1,1|<binary data>
+7FE0,0000|Group Length^UL|1,1|7532812
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=7532800 (0x0072F100)
+7FE0,0010|Pixel Data^OW|1,3|offset=2234 (0x08BA)
+$$END DICOM DATA

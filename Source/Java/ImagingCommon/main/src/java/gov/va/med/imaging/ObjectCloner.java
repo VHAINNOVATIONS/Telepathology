@@ -1,0 +1,39 @@
+package gov.va.med.imaging;
+
+import java.io.*;
+import java.util.*;
+import java.awt.*;
+
+public class ObjectCloner {
+	// so that nobody can accidentally create an ObjectCloner object
+	private ObjectCloner() {
+	}
+
+	// returns a deep copy of an object
+	static public Object deepCopy(Object originalObject) throws Exception {
+		ObjectOutputStream oos = null;
+		ObjectInputStream ois = null;
+		try 
+		{
+			ByteArrayOutputStream bos = new ByteArrayOutputStream(); // A
+			oos = new ObjectOutputStream(bos); // B
+			// serialize and pass the object
+			oos.writeObject(originalObject); // C
+			oos.flush(); // D
+			ByteArrayInputStream bin = new ByteArrayInputStream(bos.toByteArray()); // E
+			ois = new ObjectInputStream(bin); // F
+			// return the new object
+			return ois.readObject(); // G
+		} 
+		catch (Exception e) 
+		{
+			System.out.println("Exception in ObjectCloner = " + e);
+			throw (e);
+		} 
+		finally 
+		{
+			oos.close();
+			ois.close();
+		}
+	}
+}

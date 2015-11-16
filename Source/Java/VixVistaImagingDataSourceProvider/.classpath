@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VistaImagingDataSourceProvider"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VixCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VistaDataSourceCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataSourceServiceProvider"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar" sourcepath="/INSTALLS/Log4J/1.2.14/logging-log4j-1.2.14/src"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TransactionContext"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

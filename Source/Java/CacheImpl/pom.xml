@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<parent>
+		<groupId>Imaging</groupId>
+		<artifactId>ImagingRoot</artifactId>
+		<!-- <artifactId>CacheGroupParent</artifactId> -->
+		<version>${BUILD_VERSION}</version>
+		<relativePath>../ImagingRoot/pom.xml</relativePath>
+		<!-- <version>2.0.0-SNAPSHOT</version> <relativePath>../CacheGroupParent/pom.xml</relativePath> -->
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>CacheImpl</artifactId>
+	<name>CacheImpl</name>
+	<packaging>jar</packaging>
+	<build>
+		<finalName>${artifactId}-${version}</finalName>
+		<directory>${project.basedir}/target</directory>
+		<outputDirectory>${project.basedir}/target/classes</outputDirectory>
+		<testOutputDirectory>${project.basedir}/target/test-classes</testOutputDirectory>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<testSourceDirectory>main/test/java</testSourceDirectory>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>main/src/java</directory>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>main/test/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<optimize>false</optimize>
+					<compilerArguments>
+						<source>${JAVA_VERSION}</source>
+						<target>${JAVA_VERSION}</target>
+						<g />
+						<deprecation />
+					</compilerArguments>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<forkMode>once</forkMode>
+					<includes>
+						<include>**/*Test*.java</include>
+						<include>gov/va/med/imaging/storage/cache/Test*.java</include>
+						<include>gov/va/med/imaging/storage/cache/impl/filesystem/Test*.java</include>
+						<include>gov/va/med/imaging/storage/cache/impl/timer/Test*.java</include>
+					</includes>
+					<excludes>
+						<!-- All abstract classes start with Abstract -->
+						<exclude>**/Abstract*.*</exclude>
+						<!-- Utility (helper) classes end with Utility -->
+						<exclude>**/*Utility.*</exclude>
+						<!-- Data generators end with Generator -->
+						<exclude>**/*Generator.*</exclude>
+						<!-- All Test Base classes end with TestBase -->
+						<exclude>**/*TestBase.*</exclude>
+						<!-- Data may be included in a static class ending with Data -->
+						<exclude>**/Mock*.*</exclude>
+						<!-- Inner classes are excluded as unit tests -->
+						<exclude>**/*$*</exclude>
+						<!-- Excluding individual classes on a permanent basis is discouraged -->
+						<!-- Enter individual classes here -->
+						<exclude>**/TestGroupStatistics.*</exclude>
+						<exclude>**/TestMultithreadAccess.*</exclude>
+						<exclude>**/TestChannelTimeout.*</exclude>
+						<exclude>**/TestCacheCreation.*</exclude>
+						<exclude>**/TestDirectCacheAccess.*</exclude>
+						<exclude>**/TestStorageThresholdEviction.*</exclude>
+						<exclude>**/gov/va/med/imaging/storage/cache/impl/jcifs/*.*</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+			<!-- A plugin to copy the project artifact to the installation directory. 
+				In general this means copying to tomcat libarary but is project specific. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>copy</id>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+									<type>${project.packaging}</type>
+								</artifactItem>
+							</artifactItems>
+							<outputDirectory>${tomcat.lib}</outputDirectory>
+							<overWriteReleases>true</overWriteReleases>
+							<overWriteSnapshots>true</overWriteSnapshots>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- 
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>Imaging</groupId>
+				<artifactId>GlobalDependencyManagement</artifactId>
+				<version>2.0.0-SNAPSHOT</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	-->
+	
+	<dependencies>
+		<!--
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>jcifs</groupId>
+			<artifactId>jcifs</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		-->
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>CacheAPI</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>ImagingCommon</artifactId>
+			<version>${project.version}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>MockDataGenerationImpl</artifactId>
+			<version>${project.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!--		
+		<dependency>
+			<groupId>Imaging</groupId>
+			<artifactId>Common</artifactId>
+			<scope>provided</scope>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>Imaging</groupId>
+			<artifactId>Interactive</artifactId>
+			<scope>provided</scope>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		-->
+	</dependencies>
+	
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-changes-plugin</artifactId>
+				<configuration>
+					<xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

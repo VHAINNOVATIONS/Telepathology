@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag handler library for displaying Series information</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>SeriesTags</short-name>
+ <uri>http://imaging.med.va.gov/vix/series</uri>
+ <tag>
+  <description>A Series parent element for Series instances within an AbstractSeriesCollectionTag.</description>
+  <name>SeriesCollectionElementTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesCollectionElementTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>SeriesIenTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesIenTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>SeriesImageCollectionTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesImageCollectionTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <description>The message to display if the image list is empty</description>
+   <name>emptyResultMessage</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
+  <name>SeriesImageCountTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesImageCountTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>SeriesNumberTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesNumberTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>SeriesObjectOriginTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesObjectOriginTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>SeriesUidTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.series.SeriesUidTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+</taglib>

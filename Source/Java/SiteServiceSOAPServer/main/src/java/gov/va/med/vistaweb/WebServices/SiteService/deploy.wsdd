@@ -1,0 +1,74 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from SiteService WSDL service -->
+
+  <service name="SiteServiceSoap" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://vistaweb.med.va.gov/WebServices/SiteService"/>
+      <parameter name="wsdlServiceElement" value="SiteService"/>
+      <parameter name="schemaQualified" value="http://vistaweb.med.va.gov/WebServices/SiteService"/>
+      <parameter name="wsdlServicePort" value="SiteServiceSoap"/>
+      <parameter name="className" value="gov.va.med.vistaweb.WebServices.SiteService.SiteServiceSoapSkeleton"/>
+      <parameter name="wsdlPortType" value="SiteServiceSoap"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <parameter name="allowedMethods" value="*"/>
+
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:RegionTO"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.RegionTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:ArrayOfSiteTO"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.ArrayOfSiteTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:ArrayOfString"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.ArrayOfString"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:ArrayOfRegionTO"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.ArrayOfRegionTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:SiteTO"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.SiteTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <typeMapping
+        xmlns:ns="http://vistaweb.med.va.gov/WebServices/SiteService"
+        qname="ns:FaultTO"
+        type="java:gov.va.med.vistaweb.WebServices.SiteService.FaultTO"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

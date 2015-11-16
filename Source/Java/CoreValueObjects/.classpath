@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry kind="src" path="main/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/TransactionContext"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar" sourcepath="/INSTALLS/Log4J/1.2.14/logging-log4j-1.2.14/src"/>
+	<classpathentry kind="var" path="M2_REPO/springframework/spring/1.2.9/spring-1.2.9.jar" sourcepath="/SPRING_SRC"/>
+	<classpathentry kind="var" path="M2_REPO/freemarker/freemarker/2.3.14/freemarker-2.3.14.jar" sourcepath="/INSTALLS/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Documents and Settings/All Users/Documents/Installs/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/docs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.4.7/xstream-1.4.7.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterSemantics"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterAnnotation"/>
+	<classpathentry kind="var" path="M2_REPO/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

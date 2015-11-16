@@ -1,0 +1,33 @@
+<!-- 
+Add the following <Listener> element to the <Server> element.
+Adding this causes Tomcat to notify the cache manager of server lifecycle events,
+which allows the cache manager to notify the cache.
+BTW: the mapping from server lifecycle to cache lifecycle events is almost, but
+not precisely, one-to-one.
+-->
+<Listener className="gov.va.med.imaging.storage.cache.impl.tomcat.ServerLifecycleListener"/>
+
+<!-- 
+Add the following <Resource> element into the <Server><GlobalNamingResources> element.
+This will make the cache available as a resource from any hosted application.
+
+-->
+<Resource
+	auth="Container"
+	description="Caching mechanism for ViXS"
+	name="ImagingExchangeCache"
+	type="gov.va.med.imaging.storage.cache.Cache"
+	factory="gov.va.med.imaging.storage.cache.impl.tomcat.CacheFactory"
+/>
+  
+<!-- 
+Each application that uses the cache should add the following to its web.xml file:
+
+	<resource-ref>
+		<description>The Imaging Exchange Cache</description>
+		<res-ref-name>ImageExchangeCache</res-ref-name>
+		<res-type>gov.va.med.imaging.storage.cache.Cache</res-type>
+		<res-auth>Container</res-auth>
+	</resource-ref>
+
+-->

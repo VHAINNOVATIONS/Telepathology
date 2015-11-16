@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="var" path="M2_REPO/freemarker/freemarker/2.3.14/freemarker-2.3.14.jar" sourcepath="/INSTALLS/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Documents and Settings/All Users/Documents/Installs/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/docs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterSemantics"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreRouterAnnotation"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,42 @@
+<p>
+This package contains the framework for building configuration applications.  There are two main classes 
+that must be implemented to use this framework.  One is a single class that is the subject of the management, the
+other is a command factory and the commands (more on that in a moment).
+</p>
+<p>
+The framework is arranged with a CommandSource pushing Command objects on a queue and a CommandProcessor popping
+commands from the queue and executing.  The CommandSource references a CommandFactory to build command instances
+from the native form supported by the CommandSource.
+Both the CommandSource and the CommandProcessor can run on worker threads or on a single thread.  By default,
+the CommandSource runs on the calling thread and the CommandProcessor runs on a worker thread.
+The CommandController is responsible for connecting the source and the processor to the processing queue and for
+starting threads and/or running the source and processor run methods.
+</p>
+<p>
+Default implementations are provided for the queue, the CommandSource and the CommandProcessor.  Implementation of
+the CommandFactory, the Command derivations and the subject class are application specific.  A base CommandFactory
+implementation is provided.
+The default CommandSource takes its input from standard in, so simple command line applications require little
+framework code. 
+</p>
+<p>
+A complete application (e.g. the VIX cache configuration utility) is constructed something like:
+
+	public static void main(String[] argv)
+	{
+		...
+		try
+		{
+			CacheManagerImpl cacheManager = CacheManagerImpl.getSingleton();
+			CommandFactory commandFactory = InteractiveCacheCommandFactoryImpl.getSingleton();
+			CommandController<CacheManagerImpl> icc = new CommandController<CacheManagerImpl>(cacheManager, commandFactory);
+			
+			icc.getCommandSource().pushCommands(argv);
+			icc.run();
+		}
+		catch (Exception x)
+		{
+			x.printStackTrace();
+			return;
+		}
+	}

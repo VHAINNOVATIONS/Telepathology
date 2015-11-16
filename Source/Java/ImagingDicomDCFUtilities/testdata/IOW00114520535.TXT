@@ -1,0 +1,285 @@
+$$BEGIN DATA1
+PATIENTS_NAME=COX,WILLIAM R
+PATIENTS_ID=329-28-7867
+PATIENTS_BIRTH_DATE=APR 20,1934
+PATIENTS_AGE=73
+PATIENTS_SEX=M
+INTEGRATION_CONTROL_NUMBER=1007450941V481979
+ACCESSION_NUMBER=082707-1530
+IMAGE_DATE=08/27/2007
+CONTENT_DATE=08/27/2007
+IMAGE_TIME=11:03:36
+CONTENT_TIME=11:03:36
+IMAGE_TYPE=4
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=AXIAL
+IMAGE_TYPE(4)=HELIX
+CONTENT_DATE=20070827
+CONTENT_TIME=110336.883999
+MODALITY=CT
+MANUFACTURER=Philips
+INSTITUTION_NAME=VAMC  IOWA CITY
+STATION_NAME=IOW-CT2
+MANUFACTURERS_MODEL_NAME=Brilliance 64
+CONTRAST_BOLUS_AGENT=CONTRAST
+SLICE_THICKNESS=2.00
+KVP=120
+RECONSTRUCTION_DIAMETER=434
+GANTRY_DETECTOR_TILT=0
+XRAY_TUBE_CURRENT=462
+CONVOLUTION_KERNEL=B
+PATIENT_POSITION=FFS
+STUDY_ID=3954
+SERIES_NUMBER=2
+ACQUISITION_NUMBER=<unknown>
+INSTANCE_NUMBER=123
+IMAGE_POSITION_PATIENT=3
+IMAGE_POSITION_PATIENT(1)=-213.531723
+IMAGE_POSITION_PATIENT(2)=-103.049371
+IMAGE_POSITION_PATIENT(3)=571.599976
+LATERALITY=<unknown>
+POSITION_REFERENCE_INDICATOR=<unknown>
+SLICE_LOCATION=-571.60
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=512
+COLUMNS=512
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=0.84765625
+PIXEL_SPACING(2)=0.84765625
+BITS_STORED=12
+HIGH_BIT=11
+PIXEL_REPRESENTATION=0
+RESCALE_INTERCEPT=-1024
+RESCALE_SLOPE=1
+DCM_TO_TGA_PARAMETERS=b12
+HAUNSFIELD=-1000
+CONTRAST_INDICATOR=C+
+SLICE_THICKNESS_2=2.0
+GANTRY_DETECTOR_TILT_2=0.0
+EXPOSURE_TIME_2=
+IMAGE_POSITION_PATIENT_2(3)=571.6
+RECONSTRUCTION_DIAMETER_2=43.4
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|196
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.2
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.2.840.113704.1.111.3728.1188230705.220
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2.1
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|IOW_CT02_PHI
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|AXIAL
+0008,0008|Image Type^CS|4,1|HELIX
+0008,0012|Instance Creation Date^DA|1,1|20070827
+0008,0013|Instance Creation Time^TM|1,1|110505
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.2
+0008,0018|SOP Instance UID^UI|1,1|1.2.840.113704.1.111.3728.1188230705.220
+0008,0020|Study Date^DA|1,1|20070827
+0008,0022|Acquisition Date^DA|1,1|20070827
+0008,0023|Content Date^DA|1,1|20070827
+0008,0030|Study Time^TM|1,1|105731
+0008,0032|Acquisition Time^TM|1,1|110331
+0008,0033|Content Time^TM|1,1|110336.883999
+0008,0050|Accession Number^SH|1,1|082707-1530
+0008,0060|Modality^CS|1,1|CT
+0008,0070|Manufacturer^LO|1,1|Philips
+0008,0080|Institution Name^LO|1,1|VAMC  IOWA CITY
+0008,0081|Institution Address^ST|1,1|Iowa City, Iowa
+0008,0090|Referring Physician's Name^PN|1,1|UNKNOWN
+0008,1010|Station Name^SH|1,1|IOW-CT2
+0008,1030|Study Description^LO|1,1|CT ABDOMEN W/DYE
+0008,1032|Procedure Code Sequence^SQ||
+0008,1032.0001^0008,0100|Code Value^SH|1,1|74160
+0008,1032.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0008,1032.0001^0008,0104|Code Meaning^LO|1,1|CT ABDOMEN W/DYE
+0008,103E|Series Description^LO|1,1|2MM 60SEC
+0008,1040|Institutional Department Name^LO|1,1|Radiology
+0008,1070|Operators' Name^PN|1,1|MAA
+0008,1090|Manufacturer's Model Name^LO|1,1|Brilliance 64
+0008,1110|Referenced Study Sequence^SQ||
+0008,1110.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.3.1
+0008,1110.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113797.3232261122.872536.1188227553.470.362
+0008,1111|Referenced Performed Procedure Step Sequence^SQ||
+0008,1111.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.3.3
+0008,1111.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113704.1.111.2284.1188230244.2
+0008,1120|Referenced Patient Sequence^SQ||
+0008,1120.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.1.1
+0008,1120.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113797.3232261122.872536.1188227553.470.362
+0008,1140|Referenced Image Sequence^SQ||
+0008,1140.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.2
+0008,1140.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113704.1.111.3728.1188230370.9
+0010,0010|Patient's Name^PN|1,1|COX^WILLIAM^R
+0010,0020|Patient ID^LO|1,1|329-28-7867
+0010,0030|Patient's Birth Date^DA|1,1|19340420
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1010|Patient's Age^AS|1,1|073Y
+0010,1030|Patient's Weight^DS|1,1|<unknown>
+0010,2000|Medical Alerts^LO|1,1|<unknown>
+0010,2110|Contrast Allergies^LO|1,1|<unknown>
+0010,21B0|Additional Patient History^LT|1,1|PATIENT WITH HISTORY OF RENAL CELL CARCINOMA - F/U SCAN
+0010,21C0|Pregnancy Status^US|1,1|<unknown>
+0010,4000|Patient Comments^LT|1,1|PATIENT WITH HISTORY OF RENAL CELL CARCINOMA - F/U SCAN
+0018,0010|Contrast/Bolus Agent^LO|1,1|CONTRAST
+0018,0022|Scan Options^CS|1,1|HELIX
+0018,0050|Slice Thickness^DS|1,1|2.00
+0018,0060|KVP^DS|1,1|120
+0018,0088|Spacing Between Slices^DS|1,1|2.0
+0018,0090|Data Collection Diameter^DS|1,1|500
+0018,1020|Software Version(s)^LO|1,1|2.2.5
+0018,1030|Protocol Name^LO|1,1|ABDOMEN WITH IV/Abdomen
+0018,1040|Contrast/Bolus Route^LO|1,1|<unknown>
+0018,1041|Contrast/Bolus Volume^DS|1,1|<unknown>
+0018,1046|Contrast Flow Rate^DS|1,1|<unknown>
+0018,1049|Contrast/Bolus Ingredient Concentration^DS|1,1|<unknown>
+0018,1100|Reconstruction Diameter^DS|1,1|434
+0018,1120|Gantry/Detector Tilt^DS|1,1|0
+0018,1130|Table Height^DS|1,1|128
+0018,1140|Rotation Direction^CS|1,1|CW
+0018,1151|X-ray Tube Current^IS|1,1|462
+0018,1152|Exposure^IS|1,1|389
+0018,1160|Filter Type^SH|1,1|B
+0018,1210|Convolution Kernel^SH|1,1|B
+0018,5100|Patient Position^CS|1,1|FFS
+0018,9321|CT Exposure Sequence^SQ||
+0018,9321.0001^0018,9323|Exposure Modulation Type^CS|1,1|ZDOM_ACS
+0018,9321.0001^0018,9324|Estimated Dose Saving^FD|1,1|8.000000E+000
+0018,9321.0001^0018,9328|Exposure Time in ms^FD|1,1|8.419913E-001
+0018,9321.0001^0018,9330|X-Ray Tube Current in mA^FD|1,1|4.990000E+002
+0018,9321.0001^0018,9332|Exposure in mAs^FD|1,1|3.890000E+002
+0018,9321.0001^0018,9345|CTDIvol^FD|1,1|2.287690E+001
+0018,9323|Exposure Modulation Type^CS|1,1|ZDOM_ACS
+0018,9324|Estimated Dose Saving^FD|1,1|8.000000E+000
+0018,9345|CTDIvol^FD|1,1|2.287690E+001
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113797.3232261122.872536.1188227553.470.362
+0020,000E|Series Instance UID^UI|1,1|1.2.840.113704.1.111.3200.1188230491.6
+0020,0010|Study ID^SH|1,1|3954
+0020,0011|Series Number^IS|1,1|2
+0020,0012|Acquisition Number^IS|1,1|<unknown>
+0020,0013|Instance Number^IS|1,1|123
+0020,0032|Image Position (Patient)^DS|1,1|-213.531723
+0020,0032|Image Position (Patient)^DS|2,1|-103.049371
+0020,0032|Image Position (Patient)^DS|3,1|571.599976
+0020,0037|Image Orientation (Patient)^DS|1,1|1
+0020,0037|Image Orientation (Patient)^DS|2,1|0
+0020,0037|Image Orientation (Patient)^DS|3,1|0
+0020,0037|Image Orientation (Patient)^DS|4,1|0
+0020,0037|Image Orientation (Patient)^DS|5,1|1
+0020,0037|Image Orientation (Patient)^DS|6,1|0
+0020,0052|Frame of Reference UID^UI|1,1|1.2.840.113704.1.111.3200.1188230338.3
+0020,0060|Laterality^CS|1,1|<unknown>
+0020,1040|Position Reference Indicator^LO|1,1|<unknown>
+0020,1041|Slice Location^DS|1,1|-571.60
+0020,4000|Image Comments^LT|1,1|2MM 60SEC
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0010|Rows^US|1,1|512
+0028,0011|Columns^US|1,1|512
+0028,0030|Pixel Spacing^DS|1,1|0.84765625
+0028,0030|Pixel Spacing^DS|2,1|0.84765625
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|12
+0028,0102|High Bit^US|1,1|11
+0028,0103|Pixel Representation^US|1,1|0
+0028,1050|Window Center^DS|1,1|00060
+0028,1050|Window Center^DS|2,1|00060
+0028,1051|Window Width^DS|1,1|00360
+0028,1051|Window Width^DS|2,1|00360
+0028,1052|Rescale Intercept^DS|1,1|-1024
+0028,1053|Rescale Slope^DS|1,1|1
+0032,1033|Requesting Service^LO|1,1|IC/HEM ONC 21/M
+0032,1060|Requested Procedure Description^LO|1,1|CT ABDOMEN W/DYE
+0038,0010|Admission ID^LO|1,1|69
+0038,0050|Special Needs^LO|1,1|<unknown>
+0038,0500|Patient State^LO|1,1|MAVS
+0040,0253|Performed Procedure Step ID^SH|1,1|39540
+0040,0254|Performed Procedure Step Description^LO|1,1|CT ABDOMEN W/DYE
+0040,0260|Performed Protocol Code Sequence^SQ||
+0040,0260.0001^0008,0100|Code Value^SH|1,1|74160
+0040,0260.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0040,0260.0001^0008,0104|Code Meaning^LO|1,1|CT ABDOMEN W/DYE
+0040,0275|Request Attributes Sequence^SQ||
+0040,0275.0001^0040,0007|Scheduled Procedure Step Description^LO|1,1|CT ABDOMEN W/DYE
+0040,0275.0001^0040,0008|Scheduled Protocol Code Sequence^SQ||
+0040,0275.0001^0040,0008.0001^0008,0100|Code Value^SH|1,1|74160
+0040,0275.0001^0040,0008.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0040,0275.0001^0040,0008.0001^0008,0104|Code Meaning^LO|1,1|CT ABDOMEN W/DYE
+0040,0275.0001^0040,0009|Scheduled Procedure Step ID^SH|1,1|1
+0040,0275.0001^0040,1001|Requested Procedure ID^SH|1,1|1
+0040,3001|Confidentiality Constraint on Patient Data Description^LO|1,1|<unknown>
+00E1,0010|Name of Private Group^LO|1,1|ELSCINT1
+00E1,xx01,1|Private element^US|1,1|1
+00E1,xx22,1|Private element^DS|1,1|00000\00000
+00E1,xx23,1|Private element^DS|1,1|0.833\0.833
+00E1,xx40,1|Private element^SH|1,1|2MM 60SEC
+00E1,xx42,1|Private element^LO|1,1|<unknown>
+00E1,xx50,1|Private element^DS|1,1|12.229
+00E1,xx61,1|Private element^LO|1,1|Abdomen_Multi_1101_usr.proc
+00E1,xx63,1|Private element^SH|1,1|ENGLISH
+01F1,0010|Name of Private Group^LO|1,1|ELSCINT1
+01F1,xx01,1|Private element^CS|1,1|SPIRAL
+01F1,xx02,1|Private element^CS|1,1|STANDARD
+01F1,xx03,1|Private element^CS|1,1|FUSED
+01F1,xx04,1|Private element^CS|1,1|NORMAL
+01F1,xx05,1|Private element^DS|1,1|180
+01F1,xx07,1|Private element^DS|1,1|47.50
+01F1,xx08,1|Private element^DS|1,1|512
+01F1,xx0A,1|Private element^US|1,1|0
+01F1,xx0C,1|Private element^DS|1,1|0.0300676748\0.00799142197
+01F1,xx0D,1|Private element^DS|1,1|0
+01F1,xx0E,1|Private element^FL|1,1|0.000000E+000
+01F1,xx26,1|Private element^DS|1,1|0.891
+01F1,xx27,1|Private element^DS|1,1|0.75
+01F1,xx32,1|Private element^CS|1,1|RIGHT_ON_LEFT
+01F1,xx42,1|Private element^SH|1,1|No
+01F1,xx43,1|Private element^LO|1,1|<unknown>
+01F1,xx44,1|Private element^OW|1,1|<unknown>
+01F1,xx46,1|Private element^FL|1,1|6.250000E-001
+01F1,xx47,1|Private element^SH|1,1|3D
+01F1,xx49,1|Private element^DS|1,1|420
+01F1,xx4A,1|Private element^SH|1,1|DOM
+01F1,xx4B,1|Private element^SH|1,1|64x0.625
+01F1,xx4C,1|Private element^SH|1,1|NO
+01F1,xx4D,1|Private element^SH|1,1|NO
+01F1,xx4E,1|Private element^LO|1,1|Abdomen Routine
+01F7,0010|Name of Private Group^LO|1,1|ELSCINT1
+01F7,xx10,1|Private element^OB|1,1|<unknown>
+01F7,xx11,1|Private element^OW|1,1|<unknown>
+01F7,xx13,1|Private element^OW|1,1|<unknown>
+01F7,xx14,1|Private element^OW|1,1|<unknown>
+01F7,xx15,1|Private element^OW|1,1|<unknown>
+01F7,xx16,1|Private element^OW|1,1|<unknown>
+01F7,xx17,1|Private element^OW|1,1|<unknown>
+01F7,xx18,1|Private element^OW|1,1|<unknown>
+01F7,xx19,1|Private element^OW|1,1|<unknown>
+01F7,xx1A,1|Private element^OW|1,1|<unknown>
+01F7,xx1B,1|Private element^OW|1,1|<unknown>
+01F7,xx1C,1|Private element^OW|1,1|<unknown>
+01F7,xx1E,1|Private element^OW|1,1|<unknown>
+01F7,xx1F,1|Private element^OW|1,1|<unknown>
+01F7,xx22,1|Private element^UI|1,1|1.2.840.113704.1.111.3200.1188230491.5.1.1111111111111111111
+01F7,xx23,1|Private element^OW|1,1|<unknown>
+01F7,xx25,1|Private element^OW|1,1|<unknown>
+01F7,xx27,1|Private element^OW|1,1|<unknown>
+01F7,xx29,1|Private element^OW|1,1|<unknown>
+01F7,xx2B,1|Private element^OW|1,1|<unknown>
+01F7,xx2C,1|Private element^OW|1,1|<unknown>
+01F7,xx2D,1|Private element^OW|1,1|<unknown>
+01F7,xx30,1|Private element^OW|1,1|<unknown>
+01F7,xx31,1|Private element^OW|1,1|<unknown>
+01F7,xx70,1|Private element^OW|1,1|<unknown>
+01F7,xx74,1|Private element^OW|1,1|<unknown>
+01F7,xx75,1|Private element^OW|1,1|<unknown>
+07A1,0010|Name of Private Group^LO|1,1|ELSCINT1
+07A1,xx10,1|Private element^LO|1,1|3.5
+7FDF,0010|Name of Private Group^LO|1,1|ELSCINT1
+7FDF,xxF0,1|Private element^OB|1,1|<unknown>
+7FDF,xxFF,1|Private element^SH|1,1|<unknown>
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=524288 (0x00080000)
+7FE0,0010|Pixel Data^OW|1,3|offset=12478 (0x30BE)
+$$END DICOM DATA

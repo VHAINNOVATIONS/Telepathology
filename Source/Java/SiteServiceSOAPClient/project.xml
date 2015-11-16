@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <artifactId>SiteServiceSOAPClient</artifactId>
+    <name>SiteServiceSOAPClient</name>
+	<package>gov.va.med.vistaweb.WebServices.SiteService</package>
+	<shortDescription>Site Service client implementation</shortDescription>  
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>main/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>			
+	</build>
+  <dependencies>
+    <dependency>
+      <groupId>axis</groupId>
+      <artifactId>axis</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+    </dependency>    
+    <dependency>
+      <groupId>jaxrpc</groupId>
+      <artifactId>jaxrpc</artifactId>
+      <version>1.1</version>
+      <type>jar</type>
+    </dependency>  
+  </dependencies>
+</project>
+

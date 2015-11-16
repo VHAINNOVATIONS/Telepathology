@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="gov.va.med.imaging.storage.cache.memento.CacheConfigurationMemento"> 
+  <void property="regionMementoes"> 
+   <object class="java.util.ArrayList"> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="name"> 
+       <string>test-image</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="name"> 
+       <string>test-metadata</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

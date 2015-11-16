@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag library for displaying java log information</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>JavaLogTags</short-name>
+ <uri>http://imaging.med.va.gov/vix/javalog</uri>
+ <!-- Java Log Parent Tags --> 
+ <tag>
+  <description>The collection of java logs that contains all of the Java logs known.</description>
+  <name>JavaLogCollection</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogCollectionTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <description>The message to show if there are no sites</description>
+   <name>emptyResultMessage</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+  	<description>The order to sort the results in</description>
+  	<name>sortOrder</name>
+  	<required>false</required>
+  	<rtexprvalue>true</rtexprvalue>
+  	<type>java.lang.String</type>  	
+  </attribute>
+ </tag>
+ 
+ <tag>
+  <description>A single Java Log within an AbstractJavaLogCollectionTag. A derivation of AbstractJavaLogTag, 
+  so the AbstractJavaLogProperty derived tags may reside within.</description>
+  <name>JavaLogCollectionElement</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogCollectionElementTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <!-- Site Properties - derivations of AbstractSiteProperty -->
+ <tag>
+  <description>The name of a file resolved by a parent JavaLog tag.</description>
+  <name>Filename</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogFilenameTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The size a file resolved by a parent JavaLog tag.</description>
+  <name>FileSize</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogFileSizeTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The data modified of a file resolved by a parent JavaLog tag.</description>
+  <name>DateModified</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogDateModifiedTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The URL to download a file resolved by a parent JavaLog tag.</description>
+  <name>DownloadLogFileHRef</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.javalog.JavaLogDownloadLogFileHRefTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+</taglib>

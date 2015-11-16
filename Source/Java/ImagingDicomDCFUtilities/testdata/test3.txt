@@ -1,0 +1,136 @@
+$$BEGIN DATA1
+PATIENTS_NAME=KUCAR,J M
+PATIENTS_ID=844-56-4912
+PATIENTS_BIRTH_DATE=1943
+PATIENTS_AGE=59
+PATIENTS_SEX=M
+IMAGE_DATE=03/19/1997
+CONTENT_DATE=03/19/1997
+IMAGE_TIME=11:47:42
+CONTENT_TIME=11:47:42
+IMAGE_TYPE=2
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+CONTENT_DATE=19970319
+CONTENT_TIME=114742.790
+MODALITY=OT
+MANUFACTURER=Roadrunner, Inc.
+INSTITUTION_NAME=VA Testing
+STATION_NAME=Capture Station
+MANUFACTURERS_MODEL_NAME=Beep-Beep
+PATIENT_POSITION=HFS
+STUDY_ID=12345
+SERIES_NUMBER=1
+ACQUISITION_NUMBER=1
+INSTANCE_NUMBER=51
+PHOTOMETRIC_INTERPRETATION=RGB
+ROWS=480
+COLUMNS=640
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=3.515625e-01
+PIXEL_SPACING(2)=3.515625e-01
+BITS_STORED=8
+HIGH_BIT=7
+PIXEL_REPRESENTATION=0
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|194
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.7
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.2.840.113754.1.4.543.1.100.59155.38076.3
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|DICOM_TEST
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0012|Instance Creation Date^DA|1,1|19970319
+0008,0013|Instance Creation Time^TM|1,1|114719.850
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.7
+0008,0018|SOP Instance UID^UI|1,1|1.2.840.113754.1.4.543.1.100.59155.38076.3
+0008,0020|Study Date^DA|1,1|19970319
+0008,0021|Series Date^DA|1,1|19970319
+0008,0022|Acquisition Date^DA|1,1|19970319
+0008,0023|Content Date^DA|1,1|19970319
+0008,0030|Study Time^TM|1,1|114719.850
+0008,0031|Series Time^TM|1,1|114719.850
+0008,0032|Acquisition Time^TM|1,1|114719.850
+0008,0033|Content Time^TM|1,1|114742.790
+0008,0050|Accession Number^SH|1,1|GMRC-100
+0008,0060|Modality^CS|1,1|OT
+0008,0064|Conversion Type^CS|1,1|DV
+0008,0070|Manufacturer^LO|1,1|Roadrunner, Inc.
+0008,0080|Institution Name^LO|1,1|VA Testing
+0008,0090|Referring Physician's Name^PN|1,1|KUZMAK^PETER
+0008,1010|Station Name^SH|1,1|Capture Station
+0008,1048|Physician(s) of Record^PN|1,1|Casy^Benedict
+0008,1048|Physician(s) of Record^PN|2,1|Welleby^Marcus
+0008,1050|Performing Physician's Name^PN|1,1|Physician^Performing
+0008,1060|Name of Physician(s) Reading Study^PN|1,1|Educated^Guess
+0008,1070|Operators' Name^PN|1,1|CARTER^JIMMY
+0008,1090|Manufacturer's Model Name^LO|1,1|Beep-Beep
+0010,0010|Patient's Name^PN|1,1|KUCAR^J^M
+0010,0020|Patient ID^LO|1,1|844-56-4912
+0010,0030|Patient's Birth Date^DA|1,1|19430000
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1000|Other Patient IDs^LO|1,1|B6789
+0010,1010|Patient's Age^AS|1,1|038Y
+0010,2000|Medical Alerts^LO|1,1|Patient has administrativitis.
+0010,2160|Ethnic Group^SH|1,1|Caucasan
+0010,21B0|Additional Patient History^LT|1,1|Barium enema, air-contrast.  Preliminary film of the abdomen does not show
+0010,21B0|Additional Patient History^LT|1,2|unusual intestinal pattern.  There are incidental degenerative changes and
+0010,21B0|Additional Patient History^LT|1,3|scoliosis in the LS spine.  Fluoroscopic and radiographic examination shows
+0010,21B0|Additional Patient History^LT|1,4|free passage of barium from the rectum to the cecum without reflux into the
+0010,21B0|Additional Patient History^LT|1,5|terminal ileum.  Appendix is not opacified.  There are a few diverticula seen
+0010,21B0|Additional Patient History^LT|1,6|in sigmoid.  On the post evacuation lateral radiograph of the rectum there is a
+0010,21B0|Additional Patient History^LT|1,7|1.5 cm polypoid defect.  This is questionable as it can be fecal material.
+0010,21B0|Additional Patient History^LT|1,8|
+0010,21B0|Additional Patient History^LT|1,9|IMPRESSION:  Minimal diverticulosis colon and sigmoid.  Questionable 1.5 cm
+0010,21B0|Additional Patient History^LT|1,10|polypoid defect rectum, true lesion or fecal residue; can be clarified by
+0010,21B0|Additional Patient History^LT|1,11|endoscopy.
+0010,21C0|Pregnancy Status^US|1,1|2
+0010,4000|Patient Comments^LT|1,1|The patient tends to be very uncooperative.
+0018,1000|Device Serial Number^LO|1,1|54321
+0018,1010|Secondary Capture Device ID^LO|1,1|VA Camera
+0018,1012|Date of Secondary Capture^DA|1,1|19980304
+0018,1014|Time of Secondary Capture^TM|1,1|140900
+0018,1016|Secondary Capture Device Manufacturer^LO|1,1|VA Camera Company
+0018,1018|Secondary Capture Device Manufacturer's Model Name^LO|1,1|VA Pretty Picture Camera
+0018,1019|Secondary Capture Device Software Version(s)^LO|1,1|VA Software Version 123.456
+0018,1022|Video Image Format Acquired^SH|1,1|NTSC
+0018,1023|Digital Image Format Acquired^LO|1,1|Matrox Meteor RGB board
+0018,1030|Protocol Name^LO|1,1|Picture taken with camera.
+0018,5100|Patient Position^CS|1,1|HFS
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113754.1.4.543.1.100
+0020,000E|Series Instance UID^UI|1,1|2.16.840.1.113662.2.1.486876813333.429.33.10010.9990
+0020,0010|Study ID^SH|1,1|12345
+0020,0011|Series Number^IS|1,1|1
+0020,0012|Acquisition Number^IS|1,1|1
+0020,0013|Instance Number^IS|1,1|51
+0020,0020|Patient Orientation^CS|1,1|L
+0020,0020|Patient Orientation^CS|2,1|P
+0020,0052|Frame of Reference UID^UI|1,1|2.16.840.1.113662.2.1.486876813333.429.33.10010.8880
+0020,0060|Laterality^CS|1,1|<unknown>
+0020,1040|Position Reference Indicator^LO|1,1|<unknown>
+0028,0002|Samples per Pixel^US|1,1|3
+0028,0004|Photometric Interpretation^CS|1,1|RGB
+0028,0006|Planar Configuration^US|1,1|0
+0028,0010|Rows^US|1,1|480
+0028,0011|Columns^US|1,1|640
+0028,0030|Pixel Spacing^DS|1,1|3.515625e-01
+0028,0030|Pixel Spacing^DS|2,1|3.515625e-01
+0028,0034|Pixel Aspect Ratio^IS|1,1|1
+0028,0034|Pixel Aspect Ratio^IS|2,1|1
+0028,0100|Bits Allocated^US|1,1|8
+0028,0101|Bits Stored^US|1,1|8
+0028,0102|High Bit^US|1,1|7
+0028,0103|Pixel Representation^US|1,1|0
+0032,1032|Requesting Physician^PN|1,1|Physician^Requesting
+0032,1033|Requesting Service^LO|1,1|Medicine
+0038,0300|Current Patient Location^LO|1,1|5A West
+0040,1005|Requested Procedure Location^LO|1,1|GI Clinic
+7FE0,0010|Pixel Data^OB|1,1|<image>
+7FE0,0010|Pixel Data^OB|1,2|length=921600 (0x000E1000)
+7FE0,0010|Pixel Data^OB|1,3|offset=2486 (0x09B6)
+$$END DICOM DATA

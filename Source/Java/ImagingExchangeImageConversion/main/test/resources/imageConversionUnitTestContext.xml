@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="imageConversionConfiguration"
+		class="gov.va.med.imaging.exchange.configuration.ImageConversionConfigurationStub"
+		init-method="init"
+		singleton="true" />
+
+	<bean id="imageLossyCompressionConfiguration"
+		class="gov.va.med.imaging.exchange.conversion.configuration.ImageLossyCompressionConfiguration"
+		init-method="loadImageLossyCompressionConfigurationFromFile"
+		singleton="true" />
+
+	<bean id="imageConversion"
+		class="gov.va.med.imaging.exchange.conversion.ImageConversion"
+		singleton="true">
+		<constructor-arg><ref bean="imageConversionConfiguration" /></constructor-arg>
+		<constructor-arg><ref bean="imageLossyCompressionConfiguration" /></constructor-arg>
+		<property name="dicomUtilities"><ref local="DicomObjectReconstitutionFacade"/></property>
+	</bean>
+	
+	<bean id="DicomObjectReconstitutionFacade"
+		class="gov.va.med.imaging.dicom.utilities.api.reconstitution.impl.DicomObjectReconstitutionManager"
+		singleton="true" />
+</beans>

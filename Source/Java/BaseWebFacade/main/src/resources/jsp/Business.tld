@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag handler library for setting and displaying core business objects</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>BusinessTags</short-name>
+ <uri>http://imaging.med.va.gov/vix/business</uri>
+ <tag>
+  <description>A list of permissible ObjectOrigin values.  A derivation of StringArrayList.
+		Each element in the list is accessed using a StringArrayListElement tag.</description>
+  <name>ObjectOriginList</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.ObjectOriginList</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A list of permissible ImageQuality values.  A derivation of StringArrayList.
+		Each element in the list is accessed using a StringArrayListElement tag.</description>
+  <name>ImageQualityList</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.ImageQualityListTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>An element in a list of string values values.</description>
+  <name>StringArrayListElement</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.StringArrayListElement</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>A generic iterator over Enum values.</description>
+  <name>EnumIteratorTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.EnumIteratorTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <description>The fully qualified class name of an enum.</description>
+   <name>enumClassName</name>
+   <required>true</required>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>If true then prepend a null element at the beginning of the iteration.  Default is false.</description>
+   <name>prependNullElement</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Boolean</type>
+  </attribute>
+  <attribute>
+   <description>If true then append an ALL element at the end of the iteration.  Default is false.</description>
+   <name>appendAllElement</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Boolean</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>An enum name element within an EnumIteratorTag.</description>
+  <name>EnumIteratorElementNameTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.EnumIteratorElementNameTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>An enum toString element within an EnumIteratorTag.</description>
+  <name>EnumIteratorElementToStringTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.EnumIteratorElementToStringTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>An enum ordinal element within an EnumIteratorTag.</description>
+  <name>EnumIteratorElementOrdinalTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.EnumIteratorElementOrdinalTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>UrlCollectionElement</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.UrlCollectionElementTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>WellKnownOIDIteratorTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.WellKnownOIDIteratorTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>WellKnownOIDElementNameTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.WellKnownOIDElementNameTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>WellKnownOIDElementToStringTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.WellKnownOIDElementToStringTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>WellKnownOIDElementCanonicalValueTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.WellKnownOIDElementCanonicalValueTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>WellKnownOIDElementSelectedTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.WellKnownOIDElementSelectedTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>The value to compare to the current OID canonical value</description>
+   <name>compareValue</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The value to generate when the testValue is the current OID canonical value</description>
+   <name>trueValue</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The value to generate when the compareValue is not the current OID canonical value</description>
+   <name>falseValue</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+</taglib>

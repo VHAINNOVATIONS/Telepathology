@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 
+	The server lifecycle listener is an adapter from the host server (e.g. Tomcat)
+	to the application for lifecycle events.
+	Components that need to be informed that the application and/or the
+	application server are starting/stopping should register themselves
+	with this bean.
+	References to this bean should be through the ServerLifecycleAdapter interface,
+	and not to the server specific classname.
+	NOTE: The TomcatLifecycleAdapter is, not surprisingly, Tomcat specific.  Deployment on
+	a different server will require building an equivalent.
+	NOTE: the bean name "serverLifecycleAdapter" is referenced in code and so must remain
+	unchanged.
+	-->
+	
+	<bean 
+		id="cacheManager" 
+		class="gov.va.med.imaging.storage.cache.impl.CacheManagerImpl"
+		singleton="true"
+		factory-method="getSingleton">
+	</bean>
+
+	<bean 
+		id="cache" 
+		class="gov.va.med.imaging.storage.cache.Cache"
+		singleton="true"
+		factory-bean="cacheManager"
+		factory-method="getCache">
+		<constructor-arg index="0">
+			<value>ImagingExchangeCache</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- dodSourceCache must be a realization of gov.va.med.imaging.exchange.storage.cache.DODSourceCache -->
+	<bean 
+		id="dodSourcedCache" 
+		class="gov.va.med.imaging.exchange.storage.cache.DODSourcedCacheDecorator" 
+		singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.storage.cache.Cache">
+			<ref local="cache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="java.lang.String">
+			<value>dod-metadata-region</value>
+		</constructor-arg>
+		<constructor-arg index="2" type="java.lang.String">
+			<value>dod-image-region</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- vaSourceCache must be a realization of gov.va.med.imaging.exchange.storage.cache.VASourceCache -->
+	<bean 
+		id="vaSourcedCache" 
+		class="gov.va.med.imaging.exchange.storage.cache.VASourcedCacheDecorator" 
+		singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.storage.cache.Cache">
+			<ref local="cache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="java.lang.String">
+			<value>va-metadata-region</value>
+		</constructor-arg>
+		<constructor-arg index="2" type="java.lang.String">
+			<value>va-image-region</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 
+	<bean id="imagingCacheContext" 
+		class="gov.va.med.imaging.router.cache.ImagingCacheHolder" singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.exchange.storage.cache.DODSourcedCache">
+			<ref local="dodSourcedCache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="gov.va.med.imaging.exchange.storage.cache.VASourcedCache">
+			<ref local="vaSourcedCache"/>
+		</constructor-arg>
+	 
+	</bean>
+	-->	
+  
+</beans>

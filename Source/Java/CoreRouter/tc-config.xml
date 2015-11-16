@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:tc-config xmlns:con="http://www.terracotta.org/config">
+  <servers>
+    <server host="%i" name="localhost">
+      <dso-port>9510</dso-port>
+      <jmx-port>9520</jmx-port>
+      <data>terracotta/server-data</data>
+      <logs>terracotta/server-logs</logs>
+      <statistics>terracotta/cluster-statistics</statistics>
+    </server>
+    <update-check>
+      <enabled>true</enabled>
+    </update-check>
+  </servers>
+  <clients>
+    <logs>terracotta/client-logs</logs>
+    <statistics>terracotta/client-statistics/%D</statistics>
+  </clients>
+  <application>
+    <dso>
+      <instrumented-classes>
+        <include>
+          <class-expression>gov.va.med.imaging.core.RouterImpl</class-expression>
+        </include>
+        <include>
+          <class-expression>gov.va.med.imaging.core.AsynchronousRouterImpl</class-expression>
+        </include>
+        <include>
+          <class-expression>gov.va.med.imaging.core.router.AsynchronousCommandExecutor</class-expression>
+        </include>
+        <include>
+          <class-expression>gov.va.med.imaging.core.router.queue.AsynchronousCommandProcessorPriorityBlockingQueue</class-expression>
+        </include>
+        <include>
+          <class-expression>gov.va.med.imaging.core.router.queue.ClusterablePriorityBlockingQueue</class-expression>
+        </include>
+      </instrumented-classes>
+      <roots>
+        <root>
+          <field-name>gov.va.med.imaging.core.AsynchronousRouterImpl.resultsQueue</field-name>
+        </root>
+      </roots>
+    </dso>
+  </application>
+</con:tc-config>

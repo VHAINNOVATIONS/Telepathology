@@ -1,0 +1,1 @@
+gov.va.med.imaging.storage.PersistentStoreProvider		# the root persistent store provider supplies the file and jcifs PersistentStore implementations 

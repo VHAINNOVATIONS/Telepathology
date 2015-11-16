@@ -1,0 +1,850 @@
+$$BEGIN DATA1
+PATIENTS_NAME=BAILEY,STACEY L
+PATIENTS_ID=302-76-6855
+PATIENTS_BIRTH_DATE=JUL 31,1964
+PATIENTS_AGE=43
+PATIENTS_SEX=M
+INTEGRATION_CONTROL_NUMBER=1003629037V702553
+ACCESSION_NUMBER=100107-218
+IMAGE_DATE=10/01/2007
+CONTENT_DATE=10/01/2007
+IMAGE_TIME=10:12:36
+CONTENT_TIME=10:12:36
+IMAGE_TYPE=5
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=M_FFE
+IMAGE_TYPE(4)=M
+IMAGE_TYPE(5)=FFE
+CONTENT_DATE=20071001
+CONTENT_TIME=101236.62
+MODALITY=MR
+MANUFACTURER=Philips Medical Systems
+INSTITUTION_NAME=VA Medical Center Cleveland
+STATION_NAME=VA-BRECKSVILLE
+MANUFACTURERS_MODEL_NAME=Achieva
+SCANNING_SEQUENCE=GR
+REPETITION_TIME=4.08260011672973
+ECHO_TIME=2.30229997634887
+NUMBER_OF_AVERAGES=2
+ECHO_TRAIN_LENGTH=192
+ACQUISITION_MATRIX=4
+ACQUISITION_MATRIX(1)=256
+ACQUISITION_MATRIX(2)=0
+ACQUISITION_MATRIX(3)=0
+ACQUISITION_MATRIX(4)=192
+PATIENT_POSITION=HFS
+STUDY_ID=244462243
+SERIES_NUMBER=101
+ACQUISITION_NUMBER=1
+INSTANCE_NUMBER=8
+IMAGE_POSITION_PATIENT=3
+IMAGE_POSITION_PATIENT(1)=-200
+IMAGE_POSITION_PATIENT(2)=-200
+IMAGE_POSITION_PATIENT(3)=0
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=256
+COLUMNS=256
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=1.5625
+PIXEL_SPACING(2)=1.5625
+BITS_STORED=12
+HIGH_BIT=11
+PIXEL_REPRESENTATION=0
+DCM_TO_TGA_PARAMETERS=b15 f0 c32767
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|206
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.4
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.8176.2007100110132967289
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2.1
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|INTERA_Rx
+0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|M_FFE
+0008,0008|Image Type^CS|4,1|M
+0008,0008|Image Type^CS|5,1|FFE
+0008,0012|Instance Creation Date^DA|1,1|20071001
+0008,0013|Instance Creation Time^TM|1,1|103028
+0008,0014|Instance Creator UID^UI|1,1|1.3.46.670589.11.17106.5
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.4
+0008,0018|SOP Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.8176.2007100110132967289
+0008,0020|Study Date^DA|1,1|20071001
+0008,0021|Series Date^DA|1,1|20071001
+0008,0022|Acquisition Date^DA|1,1|20071001
+0008,0023|Content Date^DA|1,1|20071001
+0008,0030|Study Time^TM|1,1|101043
+0008,0031|Series Time^TM|1,1|101236.62000
+0008,0032|Acquisition Time^TM|1,1|101236.62
+0008,0033|Content Time^TM|1,1|101236.62
+0008,0050|Accession Number^SH|1,1|100107-218
+0008,0060|Modality^CS|1,1|MR
+0008,0070|Manufacturer^LO|1,1|Philips Medical Systems
+0008,0080|Institution Name^LO|1,1|VA Medical Center Cleveland
+0008,0090|Referring Physician's Name^PN|1,1|RODRIGUEZ^ERIC^J
+0008,0100|Code Value^SH|1,1|<unknown>
+0008,0102|Coding Scheme Designator^SH|1,1|DCM
+0008,0104|Code Meaning^LO|1,1|<unknown>
+0008,1010|Station Name^SH|1,1|VA-BRECKSVILLE
+0008,1030|Study Description^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0008,1032|Procedure Code Sequence^SQ||
+0008,1032.0001^0008,0100|Code Value^SH|1,1|2517
+0008,1032.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+0008,1032.0001^0008,0104|Code Meaning^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0008,1032.0001^0008,010B|Context Group Extension Flag^CS|1,1|N
+0008,103E|Series Description^LO|1,1|SURVEY
+0008,1040|Institutional Department Name^LO|1,1|MRI
+0008,1070|Operators' Name^PN|1,1|<unknown>
+0008,1080|Admitting Diagnoses Description^LO|1,1|<unknown>
+0008,1090|Manufacturer's Model Name^LO|1,1|Achieva
+0008,1111|Referenced Performed Procedure Step Sequence^SQ||
+0008,1111.0001^0008,0012|Instance Creation Date^DA|1,1|20071001
+0008,1111.0001^0008,0013|Instance Creation Time^TM|1,1|103028
+0008,1111.0001^0008,0014|Instance Creator UID^UI|1,1|1.3.46.670589.11.17106.5
+0008,1111.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.3.3
+0008,1111.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.6120.2007100110104323059
+0008,1111.0001^0020,0013|Instance Number^IS|1,1|0
+0008,1111.0001^2005,0014|Name of Private Group^LO|1,1|Philips MR Imaging DD 005
+0008,1111.0001^2005,xx06,1|Private element^SS|1,1|0
+0008,1140|Referenced Image Sequence^SQ||
+0008,9007|Frame Type^CS|1,1|
+0008,9007|Frame Type^CS|2,1|
+0008,9007|Frame Type^CS|3,1|
+0008,9007|Frame Type^CS|4,1|
+0010,0010|Patient's Name^PN|1,1|BAILEY^STACEY^L
+0010,0020|Patient ID^LO|1,1|302-76-6855
+0010,0030|Patient's Birth Date^DA|1,1|19640731
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1030|Patient's Weight^DS|1,1|140
+0010,2160|Ethnic Group^SH|1,1|BLACK, NOT HISP.
+0010,21B0|Additional Patient History^LT|1,1|Please review chart for active DNR order.
+0010,21B0|Additional Patient History^LT|1,2|
+0010,21B0|Additional Patient History^LT|1,3|Allergies: Patient has answered NKA
+0010,21B0|Additional Patient History^LT|1,4|
+0010,21B0|Additional Patient History^LT|1,5|
+0010,21B0|Additional Patient History^LT|1,6|
+0010,21B0|Additional Patient History^LT|1,7|Reason for Exam: chronic lbp
+0010,21C0|Pregnancy Status^US|1,1|1
+0018,0020|Scanning Sequence^CS|1,1|GR
+0018,0021|Sequence Variant^CS|1,1|OSP
+0018,0022|Scan Options^CS|1,1|<unknown>
+0018,0023|MR Acquisition Type^CS|1,1|<unknown>
+0018,0024|Sequence Name^SH|1,1|<unknown>
+0018,0050|Slice Thickness^DS|1,1|10
+0018,0080|Repetition Time^DS|1,1|4.08260011672973
+0018,0081|Echo Time^DS|1,1|2.30229997634887
+0018,0083|Number of Averages^DS|1,1|2
+0018,0084|Imaging Frequency^DS|1,1|127.768420999999
+0018,0085|Imaged Nucleus^SH|1,1|1H
+0018,0086|Echo Number(s)^IS|1,1|1
+0018,0087|Magnetic Field Strength^DS|1,1|3
+0018,0088|Spacing Between Slices^DS|1,1|15
+0018,0089|Number of Phase Encoding Steps^IS|1,1|192
+0018,0091|Echo Train Length^IS|1,1|192
+0018,0093|Percent Sampling^DS|1,1|75
+0018,0094|Percent Phase Field of View^DS|1,1|100
+0018,0095|Pixel Bandwidth^DS|1,1|751.879699707031
+0018,1000|Device Serial Number^LO|1,1|17106
+0018,1020|Software Version(s)^LO|1,1|2.1.3
+0018,1020|Software Version(s)^LO|2,1|2.1.3.3
+0018,1020|Software Version(s)^LO|3,1|Gyroscan PMS/DICOM 4.0 MR datadefs $Revision: 1.1 $
+0018,1030|Protocol Name^LO|1,1|SURVEY
+0018,1081|Low R-R Value^IS|1,1|0
+0018,1082|High R-R Value^IS|1,1|0
+0018,1083|Intervals Acquired^IS|1,1|0
+0018,1084|Intervals Rejected^IS|1,1|0
+0018,1088|Heart Rate^IS|1,1|0
+0018,1100|Reconstruction Diameter^DS|1,1|400
+0018,1250|Receive Coil Name^SH|1,1|SENSE-Spine
+0018,1251|Transmit Coil Name^SH|1,1|B
+0018,1310|Acquisition Matrix^US|1,1|256
+0018,1310|Acquisition Matrix^US|2,1|0
+0018,1310|Acquisition Matrix^US|3,1|0
+0018,1310|Acquisition Matrix^US|4,1|192
+0018,1312|In-plane Phase Encoding Direction^CS|1,1|COL
+0018,1314|Flip Angle^DS|1,1|20
+0018,5100|Patient Position^CS|1,1|HFS
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113754.1.4.541.6928998.8996.1.100107.218
+0020,000E|Series Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.8176.2007100110123668280
+0020,0010|Study ID^SH|1,1|244462243
+0020,0011|Series Number^IS|1,1|101
+0020,0012|Acquisition Number^IS|1,1|1
+0020,0013|Instance Number^IS|1,1|8
+0020,0032|Image Position (Patient)^DS|1,1|-200
+0020,0032|Image Position (Patient)^DS|2,1|-200
+0020,0032|Image Position (Patient)^DS|3,1|0
+0020,0037|Image Orientation (Patient)^DS|1,1|1
+0020,0037|Image Orientation (Patient)^DS|2,1|0
+0020,0037|Image Orientation (Patient)^DS|3,1|0
+0020,0037|Image Orientation (Patient)^DS|4,1|0
+0020,0037|Image Orientation (Patient)^DS|5,1|1
+0020,0037|Image Orientation (Patient)^DS|6,1|0
+0020,0052|Frame of Reference UID^UI|1,1|1.3.46.670589.11.17106.5.0.3868.2007100110121090003
+0020,0100|Temporal Position Identifier^IS|1,1|1
+0020,0105|Number of Temporal Positions^IS|1,1|1
+0020,1040|Position Reference Indicator^LO|1,1|<unknown>
+0020,1041|Slice Location^DS|1,1|261.841555143563
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0010|Rows^US|1,1|256
+0028,0011|Columns^US|1,1|256
+0028,0030|Pixel Spacing^DS|1,1|1.5625
+0028,0030|Pixel Spacing^DS|2,1|1.5625
+0028,0034|Pixel Aspect Ratio^IS|1,1|1
+0028,0034|Pixel Aspect Ratio^IS|2,1|1
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|12
+0028,0102|High Bit^US|1,1|11
+0028,0103|Pixel Representation^US|1,1|0
+0028,1050|Window Center^DS|1,1|433.044147843942
+0028,1051|Window Width^DS|1,1|752.834638090348
+0028,2110|Lossy Image Compression^CS|1,1|00
+0032,1032|Requesting Physician^PN|1,1|RODRIGUEZ^ERIC^J
+0032,1033|Requesting Service^LO|1,1|A PCM/RODRIGUEZ
+0032,1060|Requested Procedure Description^LO|1,1|MRI LUMBAR SPINE W/O&W/DYE
+0040,0241|Performed Station AE Title^AE|1,1|INTERA_Rx
+0040,0244|Performed Procedure Step Start Date^DA|1,1|20071001
+0040,0245|Performed Procedure Step Start Time^TM|1,1|101043
+0040,0250|Performed Procedure Step End Date^DA|1,1|20071001
+0040,0251|Performed Procedure Step End Time^TM|1,1|101043
+0040,0253|Performed Procedure Step ID^SH|1,1|244462243
+0040,0254|Performed Procedure Step Description^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0040,0260|Performed Protocol Code Sequence^SQ||
+0040,0260.0001^0008,0100|Code Value^SH|1,1|2517
+0040,0260.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+0040,0260.0001^0008,0104|Code Meaning^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0040,0260.0001^0008,010B|Context Group Extension Flag^CS|1,1|N
+0040,0275|Request Attributes Sequence^SQ||
+0040,0275.0001^0040,0007|Scheduled Procedure Step Description^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0040,0275.0001^0040,0008|Scheduled Protocol Code Sequence^SQ||
+0040,0275.0001^0040,0008.0001^0008,0100|Code Value^SH|1,1|2517
+0040,0275.0001^0040,0008.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+0040,0275.0001^0040,0008.0001^0008,0104|Code Meaning^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+0040,0275.0001^0040,0008.0001^0008,010B|Context Group Extension Flag^CS|1,1|N
+0040,0275.0001^0040,0009|Scheduled Procedure Step ID^SH|1,1|2517
+0040,0275.0001^0040,1001|Requested Procedure ID^SH|1,1|218
+0040,0321|Film Consumption Sequence^SQ||
+0040,1001|Requested Procedure ID^SH|1,1|218
+0040,9096|Real World Value Mapping Sequence ^SQ||
+0040,9096.0001^0040,9224|Real World Value Intercept^FD|1,1|0.000000E+000
+0040,9096.0001^0040,9225|Real World Value Slope^FD|1,1|3.805617E+000
+2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,0090|Name of Private Group^LO|1,1|Philips Imaging DD 129
+2001,xx00,5|Begin Private Sequence^SQ||
+2001,xx00,5.0001^0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+2001,xx00,5.0001^0008,0012|Instance Creation Date^DA|1,1|20071001
+2001,xx00,5.0001^0008,0013|Instance Creation Time^TM|1,1|103028
+2001,xx00,5.0001^0008,0014|Instance Creator UID^UI|1,1|1.3.46.670589.11.17106.5
+2001,xx00,5.0001^0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.11.1
+2001,xx00,5.0001^0008,0018|SOP Instance UID^UI|1,1|1.3.46.670589.11.0.0.51.4.4.0.17106.1.3348.1191249028640
+2001,xx00,5.0001^0008,1115|Referenced Series Sequence^SQ||
+2001,xx00,5.0001^0008,1115.0001^0008,1140|Referenced Image Sequence^SQ||
+2001,xx00,5.0001^0008,1115.0001^0008,1140.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.4
+2001,xx00,5.0001^0008,1115.0001^0008,1140.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.8176.2007100110132967289
+2001,xx00,5.0001^0008,1115.0001^0020,000E|Series Instance UID^UI|1,1|1.3.46.670589.11.17106.5.0.8176.2007100110123668280
+2001,xx00,5.0001^0018,1622|Shutter Presentation Value^US|1,1|0
+2001,xx00,5.0001^0020,0013|Instance Number^IS|1,1|1
+2001,xx00,5.0001^0028,3002|LUT Descriptor^US|1,1|0
+2001,xx00,5.0001^0028,3002|LUT Descriptor^US|2,1|0
+2001,xx00,5.0001^0028,3002|LUT Descriptor^US|3,1|0
+2001,xx00,5.0001^0028,3003|LUT Explanation^LO|1,1|<unknown>
+2001,xx00,5.0001^0028,3006|LUT Data^US|1,1|0
+2001,xx00,5.0001^0070,005A|Displayed Area Selection Sequence^SQ||
+2001,xx00,5.0001^0070,005A.0001^0070,0052|Displayed Area Top Left Hand Corner^SL|1,1|1
+2001,xx00,5.0001^0070,005A.0001^0070,0052|Displayed Area Top Left Hand Corner^SL|2,1|1
+2001,xx00,5.0001^0070,005A.0001^0070,0053|Displayed Area Bottom Right Hand Corner^SL|1,1|256
+2001,xx00,5.0001^0070,005A.0001^0070,0053|Displayed Area Bottom Right Hand Corner^SL|2,1|256
+2001,xx00,5.0001^0070,005A.0001^0070,0100|Presentation Size Mode^CS|1,1|SCALE TO FIT
+2001,xx00,5.0001^0070,005A.0001^0070,0102|Presentation Pixel Aspect Ratio^IS|1,1|1
+2001,xx00,5.0001^0070,005A.0001^0070,0102|Presentation Pixel Aspect Ratio^IS|2,1|1
+2001,xx00,5.0001^0070,005A.0001^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx00,5.0001^0070,005A.0001^2001,xx3F,2|Private element^CS|1,1|BI_CUBIC
+2001,xx00,5.0001^0070,0080|Content Label^CS|1,1|AS LAST SEEN
+2001,xx00,5.0001^0070,0081|Content Description^LO|1,1|<unknown>
+2001,xx00,5.0001^0070,0082|Presentation Creation Date^DA|1,1|20071001
+2001,xx00,5.0001^0070,0083|Presentation Creation Time^TM|1,1|101330
+2001,xx00,5.0001^0070,0084|Content Creator's Name^PN|1,1|Achieva
+2001,xx00,5.0001^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx00,5.0001^2001,0090|Name of Private Group^LO|1,1|Philips Imaging DD 129
+2001,xx00,5.0001^2001,xx00,5|Begin Private Sequence^SQ||
+2001,xx00,5.0001^2001,xx26,2|Private element^CS|1,1|N
+2001,xx00,5.0001^2001,xx67,2|Private element^CS|1,1|<unknown>
+2001,xx00,5.0001^2001,xx68,2|Begin Private Sequence^SQ||
+2001,xx00,5.0001^2001,xx68,2.0001^0028,1052|Rescale Intercept^DS|1,1|0
+2001,xx00,5.0001^2001,xx68,2.0001^0028,1053|Rescale Slope^DS|1,1|3.80561660561661
+2001,xx00,5.0001^2001,xx68,2.0001^0028,1054|Rescale Type^LO|1,1|normalized
+2001,xx00,5.0001^2001,xx68,2.0001^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx00,5.0001^2001,xx68,2.0001^2001,xx77,2|Private element^CS|1,1|LINEARMODALITY
+2001,xx00,5.0001^2001,xx77,2|Private element^CS|1,1|L_PRESENTATION
+2001,xx00,5.0001^2001,xx9F,2|Private element^US|1,1|0
+2001,xx00,5.0001^2001,xx9F,2|Private element^US|2,1|0
+2001,xx00,5.0001^2005,0012|Name of Private Group^LO|1,1|Philips MR Imaging DD 003
+2001,xx00,5.0001^2005,0013|Name of Private Group^LO|1,1|Philips MR Imaging DD 004
+2001,xx00,5.0001^2005,0014|Name of Private Group^LO|1,1|Philips MR Imaging DD 005
+2001,xx00,5.0001^2005,xx06,1|Private element^SS|1,1|0
+2001,xx00,5.0001^2005,xx34,6|Private element^SL|1,1|0
+2001,xx00,5.0001^2005,xx57,6|Private element^SS|1,1|0
+2001,xx00,5.0001^2005,xx81,6|Private element^UI|1,1|<unknown>
+2001,xx00,5.0001^2005,xx82,6|Private element^CS|1,1|<unknown>
+2001,xx00,5.0001^2005,xx89,4|Begin Private Sequence^SQ||
+2001,xx00,5.0001^2050,0020|Presentation LUT Shape^CS|1,1|IDENTITY
+2001,xx01,2|Private element^FL|1,1|0.000000E+000
+2001,xx02,2|Private element^IS|1,1|0
+2001,xx03,2|Private element^FL|1,1|0.000000E+000
+2001,xx06,2|Private element^CS|1,1|N
+2001,xx07,2|Private element^CS|1,1|U
+2001,xx08,2|Private element^IS|1,1|1
+2001,xx09,2|Private element^FL|1,1|0.000000E+000
+2001,xx0A,2|Private element^IS|1,1|8
+2001,xx0B,2|Private element^CS|1,1|TRANSVERSAL
+2001,xx0C,2|Private element^CS|1,1|N
+2001,xx0E,2|Private element^CS|1,1|N
+2001,xx0F,2|Private element^SS|1,1|0
+2001,xx10,2|Private element^CS|1,1|NO
+2001,xx11,2|Private element^FL|1,1|0.000000E+000
+2001,xx12,2|Private element^CS|1,1|N
+2001,xx13,2|Private element^SL|1,1|1
+2001,xx14,2|Private element^SL|1,1|1
+2001,xx15,2|Private element^SS|1,1|1
+2001,xx16,2|Private element^SS|1,1|0
+2001,xx17,2|Private element^SL|1,1|1
+2001,xx18,2|Private element^SL|1,1|9
+2001,xx19,2|Private element^CS|1,1|N
+2001,xx1A,2|Private element^FL|1,1|0.000000E+000
+2001,xx1A,2|Private element^FL|2,1|0.000000E+000
+2001,xx1A,2|Private element^FL|3,1|0.000000E+000
+2001,xx1B,2|Private element^FL|1,1|0.000000E+000
+2001,xx1C,2|Private element^CS|1,1|NO
+2001,xx1D,2|Private element^IS|1,1|1
+2001,xx1F,2|Private element^CS|1,1|NO
+2001,xx20,2|Private element^LO|1,1|T1TFE
+2001,xx21,2|Private element^CS|1,1|N
+2001,xx22,2|Private element^FL|1,1|5.777688E-001
+2001,xx23,2|Private element^DS|1,1|20
+2001,xx24,2|Private element^CS|1,1|N
+2001,xx25,2|Private element^SH|1,1|2.3
+2001,xx5F,2|Begin Private Sequence^SQ||
+2001,xx5F,2.0001^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx5F,2.0001^2001,xx2D,2|Private element^SS|1,1|3
+2001,xx5F,2.0001^2001,xx32,2|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2001,xx33,2|Private element^CS|1,1|AP
+2001,xx5F,2.0001^2001,xx35,2|Private element^SS|1,1|1
+2001,xx5F,2.0001^2001,xx36,2|Private element^CS|1,1|PARALLEL
+2001,xx5F,2.0001^2005,0010|Name of Private Group^LO|1,1|Philips MR Imaging DD 001
+2001,xx5F,2.0001^2005,0013|Name of Private Group^LO|1,1|Philips MR Imaging DD 004
+2001,xx5F,2.0001^2005,xx71,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2005,xx72,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2005,xx73,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2005,xx74,3|Private element^FL|1,1|3.200000E+001
+2001,xx5F,2.0001^2005,xx75,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0001^2005,xx76,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0001^2005,xx78,3|Private element^FL|1,1|-2.000000E+001
+2001,xx5F,2.0001^2005,xx79,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2005,xx7A,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0001^2005,xx7B,3|Private element^CS|1,1|RL
+2001,xx5F,2.0001^2005,xx7E,3|Private element^FL|1,1|1.100000E+001
+2001,xx5F,2.0001^2005,xx81,3|Private element^CS|1,1|AP
+2001,xx5F,2.0001^2005,xx90,4|Private element^CS|1,1|R_AB
+2001,xx5F,2.0001^2005,xxA3,3|Private element^IS|1,1|65
+2001,xx5F,2.0001^2005,xxA4,3|Private element^IS|1,1|0
+2001,xx5F,2.0001^2005,xxA5,3|Private element^IS|1,1|0
+2001,xx5F,2.0001^2005,xxA6,3|Private element^IS|1,1|63
+2001,xx5F,2.0001^2005,xxA7,3|Private element^CS|1,1|DEFAULT
+2001,xx5F,2.0002^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx5F,2.0002^2001,xx2D,2|Private element^SS|1,1|3
+2001,xx5F,2.0002^2001,xx32,2|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2001,xx33,2|Private element^CS|1,1|AP
+2001,xx5F,2.0002^2001,xx35,2|Private element^SS|1,1|4
+2001,xx5F,2.0002^2001,xx36,2|Private element^CS|1,1|PARALLEL
+2001,xx5F,2.0002^2005,0010|Name of Private Group^LO|1,1|Philips MR Imaging DD 001
+2001,xx5F,2.0002^2005,0013|Name of Private Group^LO|1,1|Philips MR Imaging DD 004
+2001,xx5F,2.0002^2005,xx71,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx72,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx73,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx74,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0002^2005,xx75,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0002^2005,xx76,3|Private element^FL|1,1|3.200000E+001
+2001,xx5F,2.0002^2005,xx78,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx79,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx7A,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0002^2005,xx7B,3|Private element^CS|1,1|FH
+2001,xx5F,2.0002^2005,xx7E,3|Private element^FL|1,1|1.100000E+001
+2001,xx5F,2.0002^2005,xx81,3|Private element^CS|1,1|RL
+2001,xx5F,2.0002^2005,xx90,4|Private element^CS|1,1|R_AB
+2001,xx5F,2.0002^2005,xxA3,3|Private element^IS|1,1|65
+2001,xx5F,2.0002^2005,xxA4,3|Private element^IS|1,1|0
+2001,xx5F,2.0002^2005,xxA5,3|Private element^IS|1,1|0
+2001,xx5F,2.0002^2005,xxA6,3|Private element^IS|1,1|63
+2001,xx5F,2.0002^2005,xxA7,3|Private element^CS|1,1|DEFAULT
+2001,xx5F,2.0003^2001,0010|Name of Private Group^LO|1,1|Philips Imaging DD 001
+2001,xx5F,2.0003^2001,xx2D,2|Private element^SS|1,1|3
+2001,xx5F,2.0003^2001,xx32,2|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2001,xx33,2|Private element^CS|1,1|AP
+2001,xx5F,2.0003^2001,xx35,2|Private element^SS|1,1|7
+2001,xx5F,2.0003^2001,xx36,2|Private element^CS|1,1|PARALLEL
+2001,xx5F,2.0003^2005,0010|Name of Private Group^LO|1,1|Philips MR Imaging DD 001
+2001,xx5F,2.0003^2005,0013|Name of Private Group^LO|1,1|Philips MR Imaging DD 004
+2001,xx5F,2.0003^2005,xx71,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx72,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx73,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx74,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0003^2005,xx75,3|Private element^FL|1,1|4.000000E+001
+2001,xx5F,2.0003^2005,xx76,3|Private element^FL|1,1|4.000000E+002
+2001,xx5F,2.0003^2005,xx78,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx79,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx7A,3|Private element^FL|1,1|0.000000E+000
+2001,xx5F,2.0003^2005,xx7B,3|Private element^CS|1,1|AP
+2001,xx5F,2.0003^2005,xx7E,3|Private element^FL|1,1|1.500000E+001
+2001,xx5F,2.0003^2005,xx81,3|Private element^CS|1,1|FH
+2001,xx5F,2.0003^2005,xx90,4|Private element^CS|1,1|R_AB
+2001,xx5F,2.0003^2005,xxA3,3|Private element^IS|1,1|65
+2001,xx5F,2.0003^2005,xxA4,3|Private element^IS|1,1|0
+2001,xx5F,2.0003^2005,xxA5,3|Private element^IS|1,1|0
+2001,xx5F,2.0003^2005,xxA6,3|Private element^IS|1,1|63
+2001,xx5F,2.0003^2005,xxA7,3|Private element^CS|1,1|DEFAULT
+2001,xx60,2|Private element^SL|1,1|3
+2001,xx61,2|Private element^CS|1,1|N
+2001,xx62,2|Private element^CS|1,1|N
+2001,xx63,2|Private element^CS|1,1|ELSEWHERE
+2001,xx7B,2|Private element^IS|1,1|1
+2001,xx81,2|Private element^IS|1,1|1
+2001,xx82,2|Private element^IS|1,1|192
+2001,xx83,2|Private element^DS|1,1|127.768420999999
+2001,xx84,2|Private element^DS|1,1|0
+2001,xx85,2|Private element^DS|1,1|3
+2001,xx86,2|Private element^IS|1,1|0
+2001,xx87,2|Private element^SH|1,1|1H
+2001,xx88,2|Private element^DS|1,1|2
+2001,xx89,2|Private element^DS|1,1|0
+2001,xx8A,2|Private element^DS|1,1|0
+2001,xx8B,2|Private element^SH|1,1|B
+2005,0010|Name of Private Group^LO|1,1|Philips MR Imaging DD 001
+2005,0011|Name of Private Group^LO|1,1|Philips MR Imaging DD 002
+2005,0012|Name of Private Group^LO|1,1|Philips MR Imaging DD 003
+2005,0013|Name of Private Group^LO|1,1|Philips MR Imaging DD 004
+2005,0014|Name of Private Group^LO|1,1|Philips MR Imaging DD 005
+2005,xx00,1|Private element^CS|1,1|NO
+2005,xx00,3|Private element^FL|1,1|0.000000E+000
+2005,xx00,6|Private element^UL|1,1|1
+2005,xx01,1|Private element^UL|1,1|1
+2005,xx01,3|Private element^FL|1,1|0.000000E+000
+2005,xx01,6|Private element^UL|1,1|0
+2005,xx02,1|Begin Private Sequence^SQ||
+2005,xx02,1.0001^0008,0100|Code Value^SH|1,1|2517
+2005,xx02,1.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+2005,xx02,1.0001^0008,0103|Coding Scheme Version^SH|1,1|<unknown>
+2005,xx02,1.0001^0008,0104|Code Meaning^LO|1,1|MRI LUMBAR SPINE WITH & W/O CONTRAST
+2005,xx02,1.0001^0008,010B|Context Group Extension Flag^CS|1,1|N
+2005,xx02,1.0001^0008,010D|Context Group Extension Creator UID^UI|1,1|<unknown>
+2005,xx02,3|Private element^FL|1,1|0.000000E+000
+2005,xx03,1|Private element^UL|1,1|1
+2005,xx04,3|Private element^CS|1,1|NONE
+2005,xx06,1|Private element^SS|1,1|0
+2005,xx08,3|Private element^FL|1,1|0.000000E+000
+2005,xx09,1|Private element^DS|1,1|0
+2005,xx09,3|Private element^FL|1,1|0.000000E+000
+2005,xx0A,1|Private element^DS|1,1|3.80561660561660
+2005,xx0A,3|Private element^FL|1,1|0.000000E+000
+2005,xx0B,1|Private element^LO|1,1|normalized
+2005,xx0B,3|Private element^FL|1,1|9.220132E+004
+2005,xx0C,3|Private element^FL|1,1|0.000000E+000
+2005,xx0D,3|Private element^FL|1,1|0.000000E+000
+2005,xx0E,1|Begin Private Sequence^SQ||
+2005,xx0E,3|Private element^FL|1,1|1.187586E-002
+2005,xx0F,1|Begin Private Sequence^SQ||
+2005,xx0F,1.0001^0008,9123|Creator-Version UID^UI|1,1|1.3.46.670589.11
+2005,xx0F,1.0001^0008,9205|Pixel Presentation^CS|1,1|MONOCHROME
+2005,xx0F,1.0001^0008,9206|Volumetric Properties^CS|1,1|DISTORTED
+2005,xx0F,1.0001^0008,9207|Volume Based Calculation Technique^CS|1,1|NONE
+2005,xx0F,1.0001^0008,9208|Complex Image Component^CS|1,1|REAL
+2005,xx0F,1.0001^0008,9209|Acquisition Contrast^CS|1,1|T1
+2005,xx0F,1.0001^0018,9005|Pulse Sequence Name^SH|1,1|T1TFE
+2005,xx0F,1.0001^0018,9008|Echo Pulse Sequence^CS|1,1|GRADIENT
+2005,xx0F,1.0001^0018,9009|Inversion Recovery^CS|1,1|NO
+2005,xx0F,1.0001^0018,9011|Multiple Spin Echo^CS|1,1|NO
+2005,xx0F,1.0001^0018,9012|Multi-planar Excitation^CS|1,1|NO
+2005,xx0F,1.0001^0018,9014|Phase Contrast^CS|1,1|NO
+2005,xx0F,1.0001^0018,9015|Time of Flight Contrast^CS|1,1|NO
+2005,xx0F,1.0001^0018,9016|Spoiling^CS|1,1|RF
+2005,xx0F,1.0001^0018,9017|Steady State Pulse Sequence^CS|1,1|LONGITUDINAL
+2005,xx0F,1.0001^0018,9018|Echo Planar Pulse Sequence^CS|1,1|NO
+2005,xx0F,1.0001^0018,9020|Magnetization Transfer^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9021|T2 Preparation^CS|1,1|NO
+2005,xx0F,1.0001^0018,9022|Blood Signal Nulling^CS|1,1|NO
+2005,xx0F,1.0001^0018,9024|Saturation Recovery^CS|1,1|NO
+2005,xx0F,1.0001^0018,9025|Spectrally Selected Suppression^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9026|Spectrally Selected Excitation^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9027|Spatial Pre-saturation^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9028|Tagging^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9029|Oversampling Phase^CS|1,1|2D
+2005,xx0F,1.0001^0018,9032|Geometry of k-Space Traversal^CS|1,1|RECTILINEAR
+2005,xx0F,1.0001^0018,9033|Segmented k-Space Traversal^CS|1,1|PARTIAL
+2005,xx0F,1.0001^0018,9034|Rectilinear Phase Encode Reordering^CS|1,1|UNKNOWN
+2005,xx0F,1.0001^0018,9035|Tag Thickness^FD|1,1|0.000000E+000
+2005,xx0F,1.0001^0018,9036|Partial Fourier Direction^CS|1,1|<unknown>
+2005,xx0F,1.0001^0018,9037|Cardiac Synchronization Technique^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9041|Receive Coil Manufacturer Name^LO|1,1|<unknown>
+2005,xx0F,1.0001^0018,9043|Receive Coil Type ^CS|1,1|MULTICOIL
+2005,xx0F,1.0001^0018,9044|Quadrature Receive Coil ^CS|1,1|NO
+2005,xx0F,1.0001^0018,9047|Multi-Coil Element Name^SH|1,1|DEF
+2005,xx0F,1.0001^0018,9048|Multi-Coil Element Used^CS|1,1|YES
+2005,xx0F,1.0001^0018,9051|Transmit Coil Type^CS|1,1|BODY
+2005,xx0F,1.0001^0018,9053|Chemical Shift Reference^FD|1,1|4.680000E+000
+2005,xx0F,1.0001^0018,9058|MR Acquisition Frequency Encoding Steps^US|1,1|256
+2005,xx0F,1.0001^0018,9059|De-coupling^CS|1,1|NO
+2005,xx0F,1.0001^0018,9064|k-space Filtering^CS|1,1|RIESZ
+2005,xx0F,1.0001^0018,9069|Parallel Reduction Factor In-plane^FD|1,1|1.000000E+000
+2005,xx0F,1.0001^0018,9075|Diffusion Directionality^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9077|Parallel Acquisition^CS|1,1|NO
+2005,xx0F,1.0001^0018,9079|Inversion Times^FD|1,1|0.000000E+000
+2005,xx0F,1.0001^0018,9079|Inversion Times^FD|2,1|0.000000E+000
+2005,xx0F,1.0001^0018,9080|Metabolite Map Description^ST|1,1|WATER
+2005,xx0F,1.0001^0018,9081|Partial Fourier^CS|1,1|NO
+2005,xx0F,1.0001^0018,9090|Velocity Encoding Direction^FD|1,1|0.000000E+000
+2005,xx0F,1.0001^0018,9090|Velocity Encoding Direction^FD|2,1|0.000000E+000
+2005,xx0F,1.0001^0018,9090|Velocity Encoding Direction^FD|3,1|0.000000E+000
+2005,xx0F,1.0001^0018,9091|Velocity Encoding Minimum Value^FD|1,1|0.000000E+000
+2005,xx0F,1.0001^0018,9093|Number of k-Space Trajectories^US|1,1|1
+2005,xx0F,1.0001^0018,9101|Frequency Correction^CS|1,1|NO
+2005,xx0F,1.0001^0018,9147|Diffusion Anisotropy Type^CS|1,1|<unknown>
+2005,xx0F,1.0001^0018,9155|Parallel Reduction Factor out-of-plane^FD|1,1|1.000000E+000
+2005,xx0F,1.0001^0018,9168|Parallel Reduction Factor Second In-plane^FD|1,1|1.000000E+000
+2005,xx0F,1.0001^0018,9170|Respiratory Motion Compensation Technique^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9171|Respiratory Signal Source^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9172|Bulk Motion Compensation Technique^CS|1,1|NONE
+2005,xx0F,1.0001^0018,9174|Applicable Safety Standard Agency^CS|1,1|IEC
+2005,xx0F,1.0001^0018,9179|Specific Absorption Rate Definition^CS|1,1|IEC_WHOLE_BODY
+2005,xx0F,1.0001^0018,9180|Gradient Output Type^CS|1,1|DB_DT
+2005,xx0F,1.0001^0018,9181|Specific Absorption Rate Value^FD|1,1|4.844407E+000
+2005,xx0F,1.0001^0018,9182|Gradient Output^FD|1,1|3.541913E+001
+2005,xx0F,1.0001^0018,9199|Water Referenced Phase Correction^CS|1,1|NO
+2005,xx0F,1.0001^0018,9200|MR Spectroscopy Acquisition Type^CS|1,1|<unknown>
+2005,xx0F,1.0001^0018,9231|MR Acquisition Phase Encoding Steps in-plane^US|1,1|192
+2005,xx0F,1.0001^0018,9232|MR Acquisition Phase Encoding Steps out-of-plane^US|1,1|1
+2005,xx0F,1.0001^0018,9240|RF Echo Train Length^US|1,1|0
+2005,xx0F,1.0001^0018,9241|Gradient Echo Train Length^US|1,1|192
+2005,xx0F,1.0001^0020,9072|Frame Laterality^CS|1,1|U
+2005,xx0F,1.0001^0028,3003|LUT Explanation^LO|1,1|Philips Real World Value Mapping
+2005,xx0F,1.0001^0028,9001|Data Point Rows^UL|1,1|1
+2005,xx0F,1.0001^0028,9002|Data Point Columns^UL|1,1|0
+2005,xx0F,1.0001^0040,9210|LUT Label^SH|1,1|Philips
+2005,xx0F,3|Private element^DS|1,1|1648
+2005,xx10,3|Private element^DS|1,1|2865
+2005,xx11,3|Private element^CS|1,1|M
+2005,xx12,1|Private element^IS|1,1|1
+2005,xx12,3|Private element^CS|1,1|N
+2005,xx13,1|Private element^IS|1,1|1
+2005,xx13,3|Private element^CS|1,1|NO
+2005,xx13,6|Private element^UL|1,1|1
+2005,xx14,1|Private element^SL|1,1|1
+2005,xx14,3|Private element^CS|1,1|N
+2005,xx15,1|Private element^SL|1,1|1
+2005,xx15,3|Private element^CS|1,1|N
+2005,xx16,1|Private element^CS|1,1|MAN
+2005,xx16,3|Private element^CS|1,1|N
+2005,xx17,3|Private element^CS|1,1|N
+2005,xx18,1|Private element^CS|1,1|STATIC FIELD\RF\GRADIENT
+2005,xx19,1|Private element^CS|1,1|IEC_FIRST_LEVEL\IEC_NORMAL\IEC_NORMAL
+2005,xx19,3|Private element^CS|1,1|N
+2005,xx1A,3|Private element^SS|1,1|0
+2005,xx1B,1|Private element^IS|1,1|0
+2005,xx1B,3|Private element^CS|1,1|N
+2005,xx1C,1|Private element^IS|1,1|0
+2005,xx1C,3|Private element^CS|1,1|N
+2005,xx1D,1|Private element^IS|1,1|0
+2005,xx1D,3|Private element^SS|1,1|256
+2005,xx1E,3|Private element^SH|1,1|compose
+2005,xx1F,3|Private element^SH|1,1|compose
+2005,xx20,3|Private element^SL|1,1|0
+2005,xx21,3|Private element^SS|1,1|1
+2005,xx22,3|Private element^IS|1,1|0
+2005,xx23,3|Private element^SS|1,1|0
+2005,xx25,3|Private element^SS|1,1|0
+2005,xx25,4|Private element^CS|1,1|N
+2005,xx26,1|Private element^CS|1,1|N
+2005,xx26,3|Private element^CS|1,1|Y
+2005,xx26,4|Private element^FL|1,1|0.000000E+000
+2005,xx27,3|Private element^CS|1,1|STACKS
+2005,xx27,4|Private element^CS|1,1|REAL
+2005,xx28,1|Private element^SL|1,1|0
+2005,xx28,3|Private element^CS|1,1|N
+2005,xx28,4|Private element^CS|1,1|ORIGINAL
+2005,xx29,3|Private element^CS|1,1|N
+2005,xx29,4|Private element^FL|1,1|5.000000E+001
+2005,xx2A,1|Private element^CS|1,1|INITIAL
+2005,xx2A,3|Private element^IS|1,1|251892740
+2005,xx2B,1|Private element^CS|1,1|INITIAL
+2005,xx2B,3|Private element^SS|1,1|100
+2005,xx2C,1|Private element^CS|1,1|INITIAL
+2005,xx2C,3|Private element^CS|1,1|N
+2005,xx2D,1|Private element^CS|1,1|INITIAL
+2005,xx2D,3|Private element^IS|1,1|0
+2005,xx2E,3|Private element^CS|1,1|N
+2005,xx2F,3|Private element^CS|1,1|N
+2005,xx30,3|Private element^FL|1,1|4.082600E+000
+2005,xx30,4|Private element^CS|1,1|PLUS_A_PLUS_B\PLUS_A_PLUS_B\PLUS_A_PLUS_B\PLUS_A_PLUS_B
+2005,xx31,3|Private element^CS|1,1|N
+2005,xx31,4|Private element^SS|1,1|0
+2005,xx32,1|Private element^CS|1,1|N
+2005,xx33,3|Private element^FL|1,1|2.608926E+001
+2005,xx33,4|Private element^FL|1,1|0.000000E+000
+2005,xx33,4|Private element^FL|2,1|0.000000E+000
+2005,xx33,4|Private element^FL|3,1|0.000000E+000
+2005,xx34,3|Private element^CS|1,1|Y
+2005,xx34,4|Private element^CS|1,1|UNKNOWN
+2005,xx35,1|Private element^CS|1,1|N
+2005,xx35,3|Private element^CS|1,1|PIXEL
+2005,xx35,4|Private element^CS|1,1|UNKNOWN
+2005,xx36,3|Private element^CS|1,1|N
+2005,xx36,4|Private element^FL|1,1|0.000000E+000
+2005,xx37,3|Private element^CS|1,1|N
+2005,xx37,4|Private element^FL|1,1|0.000000E+000
+2005,xx38,3|Private element^CS|1,1|Y
+2005,xx38,4|Private element^FL|1,1|0.000000E+000
+2005,xx39,3|Private element^CS|1,1|N
+2005,xx39,4|Private element^SS|1,1|0
+2005,xx39,4|Private element^SS|2,1|0
+2005,xx3B,3|Private element^CS|1,1|N
+2005,xx3C,3|Private element^CS|1,1|N
+2005,xx3D,3|Private element^SS|1,1|102
+2005,xx3E,3|Private element^SL|1,1|0
+2005,xx3E,3|Private element^SL|2,1|0
+2005,xx3E,3|Private element^SL|3,1|0
+2005,xx3E,3|Private element^SL|4,1|0
+2005,xx3E,3|Private element^SL|5,1|0
+2005,xx3E,3|Private element^SL|6,1|0
+2005,xx3E,3|Private element^SL|7,1|0
+2005,xx3E,3|Private element^SL|8,1|0
+2005,xx3E,3|Private element^SL|9,1|0
+2005,xx3E,3|Private element^SL|10,1|0
+2005,xx3E,3|Private element^SL|11,1|0
+2005,xx3E,3|Private element^SL|12,1|0
+2005,xx3E,3|Private element^SL|13,1|0
+2005,xx3E,3|Private element^SL|14,1|0
+2005,xx3E,3|Private element^SL|15,1|0
+2005,xx3E,3|Private element^SL|16,1|0
+2005,xx3E,3|Private element^SL|17,1|0
+2005,xx3E,3|Private element^SL|18,1|0
+2005,xx3E,3|Private element^SL|19,1|0
+2005,xx3E,3|Private element^SL|20,1|0
+2005,xx3E,3|Private element^SL|21,1|0
+2005,xx3E,3|Private element^SL|22,1|0
+2005,xx3E,3|Private element^SL|23,1|0
+2005,xx3E,3|Private element^SL|24,1|0
+2005,xx3E,3|Private element^SL|25,1|0
+2005,xx3E,3|Private element^SL|26,1|0
+2005,xx3E,3|Private element^SL|27,1|0
+2005,xx3E,3|Private element^SL|28,1|0
+2005,xx3E,3|Private element^SL|29,1|0
+2005,xx3E,3|Private element^SL|30,1|0
+2005,xx3E,3|Private element^SL|31,1|0
+2005,xx3E,3|Private element^SL|32,1|0
+2005,xx3E,3|Private element^SL|33,1|0
+2005,xx3E,3|Private element^SL|34,1|0
+2005,xx3E,3|Private element^SL|35,1|0
+2005,xx3E,3|Private element^SL|36,1|0
+2005,xx3E,3|Private element^SL|37,1|0
+2005,xx3E,3|Private element^SL|38,1|0
+2005,xx3E,3|Private element^SL|39,1|0
+2005,xx3E,3|Private element^SL|40,1|0
+2005,xx3E,3|Private element^SL|41,1|0
+2005,xx3E,3|Private element^SL|42,1|0
+2005,xx3E,3|Private element^SL|43,1|0
+2005,xx3E,3|Private element^SL|44,1|0
+2005,xx3E,3|Private element^SL|45,1|0
+2005,xx3E,3|Private element^SL|46,1|0
+2005,xx3E,3|Private element^SL|47,1|0
+2005,xx3E,3|Private element^SL|48,1|0
+2005,xx3E,3|Private element^SL|49,1|0
+2005,xx3E,3|Private element^SL|50,1|0
+2005,xx3E,3|Private element^SL|51,1|0
+2005,xx3E,3|Private element^SL|52,1|0
+2005,xx3E,3|Private element^SL|53,1|0
+2005,xx3E,3|Private element^SL|54,1|0
+2005,xx3E,3|Private element^SL|55,1|0
+2005,xx3E,3|Private element^SL|56,1|0
+2005,xx3E,3|Private element^SL|57,1|0
+2005,xx3E,3|Private element^SL|58,1|0
+2005,xx3E,3|Private element^SL|59,1|0
+2005,xx3E,3|Private element^SL|60,1|0
+2005,xx3E,3|Private element^SL|61,1|0
+2005,xx3E,3|Private element^SL|62,1|0
+2005,xx3E,3|Private element^SL|63,1|0
+2005,xx3E,3|Private element^SL|64,1|0
+2005,xx3E,3|Private element^SL|65,1|0
+2005,xx3E,3|Private element^SL|66,1|0
+2005,xx3E,3|Private element^SL|67,1|0
+2005,xx3E,3|Private element^SL|68,1|0
+2005,xx3E,3|Private element^SL|69,1|0
+2005,xx3E,3|Private element^SL|70,1|0
+2005,xx3E,3|Private element^SL|71,1|0
+2005,xx3E,3|Private element^SL|72,1|0
+2005,xx3E,3|Private element^SL|73,1|0
+2005,xx3E,3|Private element^SL|74,1|0
+2005,xx3E,3|Private element^SL|75,1|0
+2005,xx3E,3|Private element^SL|76,1|0
+2005,xx3E,3|Private element^SL|77,1|0
+2005,xx3E,3|Private element^SL|78,1|0
+2005,xx3E,3|Private element^SL|79,1|0
+2005,xx3E,3|Private element^SL|80,1|0
+2005,xx3E,3|Private element^SL|81,1|0
+2005,xx3E,3|Private element^SL|82,1|0
+2005,xx3E,3|Private element^SL|83,1|0
+2005,xx3E,3|Private element^SL|84,1|0
+2005,xx3E,3|Private element^SL|85,1|0
+2005,xx3E,3|Private element^SL|86,1|0
+2005,xx3E,3|Private element^SL|87,1|0
+2005,xx3E,3|Private element^SL|88,1|0
+2005,xx3E,3|Private element^SL|89,1|0
+2005,xx3E,3|Private element^SL|90,1|0
+2005,xx3E,3|Private element^SL|91,1|0
+2005,xx3E,3|Private element^SL|92,1|0
+2005,xx3E,3|Private element^SL|93,1|0
+2005,xx3E,3|Private element^SL|94,1|0
+2005,xx3E,3|Private element^SL|95,1|0
+2005,xx3E,3|Private element^SL|96,1|0
+2005,xx3E,3|Private element^SL|97,1|0
+2005,xx3E,3|Private element^SL|98,1|0
+2005,xx3E,3|Private element^SL|99,1|0
+2005,xx3E,3|Private element^SL|100,1|0
+2005,xx3E,3|Private element^SL|101,1|0
+2005,xx3E,3|Private element^SL|102,1|0
+2005,xx40,4|Private element^CS|1,1|PRE_FT
+2005,xx41,4|Private element^CS|1,1|UNKNOWN
+2005,xx42,4|Private element^CS|1,1|FID
+2005,xx43,4|Private element^CS|1,1|Y
+2005,xx44,4|Private element^SS|1,1|0
+2005,xx44,4|Private element^SS|2,1|0
+2005,xx44,4|Private element^SS|3,1|0
+2005,xx44,4|Private element^SS|4,1|0
+2005,xx44,4|Private element^SS|5,1|0
+2005,xx44,4|Private element^SS|6,1|0
+2005,xx44,4|Private element^SS|7,1|0
+2005,xx44,4|Private element^SS|8,1|0
+2005,xx44,4|Private element^SS|9,1|0
+2005,xx44,4|Private element^SS|10,1|0
+2005,xx44,4|Private element^SS|11,1|0
+2005,xx44,4|Private element^SS|12,1|0
+2005,xx44,4|Private element^SS|13,1|0
+2005,xx44,4|Private element^SS|14,1|0
+2005,xx44,4|Private element^SS|15,1|0
+2005,xx44,4|Private element^SS|16,1|0
+2005,xx44,4|Private element^SS|17,1|0
+2005,xx44,4|Private element^SS|18,1|0
+2005,xx44,4|Private element^SS|19,1|0
+2005,xx44,4|Private element^SS|20,1|0
+2005,xx44,4|Private element^SS|21,1|0
+2005,xx44,4|Private element^SS|22,1|0
+2005,xx44,4|Private element^SS|23,1|0
+2005,xx44,4|Private element^SS|24,1|0
+2005,xx44,4|Private element^SS|25,1|0
+2005,xx44,4|Private element^SS|26,1|0
+2005,xx44,4|Private element^SS|27,1|0
+2005,xx44,4|Private element^SS|28,1|0
+2005,xx44,4|Private element^SS|29,1|0
+2005,xx44,4|Private element^SS|30,1|0
+2005,xx44,4|Private element^SS|31,1|0
+2005,xx44,4|Private element^SS|32,1|0
+2005,xx44,4|Private element^SS|33,1|0
+2005,xx44,4|Private element^SS|34,1|0
+2005,xx44,4|Private element^SS|35,1|0
+2005,xx44,4|Private element^SS|36,1|0
+2005,xx44,4|Private element^SS|37,1|0
+2005,xx44,4|Private element^SS|38,1|0
+2005,xx44,4|Private element^SS|39,1|0
+2005,xx44,4|Private element^SS|40,1|0
+2005,xx45,4|Private element^CS|1,1|NO
+2005,xx45,6|Private element^SS|1,1|2
+2005,xx46,4|Private element^CS|1,1|HERTZ
+2005,xx47,4|Private element^FL|1,1|0.000000E+000
+2005,xx48,4|Private element^CS|1,1|OFF
+2005,xx49,4|Private element^FL|1,1|0.000000E+000
+2005,xx49,6|Private element^SS|1,1|0
+2005,xx50,4|Private element^FL|1,1|0.000000E+000
+2005,xx50,4|Private element^FL|2,1|0.000000E+000
+2005,xx51,4|Private element^SS|1,1|0
+2005,xx51,6|Private element^SS|1,1|0
+2005,xx52,4|Private element^SS|1,1|0
+2005,xx52,6|Private element^SS|1,1|1
+2005,xx53,6|Private element^SS|1,1|1
+2005,xx55,4|Private element^FL|1,1|0.000000E+000
+2005,xx55,4|Private element^FL|2,1|0.000000E+000
+2005,xx55,4|Private element^FL|3,1|0.000000E+000
+2005,xx55,4|Private element^FL|4,1|0.000000E+000
+2005,xx55,4|Private element^FL|5,1|0.000000E+000
+2005,xx55,4|Private element^FL|6,1|0.000000E+000
+2005,xx55,4|Private element^FL|7,1|0.000000E+000
+2005,xx55,4|Private element^FL|8,1|0.000000E+000
+2005,xx55,4|Private element^FL|9,1|0.000000E+000
+2005,xx55,4|Private element^FL|10,1|0.000000E+000
+2005,xx55,4|Private element^FL|11,1|0.000000E+000
+2005,xx55,4|Private element^FL|12,1|0.000000E+000
+2005,xx55,4|Private element^FL|13,1|0.000000E+000
+2005,xx55,4|Private element^FL|14,1|0.000000E+000
+2005,xx55,4|Private element^FL|15,1|0.000000E+000
+2005,xx55,4|Private element^FL|16,1|0.000000E+000
+2005,xx55,4|Private element^FL|17,1|0.000000E+000
+2005,xx55,4|Private element^FL|18,1|0.000000E+000
+2005,xx55,4|Private element^FL|19,1|0.000000E+000
+2005,xx55,4|Private element^FL|20,1|0.000000E+000
+2005,xx55,4|Private element^FL|21,1|0.000000E+000
+2005,xx55,4|Private element^FL|22,1|0.000000E+000
+2005,xx55,4|Private element^FL|23,1|0.000000E+000
+2005,xx55,4|Private element^FL|24,1|0.000000E+000
+2005,xx55,4|Private element^FL|25,1|0.000000E+000
+2005,xx55,4|Private element^FL|26,1|0.000000E+000
+2005,xx55,4|Private element^FL|27,1|0.000000E+000
+2005,xx55,4|Private element^FL|28,1|0.000000E+000
+2005,xx55,4|Private element^FL|29,1|0.000000E+000
+2005,xx55,4|Private element^FL|30,1|0.000000E+000
+2005,xx56,4|Private element^CS|1,1|NO
+2005,xx57,4|Private element^SS|1,1|0
+2005,xx59,4|Private element^FL|1,1|1.000000E+000
+2005,xx5F,3|Private element^CS|1,1|UNKNOWN
+2005,xx60,3|Private element^IS|1,1|-1
+2005,xx60,4|Private element^FL|1,1|0.000000E+000
+2005,xx61,3|Private element^CS|1,1|NO
+2005,xx61,4|Private element^FL|1,1|0.000000E+000
+2005,xx61,4|Private element^FL|2,1|0.000000E+000
+2005,xx62,4|Private element^FL|1,1|0.000000E+000
+2005,xx63,3|Private element^SS|1,1|0
+2005,xx63,4|Private element^FL|1,1|0.000000E+000
+2005,xx64,4|Private element^CS|1,1|NO
+2005,xx6E,3|Private element^CS|1,1|FFE
+2005,xx6F,3|Private element^CS|1,1|MS
+2005,xx70,4|Private element^SS|1,1|0
+2005,xx71,4|Begin Private Sequence^SQ||
+2005,xx80,3|Begin Private Sequence^SQ||
+2005,xx81,4|Private element^IS|1,1|0
+2005,xx82,4|Private element^UL|1,1|1
+2005,xx83,3|Begin Private Sequence^SQ||
+2005,xx84,3|Begin Private Sequence^SQ||
+2005,xx85,3|Begin Private Sequence^SQ||
+2005,xx86,3|Private element^SS|1,1|0
+2005,xx91,4|Private element^PN|1,1|<unknown>
+2005,xx92,4|Private element^IS|1,1|0
+2005,xx93,4|Private element^IS|1,1|-1
+2005,xx96,4|Private element^CS|1,1|NO
+2005,xx98,4|Private element^CS|1,1|NO
+2005,xx99,4|Private element^CS|1,1|NO
+2005,xx99,7|Private element^UL|1,1|1
+2005,xx9E,3|Begin Private Sequence^SQ||
+2005,xxA0,3|Private element^FL|1,1|0.000000E+000
+2005,xxA1,3|Private element^CS|1,1|SYN_CLASSIC
+2005,xxA2,3|Private element^CS|1,1|N
+2005,xxA8,3|Private element^DS|1,1|0
+2005,xxA9,3|Private element^CS|1,1|2D
+2005,xxB0,3|Private element^FL|1,1|0.000000E+000
+2005,xxB1,3|Private element^FL|1,1|0.000000E+000
+2005,xxB2,3|Private element^FL|1,1|0.000000E+000
+2005,xxC0,3|Private element^CS|1,1|GR
+2050,0020|Presentation LUT Shape^CS|1,1|IDENTITY
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=131072 (0x00020000)
+7FE0,0010|Pixel Data^OW|1,3|offset=10128 (0x2790)
+$$END DICOM DATA

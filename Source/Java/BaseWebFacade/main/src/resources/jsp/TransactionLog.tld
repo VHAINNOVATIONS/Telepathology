@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag handler library for displaying transaction logs</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>TransactionLogs</short-name>
+ <uri>http://imaging.med.va.gov/vix/transactionlogs</uri>
+ <!--
+	To get a Transaction log, use a 
+	TransactionLog
+		TransactionLogEntries
+			TransactionLogEntry
+				TransactionLogEntryCacheHit
+				TransactionLogEntryDataSourceProtocol
+				...
+	 -->
+ <tag>
+  <description>The root element of transaction log display.</description>
+  <name>TransactionLog</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogTag</tag-class>
+  <body-content>JSP</body-content>
+  <!--  -->
+  <attribute>
+   <description>A null indicates the start of time.</description>
+   <name>startDate</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.util.Date</type>
+  </attribute>
+  <attribute>
+   <description>A null indicates the start of time.</description>
+   <name>startDateAsString</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <!--  -->
+  <attribute>
+   <description>A null indicates the end of time.</description>
+   <name>endDate</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.util.Date</type>
+  </attribute>
+  <attribute>
+   <description>A null indicates the end of time.</description>
+   <name>endDateAsString</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <!--  -->
+  <attribute>
+   <description>The qualityName must be a valid ImageQuality value.</description>
+   <name>quality</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>gov.va.med.imaging.exchange.enums.ImageQuality</type>
+  </attribute>
+  <attribute>
+   <description>The quality must be one of: 
+			THUMBNAIL, REFERENCE, DIAGNOSTIC, DIAGNOSTICUNCOMPRESSED
+			A null or blank string includes all image quality.</description>
+   <name>qualityName</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <!--  -->
+  <attribute>
+   <description>A regular expression pattern, matching the user(s) of interest.
+			See http://java.sun.com/javase/6/docs/api/ for a full description of the pattern.
+			e.g. "A." returns all users starting with A.  
+			A null or blank string includes all users.</description>
+   <name>user</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>A regular expression pattern, matching the modaility(ies) of interest.
+			See http://java.sun.com/javase/6/docs/api/ for a full description of the pattern.
+			e.g. "A." returns all modality starting with A.  
+			A null or blank string includes all modality.</description>
+   <name>modality</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>A regular expression pattern, matching the error messages of interest.
+			See http://java.sun.com/javase/6/docs/api/ for a full description of the pattern.
+			e.g. "A." returns all error messages starting with A.  
+			A null or blank string includes all error messages.</description>
+   <name>errorMessage</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>A regular expression pattern, matching the error messages of interest.
+			See http://java.sun.com/javase/6/docs/api/ for a full description of the pattern.
+			e.g. "A." returns all error messages starting with A.  
+			A null or blank string includes all error messages.</description>
+   <name>transactionId</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>A regular expression pattern, matching the error messages of interest.
+			See http://java.sun.com/javase/6/docs/api/ for a full description of the pattern.
+			e.g. "A." returns all error messages starting with A.  
+			A null or blank string includes all error messages.</description>
+   <name>imageUrn</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <!--  -->
+  <attribute>
+   <name>datasourceProtocol</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>gov.va.med.imaging.exchange.enums.DatasourceProtocol</type>
+  </attribute>
+  <attribute>
+   <description>The datasourceProtocolAsString must be one of: 
+			VFTP, CDTP, EXCHANGE, VISTA
+			A null or blank string includes all protocol.</description>
+   <name>datasourceProtocolAsString</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The datasourceProtocolOrdinal must be one of: 
+			DatasourceProtocol.values[].ordinal or -1 or Integer.MAX_VALUE
+			Either datasourceProtocolOrdinal or datasourceProtocol may be provided.</description>
+   <name>datasourceProtocolOrdinal</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <description>Zero or a positive integer, the index of the transaction log to start the enumeration from.
+			Defaults to 0</description>
+   <name>startIndex</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <description>Zero or a positive integer, the index of the transaction log to end the enumeration on.
+			Defaults to Integer.MAX_VALUE
+			Must be greater than or equal to startIndex, else only the log entry at start index will 
+			be enumerated over.</description>
+   <name>endIndex</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <description>If true (the default) the the transactions will be iterated in increasing date
+			order.  If false then the transactions will be iterated in decreasing data order.</description>
+   <name>forward</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.Boolean</type>
+  </attribute>
+  <attribute>
+   <description>The message to display when there are no log entries to display.</description>
+   <name>emptyResultMessage</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The  byte transfer path must be one of:
+            DS_IN_FACADE_OUT, FACADE_IN_DS_OUT   
+            Defaults to DS_IN_FACADE_OUT</description>
+   <name>byteTransferPath</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>gov.va.med.imaging.exchange.enums.ByteTransferPath</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>An enumeration of transaction log entries generated by a TransactionLog
+		element.  This element must only appear within a TransactionLog element.</description>
+  <name>TransactionLogEntries</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntriesTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A transaction log entry (one transaction) within an enumeration of TransactionLog.
+		This element must only appear within a TransactionLogEntries element.</description>
+  <name>TransactionLogEntry</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>The cache hit property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryCacheHit</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryCacheHit</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The datasource protocol property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryDatasourceProtocol</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryDatasourceProtocol</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The elapsed time property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryElapsedTime</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryElapsedTime</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The error message property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryErrorMessage</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryErrorMessage</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The image throughput property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryImageThroughput</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryImageThroughput</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>Set the number of digits to the right of the decimal place</description>
+   <name>precision</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <description>The  byte transfer type must be one of:
+            FACADE_BYTES_SENT, FACADE_BYTES_RECEIVED, DATASOURCE_BYTES_SENT, DATASOURCE_BYTES_RECEIVED
+            Defaults to DATASOURCE_BYTES_RECEIVED</description>
+   <name>byteTransferType</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>gov.va.med.imaging.exchange.enums.ByteTransferType</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>The item count property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryItemCount</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryItemCount</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The number of items received by the datasource</description>
+  <name>TransactionLogEntryReceivedCount</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryItemReceivedCount</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The bytes transferred property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryBytesTransferred</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryBytesTransferred</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>The number of digits to the right of the decimal point.</description>
+   <name>precision</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Integer</type>
+  </attribute>
+  <attribute>
+   <description>The  byte transfer type must be one of:
+            FACADE_BYTES_SENT, FACADE_BYTES_RECEIVED, DATASOURCE_BYTES_SENT, DATASOURCE_BYTES_RECEIVED
+            Defaults to DATASOURCE_BYTES_RECEIVED</description>
+   <name>byteTransferType</name>
+   <rtexprvalue>true</rtexprvalue>
+   <type>gov.va.med.imaging.exchange.enums.ByteTransferType</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>The modality property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryModality</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryModality</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The originating host property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryOriginatingHost</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryOriginatingHost</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The patientICN property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryPatientICN</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryPatientIcn</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The purpose-of-use property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryPurposeOfUse</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryPurposeOfUse</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The quality property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryQuality</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryQuality</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The query filter property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryQueryFilter</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryQueryFilter</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The query type property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryQueryType</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryQueryType</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The start time property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryStartTime</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryStartTime</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>dateFormatPattern</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>The transaction ID property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryTransactionID</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryTransactionId</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The image URN property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryURN</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryUrn</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The user property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryUser</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryUser</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The response code property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryResponseCode</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryResponseCode</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The exception class name property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryExceptionClassName</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryExceptionClassName</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The command class name property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryCommandClassName</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryCommandClassName</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The realm (site) number property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryRealmSiteNumber</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryRealmSiteNumber</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The Vix Software Version. 
+      This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryVixSoftwareVersion</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryVixSoftwareVersion</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>Was the command executed asynchronously?</description>
+  <name>TransactionLogEntryAsynchronousCommand</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryAsynchronousCommand</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <!--
+	Transaction Log Statistics Tags
+	This must appear within a TransactionLog element and after a TransactionLogEntries
+	element.
+	These tags produce no output, use the transaction log entry property tags 
+	to output the statistical values for the columns. 
+	-->
+ <tag>
+  <description>A transaction log statistic element made available as a TransactionLogEntry,
+		containing the sum of numeric log entry fields.
+		This element must only appear within a TransactionLog element and after a
+		TransactionLogEntries element.</description>
+  <name>TransactionLogSumTag</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogSumTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A transaction log statistic element made available as a TransactionLogEntry,
+		containing the mean of numeric log entry fields.
+		This element must only appear within a TransactionLog element and after a
+		TransactionLogEntries element.</description>
+  <name>TransactionLogMeanTag</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogMeanTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A transaction log statistic element made available as a TransactionLogEntry,
+		containing the median of numeric log entry fields.
+		This element must only appear within a TransactionLog element and after a
+		TransactionLogEntries element.</description>
+  <name>TransactionLogMedianTag</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogMedianTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A transaction log statistic element made available as a TransactionLogEntry,
+		containing the minima of numeric log entry fields.
+		This element must only appear within a TransactionLog element and after a
+		TransactionLogEntries element.</description>
+  <name>TransactionLogMinimaTag</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogMinimaTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>A transaction log statistic element made available as a TransactionLogEntry,
+		containing the maxima of numeric log entry fields.
+		This element must only appear within a TransactionLog element and after a
+		TransactionLogEntries element.</description>
+  <name>TransactionLogMaximaTag</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogMaximaTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <description>The remote login method property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryRemoteLoginMethod</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryRemoteLoginMethod</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The remote login method property of a transaction log entry. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryClientVersion</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryClientVersion</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The version of the data source used to retrieve data. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryDataSourceVersion</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryDataSourceVersion</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The method called on the data source to retrieve data. 
+		This element must only appear within a TransactionLogEntry element.</description>
+  <name>TransactionLogEntryDataSourceMethod</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryDataSourceMethod</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>TransactionLogEntryTransactionNumberChange</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryTransactionNumberChange</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>The list of class values to rotate through (comma separated values)</description>
+   <name>classNames</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>Debug information collected during the transaction.</description>
+  <name>TransactionLogEntryDebugInformation</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryDebugInformation</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The server that responded to the data source request.</description>
+  <name>TransactionLogEntryDataSourceResponseServer</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryDataSourceResponseServer</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The name of the thread the transaction ran on.</description>
+  <name>TransactionLogEntryThreadId</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryThreadId</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The site number of the VIX creating this transaction log entry.</description>
+  <name>TransactionLogEntryVixSiteNumber</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryVixSiteNumber</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The site number of the VIX that requested data from this VIX.</description>
+  <name>TransactionLogEntryRequestingVixSiteNumber</name>
+  <tag-class>gov.va.med.imaging.access.je.taglib.TransactionLogEntryRequestingVixSiteNumber</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+</taglib>

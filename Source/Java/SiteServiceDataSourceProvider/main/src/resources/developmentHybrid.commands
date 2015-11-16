@@ -1,0 +1,44 @@
+clear, true, true, true, true
+siteService, %1
+protocol, vistaimaging, , , , true
+protocol, vista, , , , true
+protocol, xca, , , , false
+protocol, vftp, VixFederation, /webservices/ImageMetadataService, /wai/images, false
+protocol, exchange, VaImagingExchange, /ImageMetadataService.asmx, /RetrieveImage.ashx, false
+!External artifact sources
+!repository, 2.16.840.1.113883.3.42.10012.100001.207, *, exchange://localhost:80, exchange://localhost:80
+!repository, 2.16.840.1.113883.3.42.10012.100001.206, *, xca://localhost:8080, xca://localhost:8080
+!repository, 2.16.840.1.113883.3.198, *, xca://localhost:8080, xca://localhost:8080
+!Local VA site
+addProtocolPreference, 1.3.6.1.4.1.3768, 660,"vistaimaging", true, false,true
+addProtocolPreference, 2.16.840.1.113883.3.166, 660,"vistaimaging", true, false,true
+addProtocolPreference, 2.16.840.1.113883.6.233, 660,"vistaimaging", true, false,true
+!CVIX is also the local VA site
+addProtocolPreference, 1.3.6.1.4.1.3768,2001,vista,true,false,true
+addProtocolPreference, 2.16.840.1.113883.3.166,2001,vista,true,false,true
+addProtocolPreference, 2.16.840.1.113883.6.233,2001,vista,true,false,true
+!Default VA sites
+addProtocolPreference, 1.3.6.1.4.1.3768, *,"vftp,vistaimaging", false, false,true
+addProtocolPreference, 2.16.840.1.113883.3.166, *,"vftp,vistaimaging", false, false,true
+addProtocolPreference, 2.16.840.1.113883.6.233, *,"vftp,vistaimaging", false, false,true
+!DoD Radiology sites
+addProtocolPreference, 1.3.6.1.4.1.3768, 200,"exchange,vista",false,true,true
+!2002 is BHIE Documents
+addProtocolPreference, 2.16.840.1.113883.3.166, 2002,"xca", false,true,true
+addProtocolPreference, 2.16.840.1.113883.6.233, 2002,"xca", false,true,true
+!2003 is HAIMS Documents
+addProtocolPreference, 2.16.840.1.113883.3.166, 2003,"xca", false,true,true
+addProtocolPreference, 2.16.840.1.113883.6.233, 2003,"xca", false,true,true
+!2004 is NCAT Documents
+addProtocolPreference, 2.16.840.1.113883.3.166, 2004,"xca", false,true,true
+addProtocolPreference, 2.16.840.1.113883.6.233, 2004,"xca", false,true,true
+! DoD Documents redirect to VA site 2002, 2003, 2004
+addIndirection,2.16.840.1.113883.3.42.10012.100001.206, 2.16.840.1.113883.3.198.2, 2.16.840.1.113883.3.166,2003 !HAIMS
+addIndirection,2.16.840.1.113883.3.42.10012.100001.206,central, 2.16.840.1.113883.3.166,2003 !HAIMS test repository
+!addIndirection,2.16.840.1.113883.3.42.10012.100001.206, 2.16.840.1.113883.3.198.1, 2.16.840.1.113883.3.166,2004 !NCAT
+addIndirection,2.16.840.1.113883.3.198,*,2.16.840.1.113883.3.166,2004 !NCAT with own community ID
+addIndirection,2.16.840.1.113883.3.42.10012.100001.206,*, 2.16.840.1.113883.3.166,2002 !BHIE
+! DoD Radiology redirect to VA site 200 - BIA
+addIndirection,2.16.840.1.113883.3.42.10012.100001.207,*,1.3.6.1.4.1.3768,200
+save
+exit

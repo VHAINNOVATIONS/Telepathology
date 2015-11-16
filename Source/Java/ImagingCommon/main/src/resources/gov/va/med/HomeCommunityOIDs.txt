@@ -1,0 +1,5 @@
+# A list of OIDs, one per line, that establish the home community
+# Blank lines, whitespace and any characters after a # character are ignored
+2.16.840.1.113883.3.166		# VA Documents
+2.16.840.1.113883.6.233		# VA Documents
+1.3.6.1.4.1.3768			# VA Radiology

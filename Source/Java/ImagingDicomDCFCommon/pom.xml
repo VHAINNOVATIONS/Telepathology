@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+    <groupId>Imaging</groupId>
+    <artifactId>ImagingRoot</artifactId>
+    <version>${BUILD_VERSION}</version>
+    <relativePath>../ImagingRoot/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Imaging</groupId>
+  <artifactId>ImagingDicomDCFCommon</artifactId>
+  <name>ImagingDicomDCFCommon</name>
+  <organization />
+  <scm />
+  <packaging>jar</packaging>
+  <build>
+    <finalName>${artifactId}-${version}</finalName>
+    <directory>${basedir}/target</directory>
+    <outputDirectory>${basedir}/target/classes</outputDirectory>
+    <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+    <sourceDirectory>src/java</sourceDirectory>
+    <testSourceDirectory>src/test</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+        </includes>
+      </resource>
+      <resource>
+      	<!-- Need this for IOD Validation -->
+        <directory>src/java</directory>
+        <includes>
+          <include>**/*.xsl</include>
+        </includes>
+      </resource>
+      <resource>
+      	<!-- Need this for IOD Validation -->
+        <directory>src/java</directory>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+      </resource>
+      <resource>
+      	<!-- Need this for IOD Validation -->
+        <directory>src/resources</directory>
+        <excludes>
+          <exclude>**/*.dcm</exclude>
+          <exclude>**/*.DCM</exclude>
+        </excludes>
+      </resource>
+    </resources>
+    <plugins>
+      <plugin>
+        <groupId>UserPlugins</groupId>
+        <artifactId>maven-goal-plugin</artifactId>
+        <version>0.1</version>
+        <configuration>
+          <workingDirectory>${basedir}</workingDirectory>
+          <userGoalList>
+            <userGoalInfo>
+              <goalName>CruiseControl-build</goalName>
+              <commands>
+                 <command>
+                  <![CDATA[<cvs command="up -d -P"/>]]>
+                </command> 
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>Imaging-dist</goalName>
+              <commands>
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>default</goalName>
+              <commands>
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>misc</goalName>
+              <commands>
+                <!-- mvn goal:misc Your Miscellaneous Command(s) Here -->
+                <!--
+                <command>
+                  <![CDATA[<copy file="${basedir}/myFile"  todir="${user.home}/myDir" />]]>
+                </command>
+                -->
+                <command>
+                  <![CDATA[<attainGoal name="--version:--version" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+          </userGoalList>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <compilerArguments>
+            <source>${JAVA_VERSION}</source>
+            <target>${JAVA_VERSION}</target>
+          </compilerArguments>
+        </configuration>
+      </plugin>
+	  <plugin>
+      	<groupId>org.codehaus.mojo</groupId>
+      	<artifactId>exec-maven-plugin</artifactId>
+      	<executions>
+      		<execution>
+      		<id>CompileTranslet</id>
+      			<phase>process-classes</phase>
+      			<goals>
+      				<goal>java</goal>
+      			</goals>
+      			<configuration>
+      				<mainClass>gov.va.med.imaging.dicom.dcftoolkit.common.validation.CompileXSLTIntoTranslet</mainClass>
+      				<arguments>
+      					<argument>${project.build.outputDirectory}\gov\va\med\imaging\dicom\dcftoolkit\common\validation\CompileDicomIODDescriptionsIntoXSLT.xsl</argument>
+      				</arguments>
+      			</configuration>
+      		</execution>
+      		<execution>
+      			<id>ExecuteTranslet</id>
+      			<phase>process-classes</phase>
+      			<goals>
+      				<goal>java</goal>
+      			</goals>
+      			<configuration>
+      				<mainClass>gov.va.med.imaging.dicom.dcftoolkit.common.validation.ExecuteTranslet</mainClass>
+      				<arguments>
+      					<argument>${project.build.outputDirectory}\gov\va\med\imaging\dicom\dcftoolkit\common\validation\CompileDicomIODDescriptionsIntoXSLT.xsl</argument>
+      					<argument>${project.build.outputDirectory}\gov\va\med\imaging\dicom\dcftoolkit\common\validation\DicomIODDescriptionsSource.xml</argument>
+      					<argument>${project.build.outputDirectory}\gov\va\med\imaging\dicom\dcftoolkit\common\validation\DicomIODDescriptionsCompiled.xsl</argument>
+      				</arguments>
+      			</configuration>
+      		</execution>
+      	</executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>once</forkMode>
+          <includes>          	 
+            <include>**/*Test*.java</include>                        
+          </includes>
+          <excludes>
+            <!-- All abstract classes start with Abstract -->
+            <exclude>**/Abstract*.java</exclude>
+            <!-- Utility (helper) classes end with Utility -->
+            <exclude>**/*Utility.java</exclude>
+            <!-- Data generators end with Generator -->
+            <exclude>**/*Generator.java</exclude>
+            <!-- All Test Base classes end with TestBase -->
+            <exclude>**/*TestBase.java</exclude>
+            <!-- Data may be included in a static class ending with Data -->
+            <exclude>**/Mock*.java</exclude>
+            <!-- Inner classes are excluded as unit tests -->
+            <exclude>**/*$*</exclude>          
+            <!-- Excluding individual classes on a permanent basis is discouraged -->
+            <!-- Enter individual classes here -->
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+	<!-- all non project dependencies should be defined in the ImagingRoot project -->
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>ImagingDicomCommon</artifactId>
+      <version>${version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>ImagingCommon</artifactId>
+      <version>${version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>CoreValueObjects</artifactId>
+      <version>${version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>VistaStorage</artifactId>
+      <version>${version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+          <optimize>false</optimize>
+          <compilerArguments>
+            <source>${JAVA_VERSION}</source>
+            <target>${JAVA_VERSION}</target>
+            <g />
+            <deprecation />
+          </compilerArguments>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  <properties>
+    <maven.multiproject.type>jar</maven.multiproject.type>
+    <maven.build.dir>${basedir}/target</maven.build.dir>
+    <maven.final.name>${artifactId}-${version}</maven.final.name>
+  </properties>
+</project>

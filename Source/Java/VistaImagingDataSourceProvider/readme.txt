@@ -1,0 +1,1 @@
+This project contains SPI implementations that communicate with VistA while using VistA Imaging (MAG) rpc calls.  This project can contain usage for RPC calls that do NOT use VistA Imaging rpc calls if needed.

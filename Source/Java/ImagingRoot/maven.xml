@@ -1,0 +1,7 @@
+<project default="Imaging-dist" xmlns:m="jelly:maven">
+	<goal name="Imaging-dist"></goal>
+	<goal name="CruiseControl-build">
+		<cvs command="up -d -P" />
+		<attainGoal name="Imaging-dist" />
+	</goal>
+</project>

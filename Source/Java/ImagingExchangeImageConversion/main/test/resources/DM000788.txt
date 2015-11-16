@@ -1,0 +1,14 @@
+Consult Information:
+
+Pt Name: IMAGPATIENT1023,1023
+Pt ID: 000001023
+
+Request Date/Time: 3/14/01 3:11:50 PM
+Req MD: IMAGPROVIDERONETWOSIX,ONETWOSIX
+Tel: ReqTel
+
+Image Desc: CATH  Mar 14, 2001
+
+Urgency of Request: Within 8 hours
+
+Reason for Consult/Notes:

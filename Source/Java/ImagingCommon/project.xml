@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org" schemaLocation="http://maven.apache.org/xsd/maven-project-3.0.0.xsd">
+	<extend>../ImagingRoot/project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <artifactId>ImagingCommon</artifactId>
+    <name>ImagingCommon</name>
+	<package>gov.va.med.imaging</package>
+	<shortDescription>Items that are common to all Imaging applications</shortDescription>  
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>main/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<excludes>
+				<exclude>**/Abstract*.java</exclude>
+				<exclude>**/TestInputData.java</exclude>
+				<exclude>**/StorageTestUtilities.java</exclude>
+			</excludes>
+			<includes>
+				<include>**/*Test.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>			
+	</build>
+	<dependencies>
+	    <dependency>
+      <groupId>javamail</groupId>
+      <artifactId>javamail</artifactId>
+      <version>1.4</version>
+      <type>jar</type>
+    </dependency>
+	</dependencies>
+</project>
+

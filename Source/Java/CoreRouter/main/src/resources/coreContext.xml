@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 
+	The server lifecycle listener is an adapter from the host server (e.g. Tomcat)
+	to the application for lifecycle events.
+	Components that need to be informed that the application and/or the
+	application server are starting/stopping should register themselves
+	with this bean.
+	References to this bean should be through the ServerLifecycleAdapter interface,
+	and not to the server specific classname.
+	NOTE: The TomcatLifecycleAdapter is, not surprisingly, Tomcat specific.  Deployment on
+	a different server will require building an equivalent.
+	NOTE: the bean name "serverLifecycleAdapter" is referenced in code and so must remain
+	unchanged.
+	-->
+	
+	<bean id="appConfiguration"
+		class="gov.va.med.imaging.exchange.configuration.AppConfiguration"
+		init-method="init"
+		singleton="true" 
+		/>
+		
+	<!-- 
+	The router target is the router implementation.
+	The router is configured with an AOP interceptor, which collects
+	statistics on method calls.  
+	-->	  
+	<bean id="routerTarget"
+		class="gov.va.med.imaging.core.RouterImpl"
+		singleton="true">
+		<constructor-arg><ref bean="appConfiguration" /></constructor-arg>
+	</bean>
+
+	<bean id="routerStatisticsAdvice"
+		class="gov.va.med.imaging.core.interfaces.router.RouterStatisticsAdvice"/>
+
+	<bean id="router"
+		class="org.springframework.aop.framework.ProxyFactoryBean"
+		singleton="true">
+		<property name="proxyInterfaces">
+			<value>gov.va.med.imaging.core.interfaces.Router</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>routerStatisticsAdvice</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="routerTarget"/>
+		</property>	
+	</bean>
+	
+	<!-- 
+	This command factory is a singleton, which creates instances of Command
+	derived implementing classes for the router to execute.
+	-->
+	<bean id="commandFactory"
+		class="gov.va.med.imaging.core.CommandFactoryImpl"
+		singleton="true">
+		<constructor-arg><ref bean="routerTarget" /></constructor-arg>
+	</bean>
+	
+	<!-- 
+  This command factory is a singleton, which creates instances of Command
+  derived implementing classes for the router to execute.
+  -->
+  
+  <bean id="notificationFacade"
+    class="gov.va.med.imaging.notifications.NotificationFacade"
+    singleton="true">
+  </bean>
+  
+  <bean id="javaLogFacade"
+    class="gov.va.med.imaging.javalogs.JavaLogFacade"
+    singleton="true">
+  </bean>
+
+  <bean id="storageLifecycleListener"
+    class="gov.va.med.imaging.core.router.storage.StorageLifecycleListener"
+    singleton="true">
+  </bean>
+  
+</beans>

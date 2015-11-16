@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/java"/>
+	<classpathentry kind="src" path="src/test"/>
+	<classpathentry kind="src" path="src/resources"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingCommon"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingDicomCommon"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/springframework/spring/1.2.9/spring-1.2.9.jar"/>
+	<classpathentry kind="var" path="M2_REPO/com/thoughtworks/xstream/xstream/1.4.7/xstream-1.4.7.jar"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/dcf/LaurelBridge/3.3.22c/LaurelBridge-3.3.22c.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/DCF/doc/components/java/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry exported="true" kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="var" path="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VistaStorage"/>
+	<classpathentry kind="var" path="M2_REPO/com/tinkerpop/blueprints/blueprints-core/2.3.0/blueprints-core-2.3.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

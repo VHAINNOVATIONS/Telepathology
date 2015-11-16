@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Server>
+  <Listener className="org.apache.catalina.core.AprLifecycleListener"/>
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener"/>
+  <Listener className="org.apache.catalina.storeconfig.StoreConfigLifecycleListener"/>
+  <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener"/>
+  <!-- 
+  TomcatLifecycleListener adapts Tomcat lifecycle events to the VIX internal
+  lifecycle events.  This insulates the VIX from Tomcat specific classes.
+  -->
+  <Listener className="gov.va.med.server.tomcat.TomcatLifecycleAdapter"/>
+
+  <GlobalNamingResources>
+    <Environment
+      name="simpleValue"
+      type="java.lang.Integer"
+      value="30"/>
+    <Resource
+      auth="Container"
+      description="User database that can be updated and saved"
+      name="UserDatabase"
+      type="org.apache.catalina.UserDatabase"
+      pathname="conf/tomcat-users.xml"
+      factory="org.apache.catalina.users.MemoryUserDatabaseFactory"/>
+      
+    <!-- 
+         You may configure custom components (e.g. Valves/Realms) by including your own mbean-descriptor file(s), 
+         and setting the "descriptors" attribute to point to a ';' separated list of paths (in the ClassLoader sense) 
+         of files to add to the default list under ServerLifecycleListener definition in server.xml. 
+         See http://tomcat.apache.org/tomcat-5.0-doc/mbeans-descriptor-howto.html
+    -->
+    <!--
+    <Resource
+      auth="Container"
+      description="Caching mechanism for ViXS"
+      name="ImagingExchangeCache"
+      type="gov.va.med.imaging.storage.cache.Cache"
+      factory="gov.va.med.imaging.storage.cache.impl.tomcat.CacheFactory"
+	/>
+    -->
+    <Resource
+      auth="Container"
+      description="Core Application Configuration"
+      name="AppConfiguration"
+      type="gov.va.med.imaging.core.interfaces.IAppConfiguration"
+      factory="gov.va.med.server.CoreRouterFactory"
+    />
+    
+    <Resource
+      auth="Container"
+      description="Core Vix Application"
+      name="CoreRouter"
+      type="gov.va.med.imaging.core.interfaces.Router"
+      factory="gov.va.med.server.CoreRouterFactory"
+    />
+    
+    
+
+  </GlobalNamingResources>
+  <Service
+      name="Catalina">
+    <Connector 
+    	protocol="HTTP/1.1"
+        port="8443" 
+        minProcessors="5" 
+        maxProcessors="75"
+        enableLookups="true" 
+        disableUploadTimeout="true"
+        acceptCount="100" 
+        debug="11" 
+        scheme="https" 
+        secure="true"
+        clientAuth="true" 
+        sslProtocol="TLS"
+        keystoreFile="c:/vix/federation.keystore"
+        keystorePass="PickleJuice695"
+        keyAlias="isw-beckeyc1"
+        truststoreFile="c:/vix/federation.truststore"
+        truststorePass="PickleJuice695"
+        ciphers="null"
+    />
+	<Connector 
+		port="8080" 
+		maxHttpHeaderSize="8192" 
+		maxThreads="150" 
+		minSpareThreads="4" 
+		maxSpareThreads="25" 
+		enableLookups="false" 
+		redirectPort="8443" 
+		acceptCount="100" 
+		connectionTimeout="20000" 
+		disableUploadTimeout="true" 
+		maxKeepAliveRequests="1" 
+		allowChunking="false" 
+	/>       
+    <Connector
+        port="8009"
+        redirectPort="8443"
+        protocol="AJP/1.3">
+    </Connector>
+    <!--
+    <Connector 
+        port="8009" 
+        handler.list="mx"
+        mx.enabled="true" 
+        mx.httpHost="localhost" 
+        mx.httpPort="9090" 
+        protocol="AJP/1.3" 
+    />
+	-->
+    <Engine
+        defaultHost="localhost"
+        name="Catalina">
+      <Realm className="org.apache.catalina.realm.UserDatabaseRealm"/>
+      <Host
+          appBase="webapps"
+          name="localhost">
+      </Host>
+    </Engine>
+  </Service>
+</Server>

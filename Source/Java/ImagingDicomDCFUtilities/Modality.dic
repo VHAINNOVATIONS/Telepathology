@@ -1,0 +1,43 @@
+# Last edited 23 June 2003 2:19 PM
+#
+# List of different typs of modality image acquisition devices
+#
+#manufacturer|model|modality|dcmtotga.exe parameters|case# lookup code|data extraction code|data extraction file|imaging service
+#
+# Note: For Healthcare Providers, the following two values should always be used:
+#	demtotga.exe parameters should be "<DICOM>"
+#	Case# lookup code should be "CORRECT^MAGDIR3"
+#
+# Imaging services are defined as follows
+#    RAD --------- Radology
+#    CON --------- Consult/Procedure Request Tracking (CPRS)
+#
+# Examples:
+#
+# Radiology
+# ACME CT Company|BETA|CT|b12 f0|GECTHISA^MAGDIR3|GECT^MAGDIR4A|datagect.dic|RAD
+# GE MEDICAL SYSTEMS|GENESIS_JUPITER|CT|b12 f0|GECTHISA^MAGDIR3|GECT^MAGDIR4A|datagect.dic|RAD
+# GE MEDICAL SYSTEMS|GENESIS_HISPEED_RP|CT|b12 f0|GECTHISA^MAGDIR3|GECT^MAGDIR4A|datagect.dic|RAD
+# GE MEDICAL SYSTEMS|HISPEED RP|CT|b12 f0|GECTHISA^MAGDIR3|GECT^MAGDIR4A|datagect.dic|RAD
+# GE MEDICAL SYSTEMS|GENESIS_SIGNA|MR|b12 f0|LONGCASE^MAGDIR3|GECT^MAGDIR4A|datagect.dic|RAD
+# GE MEDICAL SYSTEMS|DRS|RF|b8|GEDRS^MAGDIR3|GELCA^MAGDIR4A|datamisc.dic|RAD
+# GE MEDICAL SYSTEMS|DLX|XA|b10|STUDYID^MAGDIR3|GELCA^MAGDIR4A|datamisc.dic|RAD
+# Picker International, Inc.|PQ2000|CT|b12 a1000 f0 c4095|PQ2000^MAGDIR3|PICKERCT^MAGDIR4A|datagect.dic|RAD
+# Picker International, Inc.|PQ2000|SC|b12 a1000 f0 c4095|PQ2000^MAGDIR3|PICKERCT^MAGDIR4A|datagect.dic|RAD
+# DeJarnette Research Systems|Imageshare Fuji CR Acquisition Station|CR|b10 f0 c1023 R8/b10 f0 c1023|LONGCASE^MAGDIR3||data_cr.dic|RAD
+# LUMISYS|*|CR|b12 f0 c4095 R8|LONGCASE^MAGDIR3||datamisc.dic|RAD
+# LUMISYS|*|SC|b12 f0 c4095 R8|LONGCASE^MAGDIR3||datamisc.dic|RAD
+# LUMISYS|*|RAD|b12 f0 c4095 R8|LONGCASE^MAGDIR3||datamisc.dic|RAD
+# Aspect Electronics, Inc.|Access Acquisition Module|US|b8|PIDCASE^MAGDIR3||datamisc.dic|RAD
+#
+# Healthcare Providers
+#Roadrunner, Inc.|Beep-Beep|OT|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|RAD
+#Roadrunner, Inc.|Beep-Beep|US|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|RAD
+#Roadrunner, Inc.|Beep-Beep|XC|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|RAD
+#Roadrunner, Inc.|Beep-Beep|DX|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|RAD
+#Roadrunner, Inc.|Beep-Beep|IO|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|RAD
+#Roadrunner, Inc.|Beep-Beep|US|<DICOM>|CORRECT^MAGDIR3||datamisc.dic|CON
+Road Runner, Inc.|Beep-Beep|CT|b12 a2048 f0 c4095|CORRECT^MAGDIR3||datamisc.dic|RAD
+#
+# Place your entries below
+# end of file

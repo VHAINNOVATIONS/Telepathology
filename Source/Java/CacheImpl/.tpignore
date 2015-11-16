@@ -1,0 +1,4 @@
+/bin/.*
+/target/.*
+/vixtests/.*
+test[\w]+\.junit\.result

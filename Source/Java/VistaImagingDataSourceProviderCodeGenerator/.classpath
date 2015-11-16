@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/VistaDataSourceCommon"/>
+	<classpathentry kind="var" path="M2_REPO/freemarker/freemarker/2.3.14/freemarker-2.3.14.jar" sourcepath="/INSTALLS/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/src">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Documents and Settings/All Users/Documents/Installs/FreeMarker/freemarker-2.3.14/freemarker-2.3.14/docs/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

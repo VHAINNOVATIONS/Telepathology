@@ -1,0 +1,162 @@
+$$BEGIN DATA1
+PATIENTS_NAME=RIOS,ROGELIO JR
+PATIENTS_ID=580-94-4821
+PATIENTS_BIRTH_DATE=AUG 3,1947
+PATIENTS_AGE=59
+PATIENTS_SEX=M
+INTEGRATION_CONTROL_NUMBER=1005235442V366720
+ACCESSION_NUMBER=060507-2631
+IMAGE_DATE=06/05/2007
+CONTENT_DATE=06/05/2007
+IMAGE_TIME=10:54:28
+CONTENT_TIME=10:54:28
+IMAGE_TYPE=3
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=SINGLE PLANE
+CONTENT_DATE=20070605
+CONTENT_TIME=105428
+MODALITY=RF
+MANUFACTURER=GE MEDICAL SYSTEMS
+INSTITUTION_NAME=JA Haley VAMC DEPT DIGITAL/IMAGE
+STATION_NAME=DRS1
+MANUFACTURERS_MODEL_NAME=DRS
+STUDY_ID=060507-2631
+SERIES_NUMBER=01
+INSTANCE_NUMBER=02
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=1024
+COLUMNS=1024
+BITS_STORED=8
+HIGH_BIT=7
+PIXEL_REPRESENTATION=0
+DCM_TO_TGA_PARAMETERS=b8
+FRAME_NUMBER=3/07
+FRAME_TIME=1000
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|214
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.12.2
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.2.840.113619.6.75.1000001175000010220.1180175049.0.0.12.7
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|TAMRADNWG2
+0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|SINGLE PLANE
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.12.2
+0008,0018|SOP Instance UID^UI|1,1|1.2.840.113619.6.75.1000001175000010220.1180175049.0.0.12.7
+0008,0020|Study Date^DA|1,1|20070605
+0008,0021|Series Date^DA|1,1|20070605
+0008,0022|Acquisition Date^DA|1,1|20070605
+0008,0023|Content Date^DA|1,1|20070605
+0008,0030|Study Time^TM|1,1|105420.000000
+0008,0032|Acquisition Time^TM|1,1|105428
+0008,0033|Content Time^TM|1,1|105428
+0008,0050|Accession Number^SH|1,1|060507-2631
+0008,0060|Modality^CS|1,1|RF
+0008,0070|Manufacturer^LO|1,1|GE MEDICAL SYSTEMS
+0008,0080|Institution Name^LO|1,1|JA Haley VAMC DEPT DIGITAL/IMAGE
+0008,0090|Referring Physician's Name^PN|1,1|<unknown>
+0008,1010|Station Name^SH|1,1|DRS1
+0008,1030|Study Description^LO|1,1|BA SWALLOW
+0008,1050|Performing Physician's Name^PN|1,1|DR KUSAKULL/EJJ^RLT
+0008,1090|Manufacturer's Model Name^LO|1,1|DRS
+0008,1120|Referenced Patient Sequence^SQ||
+0008,1120.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.1.1
+0008,1120.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113754.1.1.673.17739
+0008,2142|Start Trim^IS|1,1|01
+0008,2143|Stop Trim^IS|1,1|07
+0008,2144|Recommended Display Frame Rate^IS|1,1|02
+0010,0010|Patient's Name^PN|1,1|RIOS^ROGELIO^JR
+0010,0020|Patient ID^LO|1,1|580-94-4821
+0010,0030|Patient's Birth Date^DA|1,1|19470803
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1010|Patient's Age^AS|1,1|059Y
+0010,1080|Military Rank^LO|1,1|673
+0010,21B0|Additional Patient History^LT|1,1|dysphagia, s/p xrt
+0018,0060|KVP^DS|1,1|<unknown>
+0018,1020|Software Version(s)^LO|1,1|5.10
+0018,1065|Frame Time Vector^DS|1,1|00
+0018,1065|Frame Time Vector^DS|2,1|0500
+0018,1065|Frame Time Vector^DS|3,1|0500
+0018,1065|Frame Time Vector^DS|4,1|0500
+0018,1065|Frame Time Vector^DS|5,1|0500
+0018,1065|Frame Time Vector^DS|6,1|0500
+0018,1065|Frame Time Vector^DS|7,1|0500
+0018,1150|Exposure Time^IS|1,1|<unknown>
+0018,1151|X-ray Tube Current^IS|1,1|<unknown>
+0018,1155|Radiation Setting^CS|1,1|GR
+0018,1242|Actual Frame Duration^IS|1,1|33
+0018,1400|Acquisition Device Processing Description^LO|1,1|06 OUT OF 20. 0=LOW, 20=HIGH CONVOLUTION KERNEL
+0018,1600|Shutter Shape^CS|1,1|CIRCULAR
+0018,1600|Shutter Shape^CS|2,1|RECTANGULAR
+0018,1602|Shutter Left Vertical Edge^IS|1,1|10
+0018,1604|Shutter Right Vertical Edge^IS|1,1|0950
+0018,1606|Shutter Upper Horizontal Edge^IS|1,1|10
+0018,1608|Shutter Lower Horizontal Edge^IS|1,1|0950
+0018,1610|Center of Circular Shutter^IS|1,1|0480
+0018,1610|Center of Circular Shutter^IS|2,1|0480
+0018,1612|Radius of Circular Shutter^IS|1,1|0470
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113754.1.4.673.6929394.915.2.60507.2631
+0020,000E|Series Instance UID^UI|1,1|1.2.840.113619.6.75.1000001175000010220.1180175049.1.0
+0020,0010|Study ID^SH|1,1|060507-2631
+0020,0011|Series Number^IS|1,1|01
+0020,0013|Instance Number^IS|1,1|02
+0020,0020|Patient Orientation^CS|1,1|<unknown>
+0020,4000|Image Comments^LT|1,1|N
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0008|Number of Frames^IS|1,1|07
+0028,0009|Frame Increment Pointer^AT|1,1|0018,1065
+0028,0010|Rows^US|1,1|1024
+0028,0011|Columns^US|1,1|1024
+0028,0100|Bits Allocated^US|1,1|8
+0028,0101|Bits Stored^US|1,1|8
+0028,0102|High Bit^US|1,1|7
+0028,0103|Pixel Representation^US|1,1|0
+0028,0301|Burned In Annotation^CS|1,1|YES
+0028,1040|Pixel Intensity Relationship^CS|1,1|LIN
+0028,1050|Window Center^DS|1,1|127
+0028,1051|Window Width^DS|1,1|255
+0028,2110|Lossy Image Compression^CS|1,1|00
+0028,6010|Representative Frame Number^US|1,1|1
+0028,6020|Frame Numbers of Interest (FOI)^US|1,1|12
+0028,6020|Frame Numbers of Interest (FOI)^US|2,1|13
+0028,6020|Frame Numbers of Interest (FOI)^US|3,1|14
+0028,6020|Frame Numbers of Interest (FOI)^US|4,1|15
+0028,6020|Frame Numbers of Interest (FOI)^US|5,1|16
+0028,6020|Frame Numbers of Interest (FOI)^US|6,1|17
+0028,6020|Frame Numbers of Interest (FOI)^US|7,1|18
+0028,6022|Frame(s) of Interest Description^LO|1,1|N
+0028,6022|Frame(s) of Interest Description^LO|2,1|N
+0028,6022|Frame(s) of Interest Description^LO|3,1|N
+0028,6022|Frame(s) of Interest Description^LO|4,1|N
+0028,6022|Frame(s) of Interest Description^LO|5,1|N
+0028,6022|Frame(s) of Interest Description^LO|6,1|N
+0028,6022|Frame(s) of Interest Description^LO|7,1|N
+0031,0010|Name of Private Group^LO|1,1|AGFA PACS Archive Mirroring 1.0
+0031,xx00,1|Private element^UN|1,1|N 
+0031,xx01,1|Private element^UN|1,1|<binary data>
+0032,000A|Study Status ID^CS|1,1|COMPLETED
+0032,000C|Study Priority ID^CS|1,1|MED
+0032,1030|Reason for Study^LO|1,1|dysphagia, s/p xrt
+0032,1032|Requesting Physician^PN|1,1|RODRIGUEZ^ERNESTO
+0032,1033|Requesting Service^LO|1,1|7N
+0037,0000|Length of Private Group^UL|1,1|84
+0037,0010|Name of Private Group^LO|1,1|GEMS_DRS_1
+0037,xx10,2|Private element^UN|1,1|2631
+0037,xx20,2|Private element^UN|1,1|<binary data>
+0037,xx40,2|Private element^UN|1,1|<unknown>
+0037,xx42,2|Private element^UN|1,1|<unknown>
+0037,xx50,2|Private element^UN|1,1|INV_NORMAL
+0037,xx60,2|Private element^UN|1,1|<binary data>
+0038,0300|Current Patient Location^LO|1,1|7N 746-1
+7FE0,0010|Pixel Data^OB|1,1|<image>
+7FE0,0010|Pixel Data^OB|1,2|length=7340032 (0x00700000)
+7FE0,0010|Pixel Data^OB|1,3|offset=1990 (0x07C6)
+$$END DICOM DATA

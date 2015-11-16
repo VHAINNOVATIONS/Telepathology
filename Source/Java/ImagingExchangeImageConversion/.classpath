@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="main/src/java"/>
+	<classpathentry kind="src" path="main/src/resources"/>
+	<classpathentry kind="src" path="main/test/java"/>
+	<classpathentry kind="src" path="main/test/resources"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingDicomCommon"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingDicomDCFCommon"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingDicomDCFUtilities"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ImagingDicomUtilities"/>
+	<classpathentry kind="var" path="M2_REPO/aware/aware-j2k/3.19.2.4/aware-j2k-3.19.2.4.jar"/>
+	<classpathentry kind="var" path="M2_REPO/springframework/spring/1.2.9/spring-1.2.9.jar"/>
+	<classpathentry kind="var" path="M2_REPO/junit/junit/4.8.1/junit-4.8.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1/commons-logging-1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingCommon"/>
+	<classpathentry kind="var" path="M2_REPO/log4j/log4j/1.2.14/log4j-1.2.14.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreValueObjects"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/ImagingTestResources"/>
+	<classpathentry kind="var" path="M2_REPO/dcf/LaurelBridge/3.3.22c/LaurelBridge-3.3.22c.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

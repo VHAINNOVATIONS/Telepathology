@@ -1,0 +1,26 @@
+clear, true, true, true, true
+siteService, %1
+protocol, vistaimaging, , , , true
+protocol, vista, , , , true
+protocol, vftp, VixFederation, /webservices/ImageMetadataService, /wai/images, false
+protocol, exchange, VaImagingExchange, /ImageMetadataService.asmx, /RetrieveImage.ashx, false
+!Default VA sites
+addProtocolPreference, 1.3.6.1.4.1.3768, *,"vftp,vistaimaging", false, false, true
+addProtocolPreference, 2.16.840.1.113883.3.166, *,"vftp,vistaimaging", false, false, true
+addProtocolPreference, 2.16.840.1.113883.6.233, *,"vftp,vistaimaging", false, false, true
+!Local Site Configuration
+addProtocolPreference, 1.3.6.1.4.1.3768,%2,"vftp,vistaimaging",true,false,true
+addProtocolPreference, 2.16.840.1.113883.3.166,%2,"vftp,vistaimaging",true,false,true
+addProtocolPreference, 2.16.840.1.113883.6.233,%2,"vftp,vistaimaging",true,false,true
+!2001 is CVIX
+addProtocolPreference,2.16.840.1.113883.3.166,2001,"vftp",false,false,true	!VA Document - vftp only
+addProtocolPreference,2.16.840.1.113883.6.233,2001,"vftp",false,false,true	!VA Document - vftp only
+addProtocolPreference,1.3.6.1.4.1.3768,2001,"vftp",false,false,true			!VA Radiology - vftp only
+!DoD Documents redirect to VA site 2001-CVIX
+addIndirection,2.16.840.1.113883.3.42.10012.100001.206,*,2.16.840.1.113883.3.166,2001
+!DoD Radiology redirect to VA site 2001-CVIX
+addIndirection,2.16.840.1.113883.3.42.10012.100001.207,*,1.3.6.1.4.1.3768,2001
+!NCAT redirect to VA site 2001-CVIX
+addIndirection,2.16.840.1.113883.3.198,*,1.3.6.1.4.1.3768,2001
+save
+exit

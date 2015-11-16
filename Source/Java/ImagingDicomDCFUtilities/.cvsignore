@@ -1,0 +1,7 @@
+bin
+target
+velocity.log
+$jarplug.work
+build.properties
+
+*.dcm

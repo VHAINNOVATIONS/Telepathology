@@ -1,0 +1,159 @@
+$$BEGIN DATA1
+PATIENTS_NAME=DICOM,TGA
+PATIENTS_ID=868-91-9678
+PATIENTS_BIRTH_DATE=1932
+PATIENTS_AGE=71
+PATIENTS_SEX=M
+IMAGE_DATE=07/31/2001
+IMAGE_TIME=19:39:22
+IMAGE_TYPE=6
+IMAGE_TYPE(1)=DERIVED
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=POST_PROCESSED
+IMAGE_TYPE(4)=
+IMAGE_TYPE(5)=RENORMALIZED
+IMAGE_TYPE(6)=20010802190915
+CONTENT_DATE=20010731
+CONTENT_TIME=193922.681
+MODALITY=CR
+MANUFACTURER=FUJI PHOTO FILM Co., ltd.
+INSTITUTION_NAME=FUJI FILM HOSPITAL
+STATION_NAME=ru0
+MANUFACTURERS_MODEL_NAME=FCRXG1
+CONTRAST_BOLUS_AGENT=<unknown>
+BODY_PART_EXAMINED=LOW_EXM
+PLATE_ID=a00000000c
+ACQUISITION_DEVICE_PROCESSING_DESCRIPTION=KNEE, LATERAL
+SENSITIVITY=241
+STUDY_ID=<unknown>
+SERIES_NUMBER=1001
+ACQUISITION_NUMBER=005
+INSTANCE_NUMBER=1001
+PHOTOMETRIC_INTERPRETATION=MONOCHROME1
+ROWS=2140
+COLUMNS=1760
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=0.20
+PIXEL_SPACING(2)=0.20
+BITS_STORED=10
+HIGH_BIT=9
+PIXEL_REPRESENTATION=0
+RESCALE_INTERCEPT=-240
+RESCALE_SLOPE=2.81525
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|206
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.1
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.3.46.670589.8.2021400214009.2001.1.160.8.50.34.4881
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|DICOM_TEST
+0008,0008|Image Type^CS|1,1|DERIVED
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|POST_PROCESSED
+0008,0008|Image Type^CS|4,1|
+0008,0008|Image Type^CS|5,1|RENORMALIZED
+0008,0008|Image Type^CS|6,1|20010802190915
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.1
+0008,0018|SOP Instance UID^UI|1,1|1.3.46.670589.8.2021400214009.2001.1.160.8.50.34.4881
+0008,0020|Study Date^DA|1,1|20010731
+0008,0021|Series Date^DA|1,1|20010731
+0008,0022|Acquisition Date^DA|1,1|20010731
+0008,0023|Content Date^DA|1,1|20010731
+0008,0030|Study Time^TM|1,1|193902.000
+0008,0031|Series Time^TM|1,1|193921.000
+0008,0032|Acquisition Time^TM|1,1|193921.990
+0008,0033|Content Time^TM|1,1|193922.681
+0008,0050|Accession Number^SH|1,1|050803-160
+0008,0060|Modality^CS|1,1|CR
+0008,0070|Manufacturer^LO|1,1|FUJI PHOTO FILM Co., ltd.
+0008,0080|Institution Name^LO|1,1|FUJI FILM HOSPITAL
+0008,0090|Referring Physician's Name^PN|1,1|VOODOO^DOCTOR
+0008,1010|Station Name^SH|1,1|ru0
+0008,1090|Manufacturer's Model Name^LO|1,1|FCRXG1
+0008,2111|Derivation Description^ST|1,1|G0.9O#0.60-0.05,R7T1.0,,,,,
+0009,0010|Owner of Group^LO|1,1|FDMS 1~0
+0009,xx04,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0009,xx05,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0009,xx06,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0009,xx08,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0009,xx09,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0009,xx0C,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0009,xx10,FDMS 1~0|Private group element^UN|1,1|E1
+0009,xx90,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0009,xxF0,FDMS 1~0|Private group element^UN|1,1|01
+0010,0010|Patient's Name^PN|1,1|DICOM^TGA
+0010,0020|Patient ID^LO|1,1|868-91-9678
+0010,0030|Patient's Birth Date^DA|1,1|<unknown>
+0010,0040|Patient's Sex^CS|1,1|F
+0018,0010|Contrast/Bolus Agent^LO|1,1|<unknown>
+0018,0015|Body Part Examined^CS|1,1|LOW_EXM
+0018,1004|Plate ID^LO|1,1|a00000000c
+0018,1020|Software Version(s)^LO|1,1|A03
+0018,1400|Acquisition Device Processing Description^LO|1,1|KNEE, LATERAL
+0018,1401|Acquisition Device Processing Code^LO|1,1|0720
+0018,5101|View Position^CS|1,1|<unknown>
+0018,6000|Sensitivity^DS|1,1|241
+0019,0010|Name of Private Group^LO|1,1|FDMS 1~0
+0019,xx40,FDMS 1~0|Private group element^UN|1,1|RT
+0019,xx50,FDMS 1~0|Private group element^UN|1,1|0 
+0019,xx60,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0019,xx80,FDMS 1~0|Private group element^UN|1,1|00
+0019,xx81,FDMS 1~0|Private group element^UN|1,1|0 
+0019,xx90,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0019,xx91,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0020,000D|Study Instance UID^UI|1,1|1.3.46.670589.8.2021400214009.2001.1.160.8
+0020,000E|Series Instance UID^UI|1,1|1.3.46.670589.8.2021400214009.2001.1.160.8.50.34.4.1
+0020,0010|Study ID^SH|1,1|<unknown>
+0020,0011|Series Number^IS|1,1|1001
+0020,0012|Acquisition Number^IS|1,1|005
+0020,0013|Instance Number^IS|1,1|1001
+0020,0020|Patient Orientation^CS|1,1|<unknown>
+0020,0060|Laterality^CS|1,1|<unknown>
+0021,0010|Name of Private Group^LO|1,1|FDMS 1~0
+0021,xx10,FDMS 1~0|Private group element^UN|1,1|A005
+0021,xx30,FDMS 1~0|Private group element^UN|1,1|  
+0021,xx40,FDMS 1~0|Private group element^UN|1,1|01
+0021,xx50,FDMS 1~0|Private group element^UN|1,1|01000000
+0021,xx80,FDMS 1~0|Private group element^UN|1,1|<unknown>
+0025,0010|Name of Private Group^LO|1,1|FDMS 1~0
+0025,xx10,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0025,xx11,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0025,xx12,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME1
+0028,0010|Rows^US|1,1|2140
+0028,0011|Columns^US|1,1|1760
+0028,0030|Pixel Spacing^DS|1,1|0.20
+0028,0030|Pixel Spacing^DS|2,1|0.20
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|10
+0028,0102|High Bit^US|1,1|9
+0028,0103|Pixel Representation^US|1,1|0
+0028,1052|Rescale Intercept^DS|1,1|-240
+0028,1053|Rescale Slope^DS|1,1|2.81525
+0028,1054|Rescale Type^LO|1,1|OD
+0028,2110|Lossy Image Compression^CS|1,1|00
+0029,0010|Name of Private Group^LO|1,1|FDMS 1~0
+0029,xx20,FDMS 1~0|Private group element^UN|1,1|000 
+0029,xx30,FDMS 1~0|Private group element^UN|1,1|04
+0029,xx34,FDMS 1~0|Private group element^UN|1,1|<binary data>
+0029,xx44,FDMS 1~0|Private group element^UN|1,1|K0
+0029,xx50,FDMS 1~0|Private group element^UN|1,1|00
+0032,1033|Requesting Service^LO|1,1|<unknown>
+2010,0010|Image Display Format^ST|1,1|STANDARD\1,1
+2010,0030|Annotation Display Format ID^CS|1,1|CR00
+2010,0040|Film Orientation^CS|1,1|LANDSCAPE
+2010,0100|Border Density^CS|1,1|BLACK
+2010,0140|Trim^CS|1,1|NO
+2011,0010|Name of Private Group^LO|1,1|FDMS 1.0
+50F1,0010|Name of Private Group^LO|1,1|FDMS 1~0
+50F1,xx10,FDMS 1~0|Private group element^UN|1,1|10
+50F1,xx20,FDMS 1~0|Private group element^UN|1,1|10
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=7532800 (0x0072F100)
+7FE0,0010|Pixel Data^OW|1,3|offset=1856 (0x0740)
+$$END DICOM DATA

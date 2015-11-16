@@ -1,0 +1,1 @@
+This project contains SPI implementations that communicate with VistA without using any VistA Imaging (MAG) rpc calls.  If the data requires a MAG rpc call, then the functionality should be implemented in the VistaImagingDataSourceProvider project.

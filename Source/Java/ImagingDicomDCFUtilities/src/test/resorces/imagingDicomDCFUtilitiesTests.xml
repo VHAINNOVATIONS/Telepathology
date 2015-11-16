@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="appConfiguration"
+		class="gov.va.med.imaging.exchange.AppConfigurationStub"
+		init-method="init"
+		singleton="true" />
+
+	<bean id="DCFUtilities"
+		class="gov.va.med.imaging.dicom.test"
+		singleton="true">
+		<constructor-arg><ref bean="appConfiguration" /></constructor-arg>
+	</bean>
+
+</beans>

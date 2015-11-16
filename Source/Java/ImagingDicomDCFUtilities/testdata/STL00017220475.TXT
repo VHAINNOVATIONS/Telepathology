@@ -1,0 +1,138 @@
+$$BEGIN DATA1
+PATIENTS_NAME=TOLES,JOEL
+PATIENTS_ID=496-48-4403
+PATIENTS_BIRTH_DATE=NOV 22,1946
+PATIENTS_AGE=61
+PATIENTS_SEX=M
+INTEGRATION_CONTROL_NUMBER=1004120061V285946
+ACCESSION_NUMBER=011808-2818
+IMAGE_DATE=01/18/2008
+CONTENT_DATE=01/18/2008
+IMAGE_TIME=11:38:06
+CONTENT_TIME=11:38:06
+CONTENT_DATE=20080118
+CONTENT_TIME=113806.000000
+MODALITY=CR
+MANUFACTURER=Canon Inc.
+INSTITUTION_NAME=<unknown>
+STATION_NAME=medpc
+MANUFACTURERS_MODEL_NAME=AXIOM-Multix M
+BODY_PART_EXAMINED=CHEST
+RELATIVE_XRAY_EXPOSURE=427
+STUDY_ID=3482.1
+SERIES_NUMBER=2
+INSTANCE_NUMBER=1
+PHOTOMETRIC_INTERPRETATION=MONOCHROME1
+ROWS=2688
+COLUMNS=2208
+BITS_STORED=12
+HIGH_BIT=11
+PIXEL_REPRESENTATION=0
+DCM_TO_TGA_PARAMETERS=b12 f0 c4095 R8/b12 f0 c4095
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|208
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.1
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.2.392.200046.100.2.1.1.3482.20080118113740.1.2.1.1
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2.1
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|STL_DSLWKS1
+0008,0000|Group Length^UL|1,1|396
+0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.1
+0008,0018|SOP Instance UID^UI|1,1|1.2.392.200046.100.2.1.1.3482.20080118113740.1.2.1.1
+0008,0020|Study Date^DA|1,1|20080118
+0008,0021|Series Date^DA|1,1|20080118
+0008,0023|Content Date^DA|1,1|20080118
+0008,0030|Study Time^TM|1,1|113740.000000
+0008,0031|Series Time^TM|1,1|113806.000000
+0008,0033|Content Time^TM|1,1|113806.000000
+0008,0050|Accession Number^SH|1,1|011808-2818
+0008,0060|Modality^CS|1,1|CR
+0008,0070|Manufacturer^LO|1,1|Canon Inc.
+0008,0080|Institution Name^LO|1,1|<unknown>
+0008,0090|Referring Physician's Name^PN|1,1|<unknown>
+0008,1010|Station Name^SH|1,1|medpc
+0008,1030|Study Description^LO|1,1|CHEST 2 VIEWS PA&LAT
+0008,103E|Series Description^LO|1,1|CHEST LAT
+0008,1040|Institutional Department Name^LO|1,1|<unknown>
+0008,1060|Name of Physician(s) Reading Study^PN|1,1|<unknown>
+0008,1070|Operators' Name^PN|1,1|<unknown>
+0008,1090|Manufacturer's Model Name^LO|1,1|AXIOM-Multix M
+0010,0000|Group Length^UL|1,1|76
+0010,0010|Patient's Name^PN|1,1|TOLES^JOEL
+0010,0020|Patient ID^LO|1,1|496-48-4403
+0010,0030|Patient's Birth Date^DA|1,1|19461122
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1010|Patient's Age^AS|1,1|061Y
+0018,0000|Group Length^UL|1,1|282
+0018,0015|Body Part Examined^CS|1,1|CHEST
+0018,0060|KVP^DS|1,1|+137.0
+0018,1000|Device Serial Number^LO|1,1|1
+0018,1020|Software Version(s)^LO|1,1|V6.34.00
+0018,1030|Protocol Name^LO|1,1|<unknown>
+0018,1050|Spatial Resolution^DS|1,1|0.160
+0018,1150|Exposure Time^IS|1,1|+6
+0018,1151|X-ray Tube Current^IS|1,1|+467
+0018,1152|Exposure^IS|1,1|+3
+0018,115E|Image Area Dose Product^DS|1,1|0.000000
+0018,1160|Filter Type^SH|1,1|<unknown>
+0018,1164|Imager Pixel Spacing^DS|1,1|0.160
+0018,1164|Imager Pixel Spacing^DS|2,1|0.160
+0018,1180|Collimator/grid Name^SH|1,1|NO
+0018,1200|Date of Last Calibration^DA|1,1|20071213
+0018,1201|Time of Last Calibration^TM|1,1|142138.000000
+0018,1401|Acquisition Device Processing Code^LO|1,1|REX45Q2W8LP5GCS20,10Z0M1
+0018,1405|Relative X-ray Exposure^IS|1,1|427
+0018,5101|View Position^CS|1,1|<unknown>
+0018,7060|Exposure Control Mode^CS|1,1|AUTOMATIC
+0018,7062|Exposure Control Mode Description^LT|1,1|C/3
+0019,0000|Length of Private Group^UL|1,1|18628
+0019,0016|Name of Private Group^LO|1,1|Canon Inc.
+0019,xx10,1|Private element^UN|1,1|<binary data>
+0019,xx13,1|Private element^UN|1,1|RTF=011808-2818 
+0019,xx15,1|Private element^UN|1,1|0.160\0.160 
+0019,xx16,1|Private element^UN|1,1|<unknown>
+0019,xx17,1|Private element^UN|1,1|+0
+0019,xx18,1|Private element^UN|1,1|<binary data>
+0019,xx19,1|Private element^UN|1,1|<unknown>
+0019,xx1A,1|Private element^UN|1,1|<unknown>
+0019,xx1B,1|Private element^UN|1,1|TOLES^JOEL
+0019,xx1C,1|Private element^UN|1,1|00
+0019,xx1E,1|Private element^UN|1,1|0 
+0019,xx1F,1|Private element^UN|1,1|CC=AUTO;BPC=56,2;QAP=0,1,1;DR2=101,1500,1.00,2500,0.30,2.80,0.40,3000,1500;SU1=25,80,0,0.10,0.00;TN1=SL1,4,2225,2.200,2000,1.000,2.8830,3.20,0.20;ROT=0;FLP=0;SG=1;C=0;LPS=1,5,0;RC=1,8;LPD=0,0,0,0,0,0,0;QID=6,34,0,7,2,13,15,3,1,8,1,20,10;DWT=0,1,0;WID=21,8
+0019,xx21,1|Private element^UN|1,1|1 
+0020,0000|Group Length^UL|1,1|162
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113754.1.4.657.6919881.8966.1.11808.2818
+0020,000E|Series Instance UID^UI|1,1|1.2.392.200046.100.2.1.1.3482.20080118113740.1.2
+0020,0010|Study ID^SH|1,1|3482.1
+0020,0011|Series Number^IS|1,1|2
+0020,0013|Instance Number^IS|1,1|1
+0020,0060|Laterality^CS|1,1|<unknown>
+0020,4000|Image Comments^LT|1,1|<unknown>
+0028,0000|Group Length^UL|1,1|114
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME1
+0028,0010|Rows^US|1,1|2688
+0028,0011|Columns^US|1,1|2208
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|12
+0028,0102|High Bit^US|1,1|11
+0028,0103|Pixel Representation^US|1,1|0
+0028,1050|Window Center^DS|1,1|2048
+0028,1051|Window Width^DS|1,1|4095
+3109,0010|Name of Private Group^LO|1,1|Applicare/RadWorks/Version 5.0
+3109,0011|Name of Private Group^LO|1,1|Applicare/RadWorks/Version 6.0/Summary
+3109,xx02,2|Private element^SH|1,1|NEW
+3109,xx08,2|Private element^LO|1,1|siemensDR
+3109,xx0A,2|Private element^DA|1,1|20080118
+3109,xx0B,2|Private element^TM|1,1|103632
+3109,xx12,3|Private element^ST|1,1|AN_SIEMENS_MD
+7FE0,0000|Group Length^UL|1,1|11870220
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=11870208 (0x00B52000)
+7FE0,0010|Pixel Data^OW|1,3|offset=20272 (0x4F30)
+$$END DICOM DATA

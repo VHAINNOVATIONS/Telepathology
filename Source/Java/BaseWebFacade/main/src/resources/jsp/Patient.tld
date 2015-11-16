@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag handler library for displaying Patient information</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>PatientTags</short-name>
+ <uri>http://imaging.med.va.gov/vix/patient</uri>
+ <!--
+	To get a list of patient in a JSP page, do something like this:
+	<study:PatientListTag siteNumber="660" patientName="TEST">
+		<study:PatientListElementTag>
+			<study:PatientName/>
+			<study:PatientIcn/>
+		</study:PatientListElementTag>
+	</study:PatientListTag> 
+	-->
+ <tag>
+  <description>A patient list parent element, derived from AbstractPatientListTag.</description>
+  <name>PatientListTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientListTag</tag-class>
+  <body-content>JSP</body-content>
+  <attribute>
+   <name>siteNumber</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>patientName</name>
+   <required>true</required>
+   <rtexprvalue>true</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The message to display if the list is empty</description>
+   <name>emptyResultMessage</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <tag>
+  <description>A Patient parent element for patient instances within an AbstractPatientListTag.</description>
+  <name>PatientListElementTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientListElementTag</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>PatientName</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientName</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>PatientIcn</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientIcn</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <name>RemoveChecksum</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.Boolean</type>
+  </attribute>
+ </tag>
+ <tag>
+  <name>PatientDob</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientDob</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>PatientSex</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientSex</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>PatientVeteranStatus</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientVeteranStatus</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>A Patient child element that generates an href to a patient ID photo.</description>
+  <name>PatientIdentificationImageHRefTag</name>
+  <tag-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientIdentificationImageHRefTag</tag-class>
+  <body-content>empty</body-content>
+  <attribute>
+   <description>The host, including port and principal identification if needed, of the patient id image host.
+				Defaults to null to produce relative references.</description>
+   <name>host</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The context of the patient id image URL, defaults to the containing page context.</description>
+   <name>context</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>The pattern to create the path to the patient id image URL, defaults to patientid/[patientIcn].
+				Hint: leave host, context and pathPattern blank and map the PatientIdentificationServlet
+				to patientid/* and it will work.</description>
+   <name>pathInfoPattern</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <description>For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.</description>
+   <name>protocolOverride</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+  <attribute>
+   <name>targetSite</name>
+   <rtexprvalue>false</rtexprvalue>
+   <type>java.lang.String</type>
+  </attribute>
+ </tag>
+ <function>
+  <display-name>RemovePatientIcnChecksum</display-name>
+  <name>RemovePatientIcnChecksum</name>
+  <function-class>gov.va.med.imaging.exchange.business.taglib.patient.PatientIcn</function-class>
+  <function-signature>java.lang.String removePatientIcnChecksum(java.lang.String)</function-signature>
+ </function>
+</taglib>

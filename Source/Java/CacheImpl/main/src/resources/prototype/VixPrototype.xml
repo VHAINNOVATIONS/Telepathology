@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="gov.va.med.imaging.storage.cache.memento.CacheConfigurationMemento"> 
+  <void property="evictionStrategyMementoes"> 
+   <object class="java.util.ArrayList"> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>3600000</long> 
+      </void> 
+      <void property="name"> 
+       <string>one-hour-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>86400000</long> 
+      </void> 
+      <void property="name"> 
+       <string>one-day-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>604800000</long> 
+      </void> 
+      <void property="name"> 
+       <string>seven-day-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>2592000000</long> 
+      </void> 
+      <void property="name"> 
+       <string>thirty-day-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="regionMementoes"> 
+   <object class="java.util.ArrayList"> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>one-hour-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>va-metadata-region</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>thirty-day-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>va-image-region</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>thirty-day-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>dod-image-region</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>one-day-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>dod-metadata-region</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java>

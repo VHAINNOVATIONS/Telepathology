@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+	<pomVersion>1</pomVersion>
+	<artifactId>ImagingDicomDCFUtilities</artifactId>
+	<name>ImagingDicomDCFUtilities</name>
+	<groupId>Imaging</groupId>
+	<build>
+	  <sourceDirectory>src/java</sourceDirectory>
+	  <unitTestSourceDirectory>src/test</unitTestSourceDirectory>
+      <unitTest>
+			<excludes>
+				<exclude>**/*</exclude>
+			</excludes>
+			<!--<excludes>
+				<exclude>**/DicomDCFUtilitiesTestBase.java</exclude>
+			</excludes>
+			-->
+      	<includes>
+          <include>**/*Test.java</include>
+        </includes>
+      </unitTest>
+	</build>
+	<dependencies>
+		<!--  dependency>
+			<groupId>jai</groupId>
+			<artifactId>jai_core</artifactId>
+			<version>1.1.2</version>
+			<type>jar</type>
+		</dependency>
+		-->
+		<dependency>
+			<groupId>dcf</groupId>
+			<artifactId>LaurelBridge</artifactId>
+			<version>3.3.22c</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>aopalliance</groupId>
+			<artifactId>aopalliance</artifactId>
+			<version>1.0</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingCommon</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingDicomCommon</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingDicomDCFCommon</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+	</dependencies>
+</project>
+

@@ -1,0 +1,66 @@
+ 	/*
+ 	* Generated method, modifications will be overwritten when project is built
+ 	*
+ 	* The template for this method may be found in VistaImagingDataSourceMethod.tfl
+ 	*/
+ 	@Override
+ 	public ${declaredType} ${name}(
+ 		<#assign firstParameter=true>
+ 		<#list parameters as parameter>
+ 			<#if !firstParameter>, </#if>${parameter.type} ${parameter.name}
+ 			<#assign firstParameter=false> 
+ 		</#list> ) 
+	throws MethodException, ConnectionException
+	{
+		
+		VistaCommonUtilities.setDataSourceMethodAndVersion("${name}", getDataSourceVersion());
+		logger.info("${name} (<#if inputParametersDescription??>" + ${inputParametersDescription} + "</#if>) TransactionContext (" + TransactionContextFactory.get().getDisplayIdentity() + ").");
+		VistaSession localVistaSession = null;
+		try 
+		{
+			localVistaSession = getVistaSession();			
+			VistaQuery query = ${queryFactoryMethod}(
+				<#if queryFactoryParameters??>
+					${queryFactoryParameters}
+				<#else>
+					<#assign firstParameter=true>
+					<#list parameters as parameter>
+						<#if !firstParameter>, </#if>${parameter.name}
+						<#assign firstParameter=false> 
+					</#list>
+				</#if>
+				);
+			String rtn = localVistaSession.call(query);
+			<#if declaredType=="void">
+				<#if translatorMethodParameters??>						
+					${translatorMethod}(${translatorMethodParameters});
+				<#else>
+					${translatorMethod}(rtn);
+				</#if>
+				return;
+			<#else>
+				<#if translatorMethodParameters??>
+					return ${translatorMethod}(${translatorMethodParameters});
+				<#else>
+					return ${translatorMethod}(rtn);						
+				</#if>		
+			</#if>	
+		}
+		catch(IOException ioX)
+		{
+			logger.error("Exception getting VistA session", ioX);
+        	throw new ConnectionException(ioX);
+		}
+		catch (InvalidVistaCredentialsException e)
+		{
+			throw new InvalidCredentialsException(e.getMessage());
+		}
+		catch (VistaMethodException e)
+		{
+			throw new MethodException(e.getMessage());
+		}
+		finally
+        {
+        	try{localVistaSession.close();}catch(Throwable t){}
+        }
+	}

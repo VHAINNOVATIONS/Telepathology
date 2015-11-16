@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- 
+	The core router component is made available
+	on the JNDI tree as a resource.
+	-->
+	<bean id="coreRouter" class="gov.va.med.imaging.core.interfaces.Router">
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+		<property name="jndiName">
+			<value>CoreRouter</value>
+		</property>
+	</bean>
+	
+	<bean id="commandFactory" class="gov.va.med.imaging.core.interfaces.router.CommandFactory">
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+		<property name="jndiName">
+			<value>CommandFactory</value>
+		</property>
+	</bean>
+	
+	<bean id="appConfiguration" class="gov.va.med.imaging.core.interfaces.IAppConfiguration">
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+		<property name="jndiName">
+			<value>AppConfiguration</value>
+		</property>
+	</bean>
+</beans>

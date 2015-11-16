@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.5.0_07" class="java.beans.XMLDecoder"> 
+ <object class="gov.va.med.imaging.storage.cache.memento.CacheConfigurationMemento"> 
+  <void property="evictionStrategyMementoes"> 
+   <object class="java.util.ArrayList"> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>10000</long> 
+      </void> 
+      <void property="name"> 
+       <string>ten-second-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.eviction.LastAccessedEvictionStrategyMemento"> 
+      <void property="initialized"> 
+       <boolean>true</boolean> 
+      </void> 
+      <void property="maximumTimeSinceLastAccess"> 
+       <long>60000</long> 
+      </void> 
+      <void property="name"> 
+       <string>one-minute-lifespan</string> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="regionMementoes"> 
+   <object class="java.util.ArrayList"> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>one-minute-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>test-image</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+    <void method="add"> 
+     <object class="gov.va.med.imaging.storage.cache.impl.memento.PersistentRegionMemento"> 
+      <void property="evictionStrategyNames"> 
+       <array class="java.lang.String" length="1"> 
+        <void index="0"> 
+         <string>ten-second-lifespan</string> 
+        </void> 
+       </array> 
+      </void> 
+      <void property="name"> 
+       <string>test-metadata</string> 
+      </void> 
+      <void property="secondsReadWaitsForWriteCompletion"> 
+       <int>60</int> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java>

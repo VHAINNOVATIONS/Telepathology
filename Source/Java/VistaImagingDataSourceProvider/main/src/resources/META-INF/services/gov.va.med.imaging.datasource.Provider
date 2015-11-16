@@ -1,0 +1,1 @@
+gov.va.med.imaging.vistaimagingdatasource.VistaImagingDataSourceProvider		# The VIX datasource Provider realization to access Vista databases, or more properly to access the factories to create the proxy classes to access Vista 

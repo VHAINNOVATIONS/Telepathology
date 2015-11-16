@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+	<pomVersion>1</pomVersion>
+	<artifactId>CoreRouter</artifactId>
+	<name>CoreRouter</name>
+	<package>gov.va.med.imaging.core</package>
+	<shortDescription>
+		ViX Core Router - business functions
+	</shortDescription>
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>
+			main/test/java
+		</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
+	</build>
+	<dependencies>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingCommon</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingCache</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingExchangeCache</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreRouterSemantics</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreRouterAnnotation</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>CoreRouterAnnotationProcessor</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+      <version>2.3.14</version>
+      <type>jar</type>
+      <properties>
+        <jar.manifest.classpath>true</jar.manifest.classpath>
+      </properties>
+    </dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>CoreValueObjects</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>DataSourceServiceProvider</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>TransactionContext</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>ImagingVistaRealmClient</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+
+		<!-- The MockProvider is used for testing only and must never be deployed -->
+		<dependency>
+			<groupId>${pom.groupId}</groupId>
+			<artifactId>MockProvider</artifactId>
+			<version>${pom.currentVersion}</version>
+			<type>jar</type>
+		</dependency>
+		<!-- 
+			Non-Imaging Dependencies
+			All are included in the root (parent) project. 
+		-->
+	</dependencies>
+</project>
+

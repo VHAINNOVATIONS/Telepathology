@@ -1,0 +1,46 @@
+ 	/*
+ 	* Generated method, modifications will be overwritten when project is built
+ 	*
+ 	* The template for this method may be found in FederationDataSourceProxyPostMethod.tfl
+ 	*/
+ 	@Override
+ 	public ${declaredType} ${name}(
+ 		<#assign firstParameter=true>
+ 		<#list parameters as parameter>
+ 			<#if !firstParameter>, </#if>${parameter.type} ${parameter.name}
+ 			<#assign firstParameter=false> 
+ 		</#list> ) 
+	throws MethodException, ConnectionException
+	{
+		TransactionContext transactionContext = TransactionContextFactory.get();
+		
+		getLogger().info("${name}, Transaction [" + transactionContext.getTransactionId() + "] initiated (<#if inputParametersDescription??>" + ${inputParametersDescription} + "</#if>) + '.");
+		setDataSourceMethodAndVersion("${name}");
+		
+		<#list translationInputParameters as translateParam>
+		Object ${translateParam.value} = ${translateParam.method}(${translateParam.name});		
+		</#list>
+		
+		Map<String, String> urlParameterKeyValues = new HashMap<String, String>();
+		<#list restQueryParameters as restParam>
+		urlParameterKeyValues.put("${restParam.name}", ${restParam.value});
+ 		</#list>
+			
+		String url = getWebResourceUrl("${federationMethodUri}", urlParameterKeyValues ); 				
+		FederationRestPostClient postClient = new FederationRestPostClient(url, MediaType.APPLICATION_XML_TYPE, federationConfiguration);
+		${federationReturnType}	federationResult = postClient.executeRequest(${federationReturnType}.class, ${postParameter});
+		getLogger().info("${name}, Transaction [" + transactionContext.getTransactionId() + "] returned [" + (federationResult == null ? "null" :  "not null") + "] federation result object.");
+		
+		<#if declaredType=="void">
+			// do nothing
+		<#else>
+		<#if translatorMethod??>
+		${declaredType} result = ${translatorMethod}(federationResult);
+		<#else>
+		${declaredType} result = federationResult;
+		</#if>	
+		//getLogger().info("${name}, Transaction [" + transactionContext.getTransactionId() + "] returned [" + (result == null ? "null" : result.size()) + "] business objects.");
+		getLogger().info("${name}, Transaction [" + transactionContext.getTransactionId() + "] returned [" + (result == null ? "null" : "not null") + "] business objects.");
+		return result;
+		</#if>	
+	}

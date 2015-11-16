@@ -1,0 +1,3 @@
+This project contains common utilities and functionality used by the VistaDataSource and VistaImagingDataSourceProvider.  This project should not contain the usage of any MAG rpc calls (one exception for logoff).  This project also contains the VistaSession which is used for all connections to the database.
+
+Effort should be made to put common code and functionality into this project to reduce duplicate code.

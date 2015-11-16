@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <parent>
+    <groupId>Imaging</groupId>
+    <artifactId>ImagingRoot</artifactId>
+    <version>${BUILD_VERSION}</version>
+    <relativePath>../ImagingRoot/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>VixServerHealth</artifactId>
+  <name>VixServerHealth</name>
+  <packaging>jar</packaging>
+  <build>
+    <finalName>${artifactId}-${version}</finalName>
+    <directory>${basedir}/target</directory>
+    <outputDirectory>${basedir}/target/classes</outputDirectory>
+    <testOutputDirectory>${basedir}/target/test-classes</testOutputDirectory>
+    <sourceDirectory>main/src/java</sourceDirectory>
+    <testSourceDirectory>main/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>main/src/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>main/test/resources</directory>
+        <includes>
+          <include>**/*</include>
+        </includes>
+      </testResource>
+    </testResources>
+    <plugins>
+      <plugin>
+        <groupId>UserPlugins</groupId>
+        <artifactId>maven-goal-plugin</artifactId>
+        <version>0.1</version>
+        <configuration>
+          <workingDirectory>${basedir}</workingDirectory>
+          <userGoalList>
+            <userGoalInfo>
+              <goalName>CruiseControl-build</goalName>
+              <commands>
+                <command>
+                  <![CDATA[<cvs command="up -d -P" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>Imaging-dist</goalName>
+              <commands>
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>default</goalName>
+              <commands>
+                <command>
+                  <![CDATA[<attainGoal name="clean:clean" />]]>
+                </command>
+                <command>
+                  <![CDATA[<attainGoal name="jar:install" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+            <userGoalInfo>
+              <goalName>misc</goalName>
+              <commands>
+                <!-- mvn goal:misc Your Miscellaneous Command(s) Here -->
+                <!--
+                <command>
+                  <![CDATA[<copy file="${basedir}/myFile"  todir="${user.home}/myDir" />]]>
+                </command>
+                -->
+                <command>
+                  <![CDATA[<attainGoal name="--version:--version" />]]>
+                </command>
+              </commands>
+            </userGoalInfo>
+          </userGoalList>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <optimize>false</optimize>
+          <compilerArguments>
+            <source>${JAVA_VERSION}</source>
+            <target>${JAVA_VERSION}</target>
+            <g />
+            <deprecation />
+          </compilerArguments>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>once</forkMode>
+          <includes>          	 
+            <include>**/*Test*.java</include>                        
+          </includes>
+          <excludes>
+            <!-- All abstract classes start with Abstract -->
+            <exclude>**/Abstract*.java</exclude>
+            <!-- Utility (helper) classes end with Utility -->
+            <exclude>**/*Utility.java</exclude>
+            <!-- Data generators end with Generator -->
+            <exclude>**/*Generator.java</exclude>
+            <!-- All Test Base classes end with TestBase -->
+            <exclude>**/*TestBase.java</exclude>
+            <!-- Data may be included in a static class ending with Data -->
+            <exclude>**/Mock*.java</exclude>
+            <!-- Inner classes are excluded as unit tests -->
+            <exclude>**/*$*</exclude>          
+            <!-- Excluding individual classes on a permanent basis is discouraged -->
+            <!-- Enter individual classes here -->
+            <exclude>**/TestVistaSession.java</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+	<!-- all non project dependencies should be defined in the ImagingRoot project -->
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>CoreValueObjects</artifactId>
+      <version>${version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>${groupId}</groupId>
+      <artifactId>ImagingCommon</artifactId>
+      <version>${version}</version>
+      <scope>provided</scope>
+    </dependency> 
+  </dependencies>
+  <reporting>
+    <plugins>
+      <plugin>
+        <artifactId>maven-changes-plugin</artifactId>
+        <configuration>
+          <xmlPath>${basedir}/xdocs/changes.xml</xmlPath>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+  <properties>
+    <maven.build.dir>${basedir}/target</maven.build.dir>
+    <maven.final.name>${artifactId}-${version}</maven.final.name>
+  </properties>
+</project>

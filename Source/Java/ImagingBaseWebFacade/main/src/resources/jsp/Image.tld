@@ -1,0 +1,785 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- a tag library descriptor -->
+<taglib 
+	xmlns="http://java.sun.com/xml/ns/j2ee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0"
+>
+	<description>A tag handler library for displaying Image information</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>ImageTags</short-name>
+	<uri>http://imaging.med.va.gov/vix/image</uri>
+
+	<tag>
+		<description>
+			A Image list element for that can populate itself from site number, study ID and patientIcn (i.e. a studyURN).
+			This class derives from AbstractImageCollectionTag.
+		</description>
+		<name>StudyImageListTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.StudyImageListTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>siteNumber</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>studyId</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>patientIcn</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image parent element for instances within an AbstractImageCollectionTag.</description>
+		<name>ImageCollectionElementTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageCollectionElementTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+
+	<!-- Image child elements to create hrefs to the parent image -->
+	<tag>
+		<description>A Image child element that generates an href to the image binary data.</description>
+		<name>ImageHRefTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageHRefTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>applicationPath</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>queryStringPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>One of THUMBNAIL, REFERENCE, DIAGNOSTIC, DIAGNOSTICUNCOMPRESSED or an integer value from 1 to 100</description>
+			<name>imageQuality</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>One of DOWNSAMPLEDTGA, TGA, TIFF, BMP, JPEG, DICOM, DICOMJPEG, or DICOMJPEG2000</description>
+			<name>contentType</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image child element that generates an href to a thumbnail version of the image.</description>
+		<name>ThumbnailImageHRefTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ThumbnailImageHRefTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the thumbnail image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the thumbnail image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the thumbnail image URL, defaults to thumbnail/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the ThumbnailServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image child element that generates an href to a reference version of the image.</description>
+		<name>ReferenceImageHRefTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ReferenceImageHRefTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the thumbnail image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the reference image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the reference image URL, defaults to reference/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the ReferenceServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image child element that generates an href to a diagnostic version of the image.</description>
+		<name>DiagnosticImageHRefTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.DiagnosticImageHRefTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the diagnostic image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the diagnostic image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the thumbnail image URL, defaults to diagnostic/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the DiagnosticServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<!-- Tags that generate JavaScript method calls to the enclosing image -->
+	<tag>
+		<description>A Image child element that generates an action on a thumbnail version of the image.</description>
+		<name>ThumbnailImageActionTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ThumbnailImageActionTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The action (JavaScript method name usually) to build from.
+				The generated string will be of the form 'action(href);'
+				The included href will be a reference to the thumbnail image. 
+			</description>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the thumbnail image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the thumbnail image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the thumbnail image URL, defaults to thumbnail/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the ThumbnailServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image child element that generates an action on a reference version of the image.</description>
+		<name>ReferenceImageActionTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ReferenceImageActionTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The action (JavaScript method name usually) to build from.
+				The generated string will be of the form 'action(href);'
+				The included href will be a reference to the reference image. 
+			</description>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the thumbnail image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the reference image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the reference image URL, defaults to reference/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the ReferenceServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>A Image child element that generates an action on a diagnostic version of the image.</description>
+		<name>DiagnosticImageActionTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.DiagnosticImageActionTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The action (JavaScript method name usually) to build from.
+				The generated string will be of the form 'action(href);'
+				The included href will be a reference to the thumbnail image. 
+			</description>
+			<name>action</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the diagnostic image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the diagnostic image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the thumbnail image URL, defaults to diagnostic/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the DiagnosticServlet
+				to thumbnail/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>includeProtocolInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeHostInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<name>includeContextInUrl</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.Boolean</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<!-- Patient Photo ID element  -->
+	<tag>
+		<description>A Image child element that generates an href to a patient photo ID.</description>
+		<name>PatientIdentificationImageHRefTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.PatientIdentificationImageHRefTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<description>
+				The host, including port and principal identification if needed, of the patient ID image host.
+				Defaults to null to produce relative references.
+			</description>
+			<name>host</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The context of the patient ID image URL, defaults to the containing page context.
+			</description>
+			<name>context</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+				The pattern to create the path to the thumbnail image URL, defaults to patientid/[imageUrn].
+				Hint: leave host, context and pathPattern blank and map the PatientIdentificationServlet
+				to patientid/* and it will work. 
+			</description>
+			<name>pathInfoPattern</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			For the test client this, and targetSite, allow a page to specify that a request
+			be routed through another VIX interface.
+			</description>
+			<name>protocolOverride</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<description>
+			</description>
+			<name>targetSite</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>ImageAbsLocationTag</name>
+		
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageAbsLocationTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageBigFilenameTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageBigFilenameTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageClassTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageClassTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageDescriptionTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageDescriptionTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageDicomImageNumberForDisplayTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageDicomImageNumberForDisplayTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageDicomSequenceNumberForDisplayTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageDicomSequenceNumberForDisplayTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageFullFilenameTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageFullFilenameTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageFullLocationTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageFullLocationTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageGroupIenTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageGroupIenTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageIenTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageIenTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageModalityTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageModalityTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageNumberTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageNumberTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageObjectOriginTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageObjectOriginTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImagePatientDfnTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImagePatientDfnTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImagePatientIcnTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImagePatientIcnTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImagePatientNameTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImagePatientNameTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageProcedureDateTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageProcedureDateTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageProcedureTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageProcedureTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageQaMessageTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageQaMessageTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageSiteAbbreviationTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageSiteAbbreviationTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageSiteNumberTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageSiteNumberTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageStudyIenTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageStudyIenTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageTypeTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageTypeTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+
+	<tag>
+		<name>ImageUidTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageUidTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+	
+	<tag>
+		<name>ImageUrnTag</name>
+		<tag-class>gov.va.med.imaging.exchange.business.taglib.image.ImageUrnTag</tag-class>
+		<body-content>empty</body-content>
+	</tag>
+</taglib>

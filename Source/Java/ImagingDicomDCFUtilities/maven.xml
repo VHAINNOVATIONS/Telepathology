@@ -1,0 +1,13 @@
+<project default="Imaging-dist" xmlns:m="jelly:maven">	
+	
+	<goal name="Imaging-dist">
+		<attainGoal name="clean:clean" />
+	    <attainGoal name="jar:jar" />
+    	<attainGoal name="jar:install"/>	
+	</goal>
+	
+	<goal name="CruiseControl-build">
+  		<cvs command="up -d -P"/>
+	  	<attainGoal name="Imaging-dist" />
+	</goal>
+</project>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- a tag library descriptor -->
+<taglib version="2.0" xmlns="http://java.sun.com/xml/ns/j2ee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd">
+ <description>A tag handler library for displaying System information</description>
+ <tlib-version>1.0</tlib-version>
+ <short-name>SystemTags</short-name>
+ <uri>http://imaging.med.va.gov/vix/system</uri>
+ <tag>
+   <description>A tag that will display the realm that the current request was authenticated under.
+		This is also the site number that the Vix is fronting for.</description>
+  <name>RealmName</name>
+  <tag-class>gov.va.med.imaging.system.RealmNameTag</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The body tag that will display System Properties, use
+		MapElementKey and MapElementValue for each iteration.</description>
+  <name>SystemProperties</name>
+  <tag-class>gov.va.med.imaging.system.SystemPropertiesMapElement</tag-class>
+  <body-content>JSP</body-content>
+  </tag>
+ <tag>
+  <description>The body tag that will display environment Variables, use
+		MapElementKey and MapElementValue for each iteration.</description>
+  <name>EnvironmentVariables</name>
+  <tag-class>gov.va.med.imaging.system.EnvironmentVariablesMapElement</tag-class>
+  <body-content>JSP</body-content>
+  </tag>
+ <tag>
+  <description>The current key, within a MapElement element.</description>
+  <name>ElementKey</name>
+  <tag-class>gov.va.med.imaging.system.MapElementKey</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <description>The current key, within a MapElement element.</description>
+  <name>ElementValue</name>
+  <tag-class>gov.va.med.imaging.system.MapElementValue</tag-class>
+  <body-content>empty</body-content>
+ </tag>
+ <tag>
+  <name>ImageIOReaderFormats</name>
+  <tag-class>gov.va.med.imaging.jai.taglib.ReaderFormatList</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>ImageIOWriterFormats</name>
+  <tag-class>gov.va.med.imaging.jai.taglib.WriterFormatList</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>ImageIOReaderMIMETypes</name>
+  <tag-class>gov.va.med.imaging.jai.taglib.ReaderMIMETypeList</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+ <tag>
+  <name>ImageIOWriterMIMETypes</name>
+  <tag-class>gov.va.med.imaging.jai.taglib.WriterMIMETypeList</tag-class>
+  <body-content>JSP</body-content>
+ </tag>
+</taglib>

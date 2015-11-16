@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <artifactId>SiteServiceDataSourceProvider</artifactId>
+    <name>SiteServiceDataSourceProvider</name>
+	<package>gov.va.med.siteservice</package>
+	<shortDescription>Site Resolution service implementation with SiteService as the data store</shortDescription>  
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>main/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>			
+	</build>
+  <dependencies>
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>ImagingCommon</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>    
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>CoreValueObjects</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>    
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>DataSourceServiceProvider</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>    
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>SiteServiceSOAPClient</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>  
+  </dependencies>
+</project>
+

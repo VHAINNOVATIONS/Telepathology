@@ -1,0 +1,2 @@
+The template files MUST reside in the root of the jar file (artifact of this project).
+I don't really understand why but the class loading of an annotation processor is not normal and it will not find the templates in a subdirectory.

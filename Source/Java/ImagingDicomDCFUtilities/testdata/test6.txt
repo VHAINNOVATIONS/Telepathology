@@ -1,0 +1,217 @@
+$$BEGIN DATA1
+PATIENTS_NAME=AGFA,ANDY
+PATIENTS_ID=387-62-3412
+PATIENTS_BIRTH_DATE=AUG 12,1967
+PATIENTS_AGE=37
+PATIENTS_SEX=M
+ACCESSION_NUMBER=073001-70
+IMAGE_DATE=08/12/2004
+CONTENT_DATE=08/12/2004
+IMAGE_TIME=10:54:26
+CONTENT_TIME=10:54:26
+IMAGE_TYPE=4
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=STATIC
+IMAGE_TYPE(4)=EMISSION
+CONTENT_DATE=20040812
+CONTENT_TIME=105426.437000
+MODALITY=NM
+MANUFACTURER=SIEMENS NM
+STATION_NAME=ESOFTAP
+MANUFACTURERS_MODEL_NAME=IP2
+PATIENT_POSITION=FFS
+STUDY_ID=1288
+SERIES_NUMBER=1
+INSTANCE_NUMBER=1
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=256
+COLUMNS=256
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=1.6478350162506
+PIXEL_SPACING(2)=1.6478350162506
+BITS_STORED=16
+HIGH_BIT=15
+PIXEL_REPRESENTATION=0
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|206
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.20
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.3.12.2.1107.5.6.1.6277.30050104081215542040600000002
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|DICOM_TEST
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|STATIC
+0008,0008|Image Type^CS|4,1|EMISSION
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.20
+0008,0018|SOP Instance UID^UI|1,1|1.3.12.2.1107.5.6.1.6277.30050104081215542040600000002
+0008,0020|Study Date^DA|1,1|20040812
+0008,0021|Series Date^DA|1,1|20040812
+0008,0022|Acquisition Date^DA|1,1|20040812
+0008,0023|Content Date^DA|1,1|20040812
+0008,0030|Study Time^TM|1,1|104754.218000
+0008,0031|Series Time^TM|1,1|105420.406000
+0008,0032|Acquisition Time^TM|1,1|105426.437000
+0008,0033|Content Time^TM|1,1|105426.437000
+0008,0050|Accession Number^SH|1,1|081204-1288
+0008,0060|Modality^CS|1,1|NM
+0008,0070|Manufacturer^LO|1,1|SIEMENS NM
+0008,0090|Referring Physician's Name^PN|1,1|EMERSON^PETER^S
+0008,1010|Station Name^SH|1,1|ESOFTAP
+0008,1030|Study Description^LO|1,1|Parathyroid Scan
+0008,1032|Procedure Code Sequence^SQ||
+0008,1032.0001^0008,0100|Code Value^SH|1,1|78070
+0008,1032.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0008,1032.0001^0008,0104|Code Meaning^LO|1,1|PARATHYROID NUCLEAR IMAGING
+0008,103E|Series Description^LO|1,1|Parathyroid Early
+0008,1048|Physician(s) of Record^PN|1,1|EMERSON^PETER^S
+0008,1070|Operators' Name^PN|1,1|<unknown>
+0008,1090|Manufacturer's Model Name^LO|1,1|IP2
+0008,1110|Referenced Study Sequence^SQ||
+0008,1110.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.3.1
+0008,1110.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113754.1.4.644.6959187.9152.1.81204.1288
+0008,1120|Referenced Patient Sequence^SQ||
+0008,1120.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.1.1
+0008,1120.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113754.1.1.644.7173777
+0010,0010|Patient's Name^PN|1,1|GRIPPE^LEONARD^A
+0010,0020|Patient ID^LO|1,1|565-20-7362
+0010,0030|Patient's Birth Date^DA|1,1|19260219
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1000|Other Patient IDs^LO|1,1|G7362
+0010,1010|Patient's Age^AS|1,1|078Y
+0010,1040|Patient's Address^LO|1,1|3750 N PINE VIEW DR, PRESCOTT VLY, 4
+0010,2160|Ethnic Group^SH|1,1|~WHITE, NOT OF H
+0010,21B0|Additional Patient History^LT|1,1|78 yo man with primary hyperparathyroidemia (PTH= 172, Ca= 12.1).  Patient with
+0010,21B0|Additional Patient History^LT|1,2|prior history of parathyroidectomy (right inferior and superior; left superior
+0010,21B0|Additional Patient History^LT|1,3|removed)
+0010,21C0|Pregnancy Status^US|1,1|1
+0018,0026|Intervention Drug Information Sequence^SQ||
+0018,0026.0001^0018,0028|Intervention Drug Dose^DS|1,1|0
+0018,0026.0001^0018,0034|Intervention Drug Name^LO|1,1|<unknown>
+0018,0026.0001^0018,0035|Intervention Drug Start Time^TM|1,1|000000.000000
+0018,0070|Counts Accumulated^IS|1,1|<unknown>
+0018,0071|Acquisition Termination Condition^CS|1,1|TIME
+0018,1020|Software Version(s)^LO|1,1|3.5.7.13
+0018,1020|Software Version(s)^LO|2,1|5.5.12
+0018,1030|Protocol Name^LO|1,1|<unknown>
+0018,1200|Date of Last Calibration^DA|1,1|20040805
+0018,1200|Date of Last Calibration^DA|2,1|20040805
+0018,1201|Time of Last Calibration^TM|1,1|220400.000000
+0018,1201|Time of Last Calibration^TM|2,1|220400.000000
+0018,1242|Actual Frame Duration^IS|1,1|299990
+0018,5100|Patient Position^CS|1,1|FFS
+0019,0010|Name of Private Group^LO|1,1|SIEMENS MED NM
+0019,xx0F,1|Private element^UN|1,1|<binary data>
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113754.1.4.644.6959187.9152.1.81204.1288
+0020,000E|Series Instance UID^UI|1,1|1.3.12.2.1107.5.6.1.6277.30050104081215542040600000000
+0020,0010|Study ID^SH|1,1|1288
+0020,0011|Series Number^IS|1,1|1
+0020,0013|Instance Number^IS|1,1|1
+0020,0052|Frame of Reference UID^UI|1,1|1.3.12.2.1107.5.6.1.6277.30050104081215542040600000001
+0020,1002|Images in Acquisition^IS|1,1|3
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0008|Number of Frames^IS|1,1|1
+0028,0009|Frame Increment Pointer^AT|1,1|0054,0010
+0028,0009|Frame Increment Pointer^AT|2,1|0054,0020
+0028,0010|Rows^US|1,1|256
+0028,0011|Columns^US|1,1|256
+0028,0030|Pixel Spacing^DS|1,1|1.6478350162506
+0028,0030|Pixel Spacing^DS|2,1|1.6478350162506
+0028,0051|Corrected Image^CS|1,1|UNIF
+0028,0051|Corrected Image^CS|2,1|UNIF
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|16
+0028,0102|High Bit^US|1,1|15
+0028,0103|Pixel Representation^US|1,1|0
+0028,0106|Smallest Image Pixel Value^US|1,1|0
+0028,0107|Largest Image Pixel Value^US|1,1|340
+0028,1050|Window Center^DS|1,1|170
+0028,1051|Window Width^DS|1,1|340
+0029,0010|Name of Private Group^LO|1,1|SIEMENS CSA HEADER
+0029,0011|Name of Private Group^LO|1,1|SIEMENS MEDCOM HEADER
+0029,xx08,2|Private element^UN|1,1|NUC FLOOD 
+0029,xx09,2|Private element^UN|1,1|Ver 1.0 
+0029,xx10,2|Private element^UN|1,1|<binary data>
+0029,xx31,3|Private element^UN|1,1|506.0.1324855 
+0029,xx32,3|Private element^UN|1,1|<binary data>
+0029,xx33,3|Private element^UN|1,1|<binary data>
+0029,xx34,3|Private element^UN|1,1|DB TO DICOM 
+0032,1032|Requesting Physician^PN|1,1|EMERSON^PETER^S
+0032,1033|Requesting Service^LO|1,1|ENDO BONE&THYR NEW (MEDICAL)
+0032,1060|Requested Procedure Description^LO|1,1|PARATHYROID NUCLEAR IMAGING
+0032,1064|Requested Procedure Code Sequence^SQ||
+0032,1064.0001^0008,0100|Code Value^SH|1,1|78070
+0032,1064.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0032,1064.0001^0008,0104|Code Meaning^LO|1,1|PARATHYROID NUCLEAR IMAGING
+0033,0010|Owner of Group^LO|1,1|SIEMENS MED NM
+0033,xx29,1|Private element^UN|1,1|<binary data>
+0033,xx31,1|Private element^UN|1,1|<binary data>
+0033,xx32,1|Private element^UN|1,1|Solid 
+0033,xx37,1|Private element^UN|1,1|<binary data>
+0035,0010|Name of Private Group^LO|1,1|SIEMENS MED NM
+0035,xx01,1|Private element^UN|1,1|Photopeak 
+0054,0010|Energy Window Vector^US|1,1|1
+0054,0011|Number of Energy Windows^US|1,1|1
+0054,0012|Energy Window Information Sequence^SQ||
+0054,0012.0001^0054,0013|Energy Window Range Sequence^SQ||
+0054,0012.0001^0054,0013.0001^0054,0014|Energy Window Lower Limit^DS|1,1|129.23175048828
+0054,0012.0001^0054,0013.0001^0054,0015|Energy Window Upper Limit^DS|1,1|150.18824768066
+0054,0012.0001^0054,0018|Energy Window Name^SH|1,1|99m Technetium
+0054,0016|Radiopharmaceutical Information Sequence^SQ||
+0054,0016.0001^0018,0031|Radiopharmaceutical^LO|1,1|<unknown>
+0054,0016.0002^0018,1074|Radionuclide Total Dose^DS|1,1|0
+0054,0016.0003^0054,0300|Radionuclide Code Sequence^SQ||
+0054,0016.0003^0054,0300.0001^0008,0100|Code Value^SH|1,1|C-163A8
+0054,0016.0003^0054,0300.0001^0008,0102|Coding Scheme Designator^SH|1,1|99SDM
+0054,0016.0003^0054,0300.0001^0008,0104|Code Meaning^LO|1,1|99m Technetium
+0054,0020|Detector Vector^US|1,1|1
+0054,0021|Number of Detectors^US|1,1|1
+0054,0022|Detector Information Sequence^SQ||
+0054,0022.0001^0018,1142|Radial Position^DS|1,1|0
+0054,0022.0001^0018,1145|Center of Rotation Offset^DS|1,1|0
+0054,0022.0001^0018,1147|Field of View Shape^CS|1,1|RECTANGLE
+0054,0022.0001^0018,1149|Field of View Dimension(s)^IS|1,1|421
+0054,0022.0001^0018,1149|Field of View Dimension(s)^IS|2,1|385
+0054,0022.0001^0018,1180|Collimator/grid Name^SH|1,1|@18876526
+0054,0022.0001^0018,1181|Collimator Type^CS|1,1|PARA
+0054,0022.0001^0018,1182|Focal Distance^IS|1,1|0
+0054,0022.0001^0018,1183|X Focus Center^DS|1,1|0
+0054,0022.0001^0018,1183|X Focus Center^DS|2,1|0
+0054,0022.0001^0018,1184|Y Focus Center^DS|1,1|0
+0054,0022.0001^0018,1184|Y Focus Center^DS|2,1|0
+0054,0022.0002^0028,0031|Zoom Factor^DS|1,1|1.4550000429153
+0054,0022.0002^0028,0031|Zoom Factor^DS|2,1|1.4550000429153
+0054,0022.0002^0054,0220|View Code Sequence^SQ||
+0054,0022.0002^0054,0220.0001^0008,0100|Code Value^SH|1,1|Anterior Immedia
+0054,0022.0002^0054,0220.0001^0008,0102|Coding Scheme Designator^SH|1,1|99NMG
+0054,0022.0002^0054,0220.0001^0008,0104|Code Meaning^LO|1,1|Anterior Immediate
+0054,0410|Patient Orientation Code Sequence^SQ||
+0054,0410.0001^0008,0100|Code Value^SH|1,1|F-10450
+0054,0410.0001^0008,0102|Coding Scheme Designator^SH|1,1|99SDM
+0054,0410.0001^0008,0104|Code Meaning^LO|1,1|Recumbent
+0054,0410.0001^0054,0412|Patient Orientation Modifier Code Sequence^SQ||
+0054,0410.0001^0054,0412.0001^0008,0100|Code Value^SH|1,1|F-10340
+0054,0410.0001^0054,0412.0001^0008,0102|Coding Scheme Designator^SH|1,1|99SDM
+0054,0410.0001^0054,0412.0001^0008,0104|Code Meaning^LO|1,1|Supine position
+0054,0414|Patient Gantry Relationship Code Sequence^SQ||
+0054,0414.0001^0008,0100|Code Value^SH|1,1|G-5191
+0054,0414.0001^0008,0102|Coding Scheme Designator^SH|1,1|99SDM
+0054,0414.0001^0008,0104|Code Meaning^LO|1,1|Feet-first
+0055,0010|Name of Private Group^LO|1,1|SIEMENS MED NM
+0055,xx7E,1|Private element^UN|1,1|<binary data>
+0055,xx7F,1|Private element^UN|1,1|ÇÏJ=
+0055,xxC0,1|Private element^UN|1,1|<binary data>
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=131072 (0x00020000)
+7FE0,0010|Pixel Data^OW|1,3|offset=265688 (0x40DD8)
+7FE3,0010|Name of Private Group^LO|1,1|SIEMENS MED NM
+7FE3,xx14,1|Private element^UN|1,1|<binary data>
+7FE3,xx15,1|Private element^UN|1,1|<binary data>
+7FE3,xx16,1|Private element^UN|1,1|<binary data>
+$$END DICOM DATA

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- 
+===========================================================================================
+This is an example of how to use Spring configuration to get a Cache reference when the 
+cache is installed as a Resource.
+=========================================================================================== 
+-->
+<beans>
+	<bean id="cache" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="resourceRef">
+			<value>true</value>
+		</property>
+		<property name="jndiName">
+			<value>ImagingExchangeCache</value>
+		</property>
+	</bean>
+
+	<!-- dodSourceCache must be a realization of gov.va.med.imaging.exchange.storage.cache.DODSourceCache -->
+	<bean 
+		id="dodSourcedCache" 
+		class="gov.va.med.imaging.exchange.storage.cache.DODSourcedCacheDecorator" 
+		singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.storage.cache.Cache">
+			<ref local="cache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="java.lang.String">
+			<value>dod-metadata-region</value>
+		</constructor-arg>
+		<constructor-arg index="2" type="java.lang.String">
+			<value>dod-image-region</value>
+		</constructor-arg>
+	</bean>
+
+	<!-- vaSourceCache must be a realization of gov.va.med.imaging.exchange.storage.cache.VASourceCache -->
+	<bean 
+		id="vaSourcedCache" 
+		class="gov.va.med.imaging.exchange.storage.cache.VASourcedCacheDecorator" 
+		singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.storage.cache.Cache">
+			<ref local="cache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="java.lang.String">
+			<value>va-metadata-region</value>
+		</constructor-arg>
+		<constructor-arg index="2" type="java.lang.String">
+			<value>va-image-region</value>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 
+	commonCache must be a realization of gov.va.med.imaging.exchange.storage.cache.CommonSourcedCache,
+	The common cache works on the basis of the GlobalArtifactIdentifier components to determine
+	where to put or get a cached item 
+	-->
+	<bean 
+		id="commonCache" 
+		class="gov.va.med.imaging.exchange.storage.cache.CommonCacheDecorator" 
+		singleton="true"
+	>
+		<constructor-arg index="0" type="gov.va.med.imaging.storage.cache.Cache">
+			<ref local="cache"/>
+		</constructor-arg>
+		<constructor-arg index="1" type="gov.va.med.imaging.exchange.storage.cache.VASourcedCache">
+			<ref local="vaSourcedCache"/>
+		</constructor-arg>
+		<constructor-arg index="2" type="gov.va.med.imaging.exchange.storage.cache.DODSourcedCache">
+			<ref local="dodSourcedCache"/>
+		</constructor-arg>
+	</bean>
+	
+</beans>

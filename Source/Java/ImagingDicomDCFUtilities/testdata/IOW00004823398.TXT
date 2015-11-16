@@ -1,0 +1,251 @@
+$$BEGIN DATA1
+PATIENTS_NAME=LEPIRD,ROBERT CLAIR
+PATIENTS_ID=482-32-7863
+PATIENTS_BIRTH_DATE=AUG 23,1932
+PATIENTS_AGE=73
+PATIENTS_SEX=M
+ACCESSION_NUMBER=092105-3301
+IMAGE_DATE=09/21/2005
+CONTENT_DATE=09/21/2005
+IMAGE_TIME=09:20:32
+CONTENT_TIME=09:20:32
+IMAGE_TYPE=3
+IMAGE_TYPE(1)=ORIGINAL
+IMAGE_TYPE(2)=PRIMARY
+IMAGE_TYPE(3)=LOCALIZER
+CONTENT_DATE=20050921
+CONTENT_TIME=092032.000000
+MODALITY=CT
+MANUFACTURER=Philips
+INSTITUTION_NAME=VAMC IOWA CITY
+STATION_NAME=IOW-CT1
+MANUFACTURERS_MODEL_NAME=Brilliance 40
+SLICE_THICKNESS=0.625
+KVP=120
+RECONSTRUCTION_DIAMETER=500
+GANTRY_DETECTOR_TILT=0
+EXPOSURE_TIME=2719
+XRAY_TUBE_CURRENT=30
+PATIENT_POSITION=HFS
+STUDY_ID=4774
+SERIES_NUMBER=6698
+ACQUISITION_NUMBER=<unknown>
+INSTANCE_NUMBER=1
+IMAGE_POSITION_PATIENT=3
+IMAGE_POSITION_PATIENT(1)=0
+IMAGE_POSITION_PATIENT(2)=-102
+IMAGE_POSITION_PATIENT(3)=1638.59998
+LATERALITY=<unknown>
+POSITION_REFERENCE_INDICATOR=<unknown>
+SLICE_LOCATION=1183.90
+PHOTOMETRIC_INTERPRETATION=MONOCHROME2
+ROWS=256
+COLUMNS=512
+PIXEL_SPACING=2
+PIXEL_SPACING(1)=0.9765625
+PIXEL_SPACING(2)=0.9765625
+BITS_STORED=12
+HIGH_BIT=11
+PIXEL_REPRESENTATION=0
+RESCALE_INTERCEPT=-1000
+RESCALE_SLOPE=1
+HAUNSFIELD=-1000
+CONTRAST_INDICATOR=
+SLICE_THICKNESS_2=0.6
+GANTRY_DETECTOR_TILT_2=0.0
+EXPOSURE_TIME_2=2.7
+IMAGE_POSITION_PATIENT_2(3)=1638.6
+RECONSTRUCTION_DIAMETER_2=50.0
+$$END DATA1
+$$BEGIN DICOM DATA
+0002,0000|Group Length^UL|1,1|194
+0002,0001|File Meta Information Version^OB|1,1|0
+0002,0001|File Meta Information Version^OB|2,1|1
+0002,0002|Media Storage SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.2
+0002,0003|Media Storage SOP Instance UID^UI|1,1|1.2.840.113704.1.111.3808.1127312435.730
+0002,0010|Transfer Syntax UID^UI|1,1|1.2.840.10008.1.2.1
+0002,0012|Implementation Class UID^UI|1,1|1.2.840.113754.2.1.3.0
+0002,0013|Implementation Version Name^SH|1,1|VA DICOM V3.0
+0002,0016|Source Application Entity Title^AE|1,1|CTIC-01SCU
+0008,0005|Specific Character Set^CS|1,1|ISO_IR 100
+0008,0008|Image Type^CS|1,1|ORIGINAL
+0008,0008|Image Type^CS|2,1|PRIMARY
+0008,0008|Image Type^CS|3,1|LOCALIZER
+0008,0012|Instance Creation Date^DA|1,1|20050921
+0008,0013|Instance Creation Time^TM|1,1|092035
+0008,0016|SOP Class UID^UI|1,1|1.2.840.10008.5.1.4.1.1.2
+0008,0018|SOP Instance UID^UI|1,1|1.2.840.113704.1.111.3808.1127312435.730
+0008,0020|Study Date^DA|1,1|20050921
+0008,0022|Acquisition Date^DA|1,1|20050921
+0008,0023|Content Date^DA|1,1|20050921
+0008,0030|Study Time^TM|1,1|092014
+0008,0032|Acquisition Time^TM|1,1|092032
+0008,0033|Content Time^TM|1,1|092032.000000
+0008,0050|Accession Number^SH|1,1|092105-3301
+0008,0060|Modality^CS|1,1|CT
+0008,0070|Manufacturer^LO|1,1|Philips
+0008,0080|Institution Name^LO|1,1|VAMC IOWA CITY
+0008,0081|Institution Address^ST|1,1|IOWA CITY, IA
+0008,0090|Referring Physician's Name^PN|1,1|UC^ERGUN^Y
+0008,1010|Station Name^SH|1,1|IOW-CT1
+0008,1030|Study Description^LO|1,1|CT/IC HEAD/BRAIN W/O IV CONTRAST - NO MODIFIER
+0008,1032|Procedure Code Sequence^SQ||
+0008,1032.0001^0008,0100|Code Value^SH|1,1|70450
+0008,1032.0001^0008,0102|Coding Scheme Designator^SH|1,1|C4
+0008,1032.0001^0008,0104|Code Meaning^LO|1,1|CT HEAD/BRAIN W/O DYE - NO MODIFIER
+0008,103E|Series Description^LO|1,1|<unknown>
+0008,1040|Institutional Department Name^LO|1,1|Radiology
+0008,1070|Operators' Name^PN|1,1|MAA
+0008,1090|Manufacturer's Model Name^LO|1,1|Brilliance 40
+0008,1110|Referenced Study Sequence^SQ||
+0008,1110.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.3.1
+0008,1110.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113754.1.4.636.6949078.9082.1.92105.3301
+0008,1120|Referenced Patient Sequence^SQ||
+0008,1120.0001^0008,1150|Referenced SOP Class UID^UI|1,1|1.2.840.10008.3.1.2.1.1
+0008,1120.0001^0008,1155|Referenced SOP Instance UID^UI|1,1|1.2.840.113754.1.1.636.168219
+0010,0010|Patient's Name^PN|1,1|LEPIRD^ROBERT^CLAIR
+0010,0020|Patient ID^LO|1,1|482-32-7863
+0010,0030|Patient's Birth Date^DA|1,1|19320823
+0010,0040|Patient's Sex^CS|1,1|M
+0010,1000|Other Patient IDs^LO|1,1|L7863
+0010,1000|Other Patient IDs^LO|2,1|168219
+0010,1010|Patient's Age^AS|1,1|073Y
+0010,1030|Patient's Weight^DS|1,1|<unknown>
+0010,2000|Medical Alerts^LO|1,1|ALLERGY:
+0010,2000|Medical Alerts^LO|2,1|SULFONAMIDES(N)
+0010,2110|Contrast Allergies^LO|1,1|<unknown>
+0010,2160|Ethnic Group^SH|1,1|WHITE, NOT HISP.
+0010,21B0|Additional Patient History^LT|1,1|gait disorder r/o new lesion (pleasse compare to old head CT 7/04)
+0010,21C0|Pregnancy Status^US|1,1|1
+0018,0022|Scan Options^CS|1,1|SURVIEW
+0018,0050|Slice Thickness^DS|1,1|0.625
+0018,0060|KVP^DS|1,1|120
+0018,0090|Data Collection Diameter^DS|1,1|500
+0018,1020|Software Version(s)^LO|1,1|1.2.3
+0018,1030|Protocol Name^LO|1,1|ROUTINE HEAD 5MM/Head/Sv
+0018,1100|Reconstruction Diameter^DS|1,1|500
+0018,1120|Gantry/Detector Tilt^DS|1,1|0
+0018,1130|Table Height^DS|1,1|107
+0018,1140|Rotation Direction^CS|1,1|CW
+0018,1141|Angular Position^DS|1,1|90
+0018,1143|Scan Arc^DS|1,1|90
+0018,1150|Exposure Time^IS|1,1|2719
+0018,1151|X-ray Tube Current^IS|1,1|30
+0018,1160|Filter Type^SH|1,1|D
+0018,5100|Patient Position^CS|1,1|HFS
+0020,000D|Study Instance UID^UI|1,1|1.2.840.113704.1.111.5808.1127312414.1
+0020,000E|Series Instance UID^UI|1,1|1.2.840.113704.1.111.5808.1127312415.3
+0020,0010|Study ID^SH|1,1|4774
+0020,0011|Series Number^IS|1,1|6698
+0020,0012|Acquisition Number^IS|1,1|<unknown>
+0020,0013|Instance Number^IS|1,1|1
+0020,0032|Image Position (Patient)^DS|1,1|0
+0020,0032|Image Position (Patient)^DS|2,1|-102
+0020,0032|Image Position (Patient)^DS|3,1|1638.59998
+0020,0037|Image Orientation (Patient)^DS|1,1|0
+0020,0037|Image Orientation (Patient)^DS|2,1|1
+0020,0037|Image Orientation (Patient)^DS|3,1|0
+0020,0037|Image Orientation (Patient)^DS|4,1|0
+0020,0037|Image Orientation (Patient)^DS|5,1|0
+0020,0037|Image Orientation (Patient)^DS|6,1|-1
+0020,0052|Frame of Reference UID^UI|1,1|1.2.840.113704.1.111.5808.1127312415.4
+0020,0060|Laterality^CS|1,1|<unknown>
+0020,1040|Position Reference Indicator^LO|1,1|<unknown>
+0020,1041|Slice Location^DS|1,1|1183.90
+0020,4000|Image Comments^LT|1,1|<unknown>
+0028,0002|Samples per Pixel^US|1,1|1
+0028,0004|Photometric Interpretation^CS|1,1|MONOCHROME2
+0028,0010|Rows^US|1,1|256
+0028,0011|Columns^US|1,1|512
+0028,0030|Pixel Spacing^DS|1,1|0.9765625
+0028,0030|Pixel Spacing^DS|2,1|0.9765625
+0028,0100|Bits Allocated^US|1,1|16
+0028,0101|Bits Stored^US|1,1|12
+0028,0102|High Bit^US|1,1|11
+0028,0103|Pixel Representation^US|1,1|0
+0028,1050|Window Center^DS|1,1|-0215
+0028,1050|Window Center^DS|2,1|-0215
+0028,1051|Window Width^DS|1,1|00800
+0028,1051|Window Width^DS|2,1|00800
+0028,1052|Rescale Intercept^DS|1,1|-1000
+0028,1053|Rescale Slope^DS|1,1|1
+0032,1032|Requesting Physician^PN|1,1|UC^ERGUN^Y
+0032,1033|Requesting Service^LO|1,1|IC/NEURO MOVEMENT D/O CONS B
+0032,1060|Requested Procedure Description^LO|1,1|CT HEAD/BRAIN W/O DYE - NO MODIFIER
+0038,0010|Admission ID^LO|1,1|<unknown>
+0038,0050|Special Needs^LO|1,1|<unknown>
+0038,0500|Patient State^LO|1,1|<unknown>
+0040,0007|Scheduled Procedure Step Description^LO|1,1|CT/IC HEAD/BRAIN W/O IV CONTRAST - NO MODIFIER
+0040,0008|Scheduled Protocol Code Sequence^SQ||
+0040,0008.0001^0008,0100|Code Value^SH|1,1|2850
+0040,0008.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+0040,0008.0001^0008,0104|Code Meaning^LO|1,1|CT/IC HEAD/BRAIN W/O IV CONTRAST - NO MODIFIER
+0040,0009|Scheduled Procedure Step ID^SH|1,1|2850
+0040,0253|Performed Procedure Step ID^SH|1,1|<unknown>
+0040,0254|Performed Procedure Step Description^LO|1,1|CT/IC HEAD/BRAIN W/O IV CONTRAST - NO MODIFIER
+0040,0260|Performed Protocol Sequence^SQ||
+0040,0260.0001^0008,0100|Code Value^SH|1,1|2850
+0040,0260.0001^0008,0102|Coding Scheme Designator^SH|1,1|L
+0040,0260.0001^0008,0104|Code Meaning^LO|1,1|CT/IC HEAD/BRAIN W/O IV CONTRAST - NO MODIFIER
+0040,1001|Requested Procedure ID^SH|1,1|3301
+0040,3001|Confidentiality Constraint on Patient Data Description^LO|1,1|<unknown>
+00E1,0010|Name of Private Group^LO|1,1|ELSCINT1
+00E1,xx01,1|Private element^US|1,1|1
+00E1,xx22,1|Private element^DS|1,1|00000\00000
+00E1,xx23,1|Private element^DS|1,1|00001\00001
+00E1,xx40,1|Private element^SH|1,1|<unknown>
+00E1,xx61,1|Private element^LO|1,1|Head_Multi_1161_usr.proc
+00E1,xx63,1|Private element^SH|1,1|ENGLISH
+01F1,0010|Name of Private Group^LO|1,1|ELSCINT1
+01F1,xx01,1|Private element^CS|1,1|SLICES
+01F1,xx02,1|Private element^CS|1,1|ULTRA FAST
+01F1,xx04,1|Private element^CS|1,1|NORMAL
+01F1,xx08,1|Private element^DS|1,1|254.300049
+01F1,xx0A,1|Private element^US|1,1|0
+01F1,xx0C,1|Private element^DS|1,1|0\0
+01F1,xx0D,1|Private element^DS|1,1|0
+01F1,xx32,1|Private element^CS|1,1|RIGHT_ON_LEFT
+01F1,xx44,1|Private element^OW|1,1|<unknown>
+01F1,xx46,1|Private element^FL|1,1|6.250000E-001
+01F1,xx47,1|Private element^SH|1,1|2D
+01F1,xx49,1|Private element^DS|1,1|1
+01F1,xx4A,1|Private element^SH|1,1|NONE
+01F1,xx4B,1|Private element^SH|1,1|4x0.625
+01F1,xx4D,1|Private element^SH|1,1|no
+01F7,0010|Name of Private Group^LO|1,1|ELSCINT1
+01F7,xx10,1|Private element^OB|1,1|<unknown>
+01F7,xx11,1|Private element^OW|1,1|<unknown>
+01F7,xx13,1|Private element^OW|1,1|<unknown>
+01F7,xx14,1|Private element^OW|1,1|<unknown>
+01F7,xx15,1|Private element^OW|1,1|<unknown>
+01F7,xx16,1|Private element^OW|1,1|<unknown>
+01F7,xx17,1|Private element^OW|1,1|<unknown>
+01F7,xx18,1|Private element^OW|1,1|<unknown>
+01F7,xx19,1|Private element^OW|1,1|<unknown>
+01F7,xx1A,1|Private element^OW|1,1|<unknown>
+01F7,xx1B,1|Private element^OW|1,1|<unknown>
+01F7,xx1C,1|Private element^OW|1,1|<unknown>
+01F7,xx1E,1|Private element^OW|1,1|<unknown>
+01F7,xx1F,1|Private element^OW|1,1|<unknown>
+01F7,xx22,1|Private element^UI|1,1|1.2.840.113704.1.111.5808.1127312415.21111111111111111111111
+01F7,xx23,1|Private element^OW|1,1|<unknown>
+01F7,xx25,1|Private element^OW|1,1|<unknown>
+01F7,xx26,1|Private element^OW|1,1|<unknown>
+01F7,xx27,1|Private element^OW|1,1|<unknown>
+01F7,xx29,1|Private element^OW|1,1|<unknown>
+01F7,xx2B,1|Private element^OW|1,1|<unknown>
+01F7,xx2C,1|Private element^OW|1,1|<unknown>
+01F7,xx2D,1|Private element^OW|1,1|<unknown>
+01F7,xx30,1|Private element^OW|1,1|<unknown>
+01F7,xx70,1|Private element^OW|1,1|<unknown>
+01F7,xx73,1|Private element^OW|1,1|<unknown>
+01F7,xx75,1|Private element^OW|1,1|<unknown>
+07A1,0010|Name of Private Group^LO|1,1|ELSCINT1
+07A1,xx10,1|Private element^LO|1,1|3.5
+7FDF,0010|Name of Private Group^LO|1,1|ELSCINT1
+7FDF,xxF0,1|Private element^OB|1,1|<unknown>
+7FDF,xxFF,1|Private element^SH|1,1|<unknown>
+7FE0,0010|Pixel Data^OW|1,1|<image>
+7FE0,0010|Pixel Data^OW|1,2|length=262144 (0x00040000)
+7FE0,0010|Pixel Data^OW|1,3|offset=20252 (0x4F1C)
+$$END DICOM DATA

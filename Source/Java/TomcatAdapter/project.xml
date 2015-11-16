@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<extend>../ImagingRoot/project.xml</extend>
+    <pomVersion>1</pomVersion>
+    <artifactId>TomcatAdapter</artifactId>
+    <name>TomcatAdapter</name>
+	<package>gov.va.med.server.tomcat</package>
+	<shortDescription>Tomcat Server Adapter</shortDescription>  
+	<build>
+		<sourceDirectory>main/src/java</sourceDirectory>
+		<unitTestSourceDirectory>main/test/java</unitTestSourceDirectory>
+		<unitTest>
+			<includes>
+				<include>**/Test*.java</include>
+			</includes>
+			<resources>
+				<resource>
+					<directory>main/test/resources</directory>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<filtering>false</filtering>
+				</resource>
+			</resources>
+		</unitTest>
+		<resources>
+			<resource>
+				<directory>main/src/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+				<filtering>false</filtering>
+			</resource>
+		</resources>			
+	</build>
+  <dependencies>
+    <dependency>
+      <groupId>${pom.groupId}</groupId>
+      <artifactId>ImagingCommon</artifactId>
+      <version>${pom.currentVersion}</version>
+      <type>jar</type>
+    </dependency>        
+    
+    <!-- Non-Imaging Dependencies -->
+    <dependency>
+      <groupId>catalina</groupId>
+      <artifactId>catalina</artifactId>
+      <version>6.0.16</version>
+      <type>jar</type>
+    </dependency> 
+    <dependency>
+      <groupId>catalina</groupId>
+      <artifactId>catalina-tribes</artifactId>
+      <version>6.0.16</version>
+      <type>jar</type>
+    </dependency> 
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.14</version>
+      <type>jar</type>
+    </dependency> 
+  </dependencies>
+</project>
+
